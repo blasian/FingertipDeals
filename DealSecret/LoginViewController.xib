@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginViewController">
+            <connections>
+                <outlet property="emailField" destination="wbD-JT-evm" id="N4q-4S-Qhn"/>
+                <outlet property="passwordField" destination="RKn-Pm-7Lx" id="2Ca-Hk-Kue"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wbD-JT-evm">
+                    <rect key="frame" x="20" y="259" width="335" height="50"/>
+                    <animations/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="5me-lX-NL2"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RKn-Pm-7Lx">
+                    <rect key="frame" x="20" y="319" width="335" height="50"/>
+                    <animations/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ckU-6X-Kw0">
+                    <rect key="frame" x="172" y="596" width="32" height="30"/>
+                    <animations/>
+                    <state key="normal" title="Next"/>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Register" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0cU-wk-vSm">
+                    <rect key="frame" x="156" y="45" width="64" height="21"/>
+                    <animations/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <animations/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="wbD-JT-evm" secondAttribute="trailing" constant="20" id="2Tp-zN-WD7"/>
+                <constraint firstItem="wbD-JT-evm" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" constant="-50" id="88I-zH-EbH"/>
+                <constraint firstItem="RKn-Pm-7Lx" firstAttribute="height" secondItem="wbD-JT-evm" secondAttribute="height" id="DPv-Dd-ckE"/>
+                <constraint firstItem="wbD-JT-evm" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="I56-Vf-h7J"/>
+                <constraint firstItem="RKn-Pm-7Lx" firstAttribute="top" secondItem="wbD-JT-evm" secondAttribute="bottom" constant="10" id="JBg-BH-wEe"/>
+                <constraint firstAttribute="bottom" secondItem="ckU-6X-Kw0" secondAttribute="bottom" constant="60" id="NiN-Av-hKT"/>
+                <constraint firstItem="ckU-6X-Kw0" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="SNi-V1-dcF"/>
+                <constraint firstItem="0cU-wk-vSm" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="50" id="U6l-wf-Cc5"/>
+                <constraint firstItem="RKn-Pm-7Lx" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="Yrg-Gb-lB0"/>
+                <constraint firstAttribute="trailing" secondItem="RKn-Pm-7Lx" secondAttribute="trailing" constant="20" id="lLk-t0-RVu"/>
+                <constraint firstItem="0cU-wk-vSm" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="naM-Og-DN7"/>
+            </constraints>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+        </view>
+    </objects>
+</document>

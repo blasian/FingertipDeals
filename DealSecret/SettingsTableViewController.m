@@ -99,9 +99,9 @@
 - (void)signOut {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setBool:NO forKey:kUserPersistenceKey];
-    AuthViewController *authVC = [[AuthViewController alloc] init];
-    [self.navigationController pushViewController:authVC animated:YES];
-    self.navigationController.viewControllers = @[authVC];
+//    AuthViewController *authVC = [[AuthViewController alloc] init];
+//    [self.navigationController pushViewController:authVC animated:YES];
+//    self.navigationController.viewControllers = @[authVC];
 }
 
 

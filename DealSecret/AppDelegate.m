@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "AuthViewController.h"
+#import "SplashScreenViewController.h"
 #import "DealsTableViewController.h"
 #import "LocationManager.h"
 #import "User.h"
@@ -24,13 +24,14 @@
     
     [[LocationManager sharedInstance] start];
     
-    UIViewController* rootVC = [[AuthViewController alloc] init];
+    UIViewController* rootVC = [[SplashScreenViewController alloc] init];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if ([defaults boolForKey:kUserPersistenceKey]) {
         rootVC = [[DealsTableViewController alloc] init];
     }
     
     self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:rootVC];
+    ((UINavigationController*)self.window.rootViewController).navigationBarHidden = YES;
     
     if ([application respondsToSelector:@selector(isRegisteredForRemoteNotifications)]) {
         // iOS 8 Notifications

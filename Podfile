@@ -5,5 +5,4 @@ platform :ios, '7.0'
 
 target 'DealSecret' do
 	pod "AFNetworking", "~> 2.0"
-	pod 'FXForms', '~> 1.2'
 end
