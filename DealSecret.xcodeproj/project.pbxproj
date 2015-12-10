@@ -7,27 +7,89 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		58391B7F1C04EB72007E3C57 /* Deal+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 58391B7C1C04EB72007E3C57 /* Deal+CoreDataProperties.m */; };
+		58391B801C04EB72007E3C57 /* Deal.m in Sources */ = {isa = PBXBuildFile; fileRef = 58391B7E1C04EB72007E3C57 /* Deal.m */; };
+		58391B841C04EEDE007E3C57 /* DealsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58391B821C04EEDE007E3C57 /* DealsTableViewController.m */; };
 		58933F8C1C0115940013BCF2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 58933F8B1C0115940013BCF2 /* main.m */; };
 		58933F8F1C0115940013BCF2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 58933F8E1C0115940013BCF2 /* AppDelegate.m */; };
-		58933F921C0115940013BCF2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58933F911C0115940013BCF2 /* ViewController.m */; };
+		58933F921C0115940013BCF2 /* AuthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58933F911C0115940013BCF2 /* AuthViewController.m */; };
 		58933F951C0115940013BCF2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58933F931C0115940013BCF2 /* Main.storyboard */; };
 		58933F981C0115940013BCF2 /* DealSecret.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 58933F961C0115940013BCF2 /* DealSecret.xcdatamodeld */; };
 		58933F9A1C0115950013BCF2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 58933F991C0115950013BCF2 /* Assets.xcassets */; };
 		58933F9D1C0115950013BCF2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58933F9B1C0115950013BCF2 /* LaunchScreen.storyboard */; };
+		58933FA91C0127480013BCF2 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 58933FA71C0127480013BCF2 /* User.m */; };
+		58933FC21C026EA20013BCF2 /* AuthForm.m in Sources */ = {isa = PBXBuildFile; fileRef = 58933FC11C026EA20013BCF2 /* AuthForm.m */; };
+		58933FC51C0286EB0013BCF2 /* LoginForm.m in Sources */ = {isa = PBXBuildFile; fileRef = 58933FC41C0286EB0013BCF2 /* LoginForm.m */; };
+		58933FC81C0287380013BCF2 /* RegistrationForm.m in Sources */ = {isa = PBXBuildFile; fileRef = 58933FC71C0287380013BCF2 /* RegistrationForm.m */; };
+		58933FCA1C02CBA10013BCF2 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58933FC91C02CBA10013BCF2 /* CoreLocation.framework */; };
+		58933FCD1C02CBC80013BCF2 /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 58933FCC1C02CBC80013BCF2 /* LocationManager.m */; };
+		58933FD01C02D9B50013BCF2 /* NetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 58933FCF1C02D9B50013BCF2 /* NetworkManager.m */; };
+		589A0F4D1C062F2200458E52 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 589A0F4C1C062F2200458E52 /* Constants.m */; };
+		589A0F561C064A3900458E52 /* ManagedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 589A0F551C064A3900458E52 /* ManagedObject.m */; };
+		589A0F5C1C07B8F500458E52 /* User+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 589A0F5B1C07B8F500458E52 /* User+CoreDataProperties.m */; };
+		589A0F5F1C07D22800458E52 /* DealsHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 589A0F5E1C07D22800458E52 /* DealsHeaderView.m */; };
+		589A0F631C0BB0B100458E52 /* DealTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 589A0F621C0BB0B100458E52 /* DealTableViewCell.m */; };
+		589A0F6D1C0FFC7400458E52 /* DealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 589A0F6B1C0FFC7400458E52 /* DealViewController.m */; };
+		589A0F6E1C0FFC7400458E52 /* DealViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 589A0F6C1C0FFC7400458E52 /* DealViewController.xib */; };
+		589A0F701C10312900458E52 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 589A0F6F1C10312900458E52 /* MapKit.framework */; };
+		589A0F791C10487F00458E52 /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 589A0F771C10487F00458E52 /* SettingsTableViewController.m */; };
+		589A0F7A1C10487F00458E52 /* SettingsTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 589A0F781C10487F00458E52 /* SettingsTableViewController.xib */; };
+		A1856927AF1870455FDF25AC /* libPods-DealSecret.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B4FCBAD5C9639A6E28F31134 /* libPods-DealSecret.a */; settings = {ATTRIBUTES = (Required, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4B85B872E2BA3407E0EF3BB8 /* Pods-DealSecret.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DealSecret.release.xcconfig"; path = "Pods/Target Support Files/Pods-DealSecret/Pods-DealSecret.release.xcconfig"; sourceTree = "<group>"; };
+		5834A3E61C1663F50065F864 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		5834A3E81C1665070065F864 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		58391B7B1C04EB72007E3C57 /* Deal+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Deal+CoreDataProperties.h"; sourceTree = "<group>"; };
+		58391B7C1C04EB72007E3C57 /* Deal+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Deal+CoreDataProperties.m"; sourceTree = "<group>"; };
+		58391B7D1C04EB72007E3C57 /* Deal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Deal.h; sourceTree = "<group>"; };
+		58391B7E1C04EB72007E3C57 /* Deal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Deal.m; sourceTree = "<group>"; };
+		58391B811C04EEDE007E3C57 /* DealsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealsTableViewController.h; sourceTree = "<group>"; };
+		58391B821C04EEDE007E3C57 /* DealsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealsTableViewController.m; sourceTree = "<group>"; };
 		58933F871C0115940013BCF2 /* DealSecret.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DealSecret.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		58933F8B1C0115940013BCF2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		58933F8D1C0115940013BCF2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		58933F8E1C0115940013BCF2 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		58933F901C0115940013BCF2 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		58933F911C0115940013BCF2 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		58933F901C0115940013BCF2 /* AuthViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AuthViewController.h; sourceTree = "<group>"; };
+		58933F911C0115940013BCF2 /* AuthViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AuthViewController.m; sourceTree = "<group>"; };
 		58933F941C0115940013BCF2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		58933F971C0115940013BCF2 /* DealSecret.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DealSecret.xcdatamodel; sourceTree = "<group>"; };
 		58933F991C0115950013BCF2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		58933F9C1C0115950013BCF2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		58933F9E1C0115950013BCF2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		58933FA61C0127480013BCF2 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		58933FA71C0127480013BCF2 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		58933FC01C026EA20013BCF2 /* AuthForm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthForm.h; sourceTree = "<group>"; };
+		58933FC11C026EA20013BCF2 /* AuthForm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthForm.m; sourceTree = "<group>"; };
+		58933FC31C0286EB0013BCF2 /* LoginForm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginForm.h; sourceTree = "<group>"; };
+		58933FC41C0286EB0013BCF2 /* LoginForm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginForm.m; sourceTree = "<group>"; };
+		58933FC61C0287380013BCF2 /* RegistrationForm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrationForm.h; sourceTree = "<group>"; };
+		58933FC71C0287380013BCF2 /* RegistrationForm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationForm.m; sourceTree = "<group>"; };
+		58933FC91C02CBA10013BCF2 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		58933FCB1C02CBC80013BCF2 /* LocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationManager.h; sourceTree = "<group>"; };
+		58933FCC1C02CBC80013BCF2 /* LocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationManager.m; sourceTree = "<group>"; };
+		58933FCE1C02D9B50013BCF2 /* NetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkManager.h; sourceTree = "<group>"; };
+		58933FCF1C02D9B50013BCF2 /* NetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkManager.m; sourceTree = "<group>"; };
+		589A0F4B1C062F2200458E52 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		589A0F4C1C062F2200458E52 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
+		589A0F541C064A3900458E52 /* ManagedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManagedObject.h; sourceTree = "<group>"; };
+		589A0F551C064A3900458E52 /* ManagedObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManagedObject.m; sourceTree = "<group>"; };
+		589A0F5A1C07B8F500458E52 /* User+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "User+CoreDataProperties.h"; sourceTree = "<group>"; };
+		589A0F5B1C07B8F500458E52 /* User+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "User+CoreDataProperties.m"; sourceTree = "<group>"; };
+		589A0F5D1C07D22800458E52 /* DealsHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealsHeaderView.h; sourceTree = "<group>"; };
+		589A0F5E1C07D22800458E52 /* DealsHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealsHeaderView.m; sourceTree = "<group>"; };
+		589A0F611C0BB0B100458E52 /* DealTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealTableViewCell.h; sourceTree = "<group>"; };
+		589A0F621C0BB0B100458E52 /* DealTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealTableViewCell.m; sourceTree = "<group>"; };
+		589A0F6A1C0FFC7400458E52 /* DealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealViewController.h; sourceTree = "<group>"; };
+		589A0F6B1C0FFC7400458E52 /* DealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealViewController.m; sourceTree = "<group>"; };
+		589A0F6C1C0FFC7400458E52 /* DealViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DealViewController.xib; sourceTree = "<group>"; };
+		589A0F6F1C10312900458E52 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		589A0F761C10487F00458E52 /* SettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsTableViewController.h; sourceTree = "<group>"; };
+		589A0F771C10487F00458E52 /* SettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsTableViewController.m; sourceTree = "<group>"; };
+		589A0F781C10487F00458E52 /* SettingsTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsTableViewController.xib; sourceTree = "<group>"; };
+		B4FCBAD5C9639A6E28F31134 /* libPods-DealSecret.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DealSecret.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FD0C5017E6E7ADB50ADD2242 /* Pods-DealSecret.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DealSecret.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DealSecret/Pods-DealSecret.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,17 +97,61 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				589A0F701C10312900458E52 /* MapKit.framework in Frameworks */,
+				58933FCA1C02CBA10013BCF2 /* CoreLocation.framework in Frameworks */,
+				A1856927AF1870455FDF25AC /* libPods-DealSecret.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		297A6BB654712EA0D68742CF /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				FD0C5017E6E7ADB50ADD2242 /* Pods-DealSecret.debug.xcconfig */,
+				4B85B872E2BA3407E0EF3BB8 /* Pods-DealSecret.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		58391B791C04E990007E3C57 /* Forms */ = {
+			isa = PBXGroup;
+			children = (
+				58933FC01C026EA20013BCF2 /* AuthForm.h */,
+				58933FC11C026EA20013BCF2 /* AuthForm.m */,
+				58933FC61C0287380013BCF2 /* RegistrationForm.h */,
+				58933FC71C0287380013BCF2 /* RegistrationForm.m */,
+				58933FC31C0286EB0013BCF2 /* LoginForm.h */,
+				58933FC41C0286EB0013BCF2 /* LoginForm.m */,
+			);
+			name = Forms;
+			sourceTree = "<group>";
+		};
+		58391B7A1C04E9CA007E3C57 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				589A0F5A1C07B8F500458E52 /* User+CoreDataProperties.h */,
+				589A0F5B1C07B8F500458E52 /* User+CoreDataProperties.m */,
+				58933FA61C0127480013BCF2 /* User.h */,
+				58933FA71C0127480013BCF2 /* User.m */,
+				58391B7B1C04EB72007E3C57 /* Deal+CoreDataProperties.h */,
+				58391B7C1C04EB72007E3C57 /* Deal+CoreDataProperties.m */,
+				58391B7D1C04EB72007E3C57 /* Deal.h */,
+				58391B7E1C04EB72007E3C57 /* Deal.m */,
+				589A0F541C064A3900458E52 /* ManagedObject.h */,
+				589A0F551C064A3900458E52 /* ManagedObject.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		58933F7E1C0115940013BCF2 = {
 			isa = PBXGroup;
 			children = (
 				58933F891C0115940013BCF2 /* DealSecret */,
 				58933F881C0115940013BCF2 /* Products */,
+				297A6BB654712EA0D68742CF /* Pods */,
+				68709F70408DEE08F8C6D948 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -62,8 +168,16 @@
 			children = (
 				58933F8D1C0115940013BCF2 /* AppDelegate.h */,
 				58933F8E1C0115940013BCF2 /* AppDelegate.m */,
-				58933F901C0115940013BCF2 /* ViewController.h */,
-				58933F911C0115940013BCF2 /* ViewController.m */,
+				589A0F4B1C062F2200458E52 /* Constants.h */,
+				589A0F4C1C062F2200458E52 /* Constants.m */,
+				589A0F4A1C05588C00458E52 /* Controllers */,
+				589A0F601C07D23500458E52 /* Views */,
+				58391B791C04E990007E3C57 /* Forms */,
+				58391B7A1C04E9CA007E3C57 /* Models */,
+				58933FCB1C02CBC80013BCF2 /* LocationManager.h */,
+				58933FCC1C02CBC80013BCF2 /* LocationManager.m */,
+				58933FCE1C02D9B50013BCF2 /* NetworkManager.h */,
+				58933FCF1C02D9B50013BCF2 /* NetworkManager.m */,
 				58933F931C0115940013BCF2 /* Main.storyboard */,
 				58933F991C0115950013BCF2 /* Assets.xcassets */,
 				58933F9B1C0115950013BCF2 /* LaunchScreen.storyboard */,
@@ -82,6 +196,46 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		589A0F4A1C05588C00458E52 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				58391B811C04EEDE007E3C57 /* DealsTableViewController.h */,
+				58391B821C04EEDE007E3C57 /* DealsTableViewController.m */,
+				58933F901C0115940013BCF2 /* AuthViewController.h */,
+				58933F911C0115940013BCF2 /* AuthViewController.m */,
+				589A0F6A1C0FFC7400458E52 /* DealViewController.h */,
+				589A0F6B1C0FFC7400458E52 /* DealViewController.m */,
+				589A0F761C10487F00458E52 /* SettingsTableViewController.h */,
+				589A0F771C10487F00458E52 /* SettingsTableViewController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		589A0F601C07D23500458E52 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				589A0F6C1C0FFC7400458E52 /* DealViewController.xib */,
+				589A0F781C10487F00458E52 /* SettingsTableViewController.xib */,
+				589A0F5D1C07D22800458E52 /* DealsHeaderView.h */,
+				589A0F5E1C07D22800458E52 /* DealsHeaderView.m */,
+				589A0F611C0BB0B100458E52 /* DealTableViewCell.h */,
+				589A0F621C0BB0B100458E52 /* DealTableViewCell.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		68709F70408DEE08F8C6D948 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5834A3E81C1665070065F864 /* CoreFoundation.framework */,
+				5834A3E61C1663F50065F864 /* Foundation.framework */,
+				589A0F6F1C10312900458E52 /* MapKit.framework */,
+				58933FC91C02CBA10013BCF2 /* CoreLocation.framework */,
+				B4FCBAD5C9639A6E28F31134 /* libPods-DealSecret.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -89,9 +243,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 58933FA11C0115950013BCF2 /* Build configuration list for PBXNativeTarget "DealSecret" */;
 			buildPhases = (
+				A39AA0C2735AFC3A314F4238 /* Check Pods Manifest.lock */,
 				58933F831C0115940013BCF2 /* Sources */,
 				58933F841C0115940013BCF2 /* Frameworks */,
 				58933F851C0115940013BCF2 /* Resources */,
+				5A90AA86C81CD2F3DC70D384 /* Embed Pods Frameworks */,
+				53D1D50B7FB906D9AA94F658 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -113,6 +270,12 @@
 				TargetAttributes = {
 					58933F861C0115940013BCF2 = {
 						CreatedOnToolsVersion = 7.1.1;
+						DevelopmentTeam = SE9D5PU7WS;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -139,7 +302,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				589A0F7A1C10487F00458E52 /* SettingsTableViewController.xib in Resources */,
 				58933F9D1C0115950013BCF2 /* LaunchScreen.storyboard in Resources */,
+				589A0F6E1C0FFC7400458E52 /* DealViewController.xib in Resources */,
 				58933F9A1C0115950013BCF2 /* Assets.xcassets in Resources */,
 				58933F951C0115940013BCF2 /* Main.storyboard in Resources */,
 			);
@@ -147,15 +312,79 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		53D1D50B7FB906D9AA94F658 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DealSecret/Pods-DealSecret-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5A90AA86C81CD2F3DC70D384 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DealSecret/Pods-DealSecret-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A39AA0C2735AFC3A314F4238 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		58933F831C0115940013BCF2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				58933F921C0115940013BCF2 /* ViewController.m in Sources */,
+				58391B801C04EB72007E3C57 /* Deal.m in Sources */,
+				58933F921C0115940013BCF2 /* AuthViewController.m in Sources */,
+				58933FC21C026EA20013BCF2 /* AuthForm.m in Sources */,
+				58933FD01C02D9B50013BCF2 /* NetworkManager.m in Sources */,
+				589A0F4D1C062F2200458E52 /* Constants.m in Sources */,
+				58933FC51C0286EB0013BCF2 /* LoginForm.m in Sources */,
+				58391B7F1C04EB72007E3C57 /* Deal+CoreDataProperties.m in Sources */,
+				589A0F6D1C0FFC7400458E52 /* DealViewController.m in Sources */,
+				589A0F631C0BB0B100458E52 /* DealTableViewCell.m in Sources */,
+				58933FA91C0127480013BCF2 /* User.m in Sources */,
+				589A0F5F1C07D22800458E52 /* DealsHeaderView.m in Sources */,
+				58933FC81C0287380013BCF2 /* RegistrationForm.m in Sources */,
+				589A0F791C10487F00458E52 /* SettingsTableViewController.m in Sources */,
+				58933FCD1C02CBC80013BCF2 /* LocationManager.m in Sources */,
 				58933F8F1C0115940013BCF2 /* AppDelegate.m in Sources */,
 				58933F8C1C0115940013BCF2 /* main.m in Sources */,
 				58933F981C0115940013BCF2 /* DealSecret.xcdatamodeld in Sources */,
+				589A0F561C064A3900458E52 /* ManagedObject.m in Sources */,
+				589A0F5C1C07B8F500458E52 /* User+CoreDataProperties.m in Sources */,
+				58391B841C04EEDE007E3C57 /* DealsTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,9 +492,12 @@
 		};
 		58933FA21C0115950013BCF2 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FD0C5017E6E7ADB50ADD2242 /* Pods-DealSecret.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = DealSecret/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.michaelspearman.DealSecret;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -274,9 +506,12 @@
 		};
 		58933FA31C0115950013BCF2 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4B85B872E2BA3407E0EF3BB8 /* Pods-DealSecret.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = DealSecret/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.michaelspearman.DealSecret;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -302,6 +537,7 @@
 				58933FA31C0115950013BCF2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
