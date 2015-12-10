@@ -63,25 +63,21 @@
     }
 }
 
-+ (void)createUserWithEmail:(NSString*)email
-               withPassword:(NSString*)password
-                      block:(void (^_Nullable)(NSDictionary* response))block {
-    NSMutableDictionary* params = [NSMutableDictionary dictionary];
++ (void)loginWithEmail:(NSString*)email
+          withPassword:(NSString*)password
+                 block:(void (^_Nullable)(NSDictionary* response))block {
     
-    if (email) {
-        [params setObject:email forKey:@"um_email"];
-    }
+    NSDictionary *params = @{@"um_email":email,
+                             @"um_upass":password};
     
-    if (password) {
-        [params setObject:password forKey:@"um_upass"];
-    }
-    
-    [[NetworkManager sharedInstance] POST:kUserEndpoint
+    [[NetworkManager sharedInstance] POST:kUserLoginEndpoint
                                parameters:params
                                   success:^(NSURLSessionDataTask* task,
                                             id responseObject) {
+                                      
                                       NSDictionary* userDict = [responseObject objectForKey:@"data"];
-                                      User* user = [[User alloc] initWithAttributes:userDict];
+                                      User *user = [[User alloc] initWithAttributes:userDict[@"userm"]];
+                                      [user save];
                                       
                                       NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
                                       [defaults setObject:user.token forKey:kUserAPIToken];
@@ -103,35 +99,37 @@
                                   }];
 }
 
-+ (void)loginWithEmail:(NSString*)email
-          withPassword:(NSString*)password
-                 block:(void (^_Nullable)(NSDictionary* response))block {
-    NSMutableDictionary* params = [NSMutableDictionary dictionary];
-    
-    if (email) {
-        [params setObject:email forKey:@"um_email"];
-    }
-    
-    if (password) {
-        [params setObject:password forKey:@"um_upass"];
-    }
-    
-    [[NetworkManager sharedInstance] POST:kUserLoginEndpoint
++ (void)createUserWithEmail:(NSString*)email
+                   password:(NSString*)password
+                  firstName:(NSString*)firstName
+                   lastName:(NSString*)lastName
+                        dob:(NSDate*)dob
+                     gender:(NSNumber*)gender
+                      block:(void (^_Nullable)(NSDictionary* response))block
+{
+    NSDictionary* params = @{@"um_email" : email,
+                             @"um_upass" : password,
+                             @"um_fname" : firstName,
+                             @"um_lname" : lastName,
+                             @"um_dob"   : dob,
+                             @"um_gender": gender};
+
+    [[NetworkManager sharedInstance] POST:kUserEndpoint
                                parameters:params
                                   success:^(NSURLSessionDataTask* task,
                                             id responseObject) {
+                                      
                                       NSDictionary* userDict = [responseObject objectForKey:@"data"];
-                                      User *user = [[User alloc] initWithAttributes:userDict[@"userm"]];
-                                      [user save];
+                                      User* user = [[User alloc] initWithAttributes:userDict];
+                                      
                                       NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
                                       [defaults setObject:user.token forKey:kUserAPIToken];
                                       [defaults setBool:YES forKey:kUserPersistenceKey];
                                       [defaults synchronize];
                                       if (block) {
-                                          NSDictionary* dict = @{@"id" : user.userId};
+                                          NSDictionary* dict = @{};
                                           block(dict);
                                       }
-                                      
                                   }
                                   failure:^(NSURLSessionDataTask* task,
                                             NSError* error) {

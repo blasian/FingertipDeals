@@ -9,6 +9,7 @@
 #import "SplashScreenViewController.h"
 #import "LoginViewController.h"
 #import "RegistrationViewController.h"
+#import "DealsTableViewController.h"
 
 @interface SplashScreenViewController ()
 
@@ -36,12 +37,13 @@
 
 - (void)signInButtonPressed {
     // If user has credentials saved on device
+    UIViewController *nextVC;
     if (false) {
-        // Goto DealsTableViewController
+        nextVC = [[DealsTableViewController alloc] init];
     } else {
-        LoginViewController *loginVC = [[LoginViewController alloc] init];
-        [self.navigationController pushViewController:loginVC animated:YES];
+        nextVC = [[LoginViewController alloc] init];
     }
+    [self.navigationController pushViewController:nextVC animated:YES];
 }
 
 - (void)registerButtonPressed {

@@ -25,10 +25,10 @@
     [[LocationManager sharedInstance] start];
     
     UIViewController* rootVC = [[SplashScreenViewController alloc] init];
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults boolForKey:kUserPersistenceKey]) {
-        rootVC = [[DealsTableViewController alloc] init];
-    }
+//    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//    if ([defaults boolForKey:kUserPersistenceKey]) {
+//        rootVC = [[DealsTableViewController alloc] init];
+//    }
     
     self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:rootVC];
     ((UINavigationController*)self.window.rootViewController).navigationBarHidden = YES;

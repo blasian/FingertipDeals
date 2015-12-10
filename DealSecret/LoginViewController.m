@@ -7,6 +7,8 @@
 //
 
 #import "LoginViewController.h"
+#import "User.h"
+#import "DealsTableViewController.h"
 
 @interface LoginViewController ()
 
@@ -21,6 +23,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.nextButton addTarget:self action:@selector(nextButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(backgroundTapped)]];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -29,9 +33,40 @@
 }
 
 - (void)nextButtonPressed {
+    NSString* email = self.emailField.text;
+    NSString* password = self.passwordField.text;
     
+    NSLog(@"EMAIL %@ \n PASS %@", email, password);
+    [User loginWithEmail:email withPassword:password block:^(NSDictionary * _Nonnull response) {
+        NSLog(@"%@", response);
+        if ([response valueForKey:@"error"] == nil) {
+            DealsTableViewController *dealsVC = [[DealsTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
+            [self.navigationController pushViewController:dealsVC animated:YES];
+        } else {
+            NSLog(@"an error has occured");
+            // display error message to user.
+        }
+    }];
 }
 
+- (void)backgroundTapped {
+    [self.view endEditing:YES];
+}
+
+/*
+- (void)validateEmail:(id)sender {
+    FXFormTextFieldCell *cell = sender;
+
+    NSString* reg = @"[^@]+@[^.@]+(\\.[^.@]+)+";
+    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", reg];
+
+    if (![emailTest evaluateWithObject:cell.textField.text]) {
+        cell.textLabel.textColor = [UIColor redColor];
+    } else {
+        cell.textLabel.textColor = [UIColor blackColor];
+    }
+}
+*/
 /*
 #pragma mark - Navigation
 

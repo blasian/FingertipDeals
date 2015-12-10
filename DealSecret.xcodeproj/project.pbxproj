@@ -179,8 +179,6 @@
 			children = (
 				58933F8D1C0115940013BCF2 /* AppDelegate.h */,
 				58933F8E1C0115940013BCF2 /* AppDelegate.m */,
-				589A0F4B1C062F2200458E52 /* Constants.h */,
-				589A0F4C1C062F2200458E52 /* Constants.m */,
 				589A0F4A1C05588C00458E52 /* Controllers */,
 				589A0F601C07D23500458E52 /* Views */,
 				58391B791C04E990007E3C57 /* Forms */,
@@ -189,6 +187,8 @@
 				58933FCC1C02CBC80013BCF2 /* LocationManager.m */,
 				58933FCE1C02D9B50013BCF2 /* NetworkManager.h */,
 				58933FCF1C02D9B50013BCF2 /* NetworkManager.m */,
+				589A0F4B1C062F2200458E52 /* Constants.h */,
+				589A0F4C1C062F2200458E52 /* Constants.m */,
 				58933F931C0115940013BCF2 /* Main.storyboard */,
 				58933F991C0115950013BCF2 /* Assets.xcassets */,
 				58933F9B1C0115950013BCF2 /* LaunchScreen.storyboard */,

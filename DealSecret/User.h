@@ -19,8 +19,13 @@ NS_ASSUME_NONNULL_BEGIN
 + (User*)getMe;
 
 + (void)createUserWithEmail:(NSString*)email
-                     withPassword:(NSString*)password
-                            block:(void (^_Nullable)(NSDictionary* response))block;
+                   password:(NSString*)password
+                   firstName:(NSString*)firstName
+                   lastName:(NSString*)lastName
+                        dob:(NSDate*)dob
+                     gender:(NSNumber*)gender
+                      block:(void (^_Nullable)(NSDictionary* response))block;
+
 
 + (void)loginWithEmail:(NSString*)email
           withPassword:(NSString*)password
