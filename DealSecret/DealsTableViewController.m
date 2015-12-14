@@ -2,26 +2,18 @@
 //  DealsTableViewController.m
 //  DealSecret
 //
-//  Created by Michael Spearman on 11/24/15.
+//  Created by Michael Spearman on 12/13/15.
 //  Copyright © 2015 Michael Spearman. All rights reserved.
 //
 
 #import "DealsTableViewController.h"
-#import "DealsHeaderView.h"
-#import "DealViewController.h"
-#import "SettingsTableViewController.h"
-#import "LocationManager.h"
 #import "Deal.h"
-#import "User.h"
+#import "DealTableViewCell.h"
 
-const CGFloat kDealsNumberOfPages = 5;
-const CGFloat kDealsHeaderSize = 180.0f;
+const float kDealCellHeight = 100.0f;
 
 @interface DealsTableViewController ()
 
-@property (nonatomic, strong) UIScrollView *scrollView;
-@property (nonatomic, strong) NSMutableArray *contentArray;
-@property (nonatomic, strong) UIPageControl *pageControl;
 @property (nonatomic, strong) NSFetchedResultsController* fetchedResultsController;
 
 @end
@@ -32,9 +24,7 @@ const CGFloat kDealsHeaderSize = 180.0f;
 {
     self = [super initWithStyle:style];
     if (self) {
-        [self getAllDealsWithBlock:^{
-            [self initializeFetchResultsController];
-        }];
+        [self initializeFetchResultsController];
     }
     return self;
 }
@@ -54,74 +44,36 @@ const CGFloat kDealsHeaderSize = 180.0f;
     }
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [self getHeaderDeals:0];
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.title = @"Deals";
-    self.tableView.backgroundColor = [UIColor whiteColor];
-    
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Settings" style:UIBarButtonItemStylePlain target:self action:@selector(settingsButtonTapped)];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshData)];
-    // Setup tableview header.
-    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0,
-                                                                     0,
-                                                                     self.view.frame.size.width,
-                                                                     kDealsHeaderSize)];
-    self.scrollView.contentSize = CGSizeMake(self.view.frame.size.width * kDealsNumberOfPages,
-                                             kDealsHeaderSize);
-    self.scrollView.pagingEnabled = YES;
-    self.scrollView.showsHorizontalScrollIndicator = NO;
-    self.scrollView.showsVerticalScrollIndicator = NO;
-    self.scrollView.delegate = self;
-    
-    self.contentArray = [[NSMutableArray alloc] init];
-    for (NSUInteger i = 0; i < kDealsNumberOfPages; i++) {
-        DealsHeaderView* headerView = [[DealsHeaderView alloc] initWithFrame:self.scrollView.bounds];
-        CGRect frame = headerView.frame;
-        frame.origin.x = i * self.scrollView.frame.size.width;
-        headerView.frame = frame;
-        [self.contentArray addObject:headerView];
-        [self.scrollView addSubview:headerView];
-    }
-    
-    self.pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0,
-                                                                       kDealsHeaderSize - 20.0f,
-                                                                       self.view.bounds.size.width,
-                                                                       20.0f)];
-    self.pageControl.numberOfPages = kDealsNumberOfPages;
-    self.pageControl.currentPageIndicatorTintColor = [UIColor grayColor];
-    self.pageControl.pageIndicatorTintColor = [UIColor colorWithRed:206.0/255 green:230.0/255 blue:240.0/255 alpha:1.0];
-    
-    [self.tableView addSubview:self.pageControl];
-    
-    self.tableView.tableHeaderView = self.scrollView;
-    self.tableView.scrollEnabled = YES;
+    [self.tableView registerNib:[UINib nibWithNibName:@"DealTableViewCell" bundle:nil] forCellReuseIdentifier:@"DealCell"];
+    self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"form_background"]];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.tableView.tag = 1;
-}
+    
+    CGRect headerFrame = CGRectMake(0, 0, self.view.frame.size.width, 100.0f);
+    UIView *headerView = [[UIView alloc] initWithFrame:headerFrame];
+    headerView.backgroundColor = [UIColor clearColor];
+    UILabel *headerLabel = [[UILabel alloc] initWithFrame:headerFrame];
+    headerLabel.textAlignment = NSTextAlignmentCenter;
+    headerLabel.text = @"Deals";
+    headerLabel.textColor = [UIColor whiteColor];
+    [headerView addSubview:headerLabel];
+    
+    CGRect backFrame = CGRectMake(25.0f, 25.0f, 50.0f, 50.0f);
 
-- (void)settingsButtonTapped {
-    SettingsTableViewController *settingsVC = [[SettingsTableViewController alloc] init];
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:settingsVC];
-    [self.navigationController presentViewController:nav animated:YES completion:^{
-        
-    }];
-}
-
-- (void)getAllDealsWithBlock:(void(^)())block {
-    CLLocationCoordinate2D location = [LocationManager sharedInstance].location.coordinate;
-    NSString* latitude = [NSString stringWithFormat:@"%f", location.latitude];
-    NSString* longitude = [NSString stringWithFormat:@"%f", location.longitude];
-    [User getDealsWithLatitude:latitude longitude:longitude block:^(NSDictionary * _Nonnull response) {
-        if (block) {
-            block();
-        }
-        [self.tableView reloadData];
-    }];
+    UIButton *backButton = [[UIButton alloc] initWithFrame:backFrame];
+    backButton.backgroundColor = [UIColor clearColor];
+    [backButton setBackgroundImage:[UIImage imageNamed:@"back_button_header"] forState:UIControlStateNormal];
+    [backButton addTarget:self action:@selector(backButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [headerView addSubview:backButton];
+    
+    self.tableView.tableHeaderView = headerView;
+    // Uncomment the following line to preserve selection between presentations.
+    // self.clearsSelectionOnViewWillAppear = NO;
+    
+    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -129,35 +81,7 @@ const CGFloat kDealsHeaderSize = 180.0f;
     // Dispose of any resources that can be recreated.
 }
 
-- (void)refreshData {
-    [self getAllDealsWithBlock:nil];
-}
 
-#pragma mark - UIScrollViewDelegate
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
-    int indexOfPage = scrollView.contentOffset.x / scrollView.frame.size.width;
-    self.pageControl.currentPage = indexOfPage;
-    [self getHeaderDeals:indexOfPage];
-}
-
-- (void)getHeaderDeals:(int)index {
-    if (self.contentArray.count > index) {
-        if ([[[self fetchedResultsController] fetchedObjects] count] > index) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                DealsHeaderView *header = self.contentArray[index];
-                Deal *deal = [[[self fetchedResultsController] fetchedObjects] objectAtIndex:index];
-                header.bigTitleLabel.text = deal.header;
-                header.smallTitleLabel.text = deal.content;
-            });
-        } else {
-            [self getAllDealsWithBlock:^{
-                [self getHeaderDeals:index];
-            }];
-        }
-    }
-}
 
 #pragma mark - Table view data source
 
@@ -166,40 +90,81 @@ const CGFloat kDealsHeaderSize = 180.0f;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    id< NSFetchedResultsSectionInfo> sectionInfo = [[self fetchedResultsController] sections][section];
-    return [sectionInfo numberOfObjects];
+    return [[self.fetchedResultsController fetchedObjects] count];
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Deal"];
+    DealTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DealCell"];
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"Deal"];
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell = [[DealTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"DealCell"];
     }
-    // Set up the cell
-    [self configureCell:cell atIndexPath:indexPath];
+    
+    Deal *deal = [[self.fetchedResultsController fetchedObjects] objectAtIndex:indexPath.row];
+    cell.companyLabel.text = deal.header;
+    cell.subtitleLabel.text = deal.content;
+    NSString *distanceText;
+    if (deal.distance.intValue < 500) {
+        distanceText = [NSString stringWithFormat:@"%.2fm", deal.distance.floatValue];
+    } else if (deal.distance.intValue < 100000) {
+        distanceText = [NSString stringWithFormat:@"%.2fkm", deal.distance.floatValue / 1000.0];
+    } else {
+        distanceText = @"100+km";
+    }
+    cell.distanceLabel.text = [NSString stringWithFormat: @"%@", distanceText];
+    
     return cell;
 }
 
-- (void)configureCell:(UITableViewCell*)cell atIndexPath:(NSIndexPath*)indexPath
-{
-    Deal *deal = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-    cell.textLabel.text = deal.header;
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%d kms.", deal.distance.intValue/1000];
-}
-
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 100.0f;
+    return kDealCellHeight + 15.0f;
 }
 
-#pragma mark - Table view delegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    DealViewController *dealViewController = [[DealViewController alloc] init];
-    Deal *deal = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-    dealViewController.deal = deal;
-    [self.navigationController pushViewController:dealViewController animated:YES];
+#pragma mark - Navigation
+- (void)backButtonPressed:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
 }
+
+/*
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ } */
+
+/*
+// Override to support conditional editing of the table view.
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Return NO if you do not want the specified item to be editable.
+    return YES;
+}
+*/
+
+/*
+// Override to support editing the table view.
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        // Delete the row from the data source
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
+        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+    }   
+}
+*/
+
+/*
+// Override to support rearranging the table view.
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+}
+*/
+
+/*
+// Override to support conditional rearranging of the table view.
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Return NO if you do not want the item to be re-orderable.
+    return YES;
+}
+*/
 
 @end

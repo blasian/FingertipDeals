@@ -15,7 +15,12 @@
 		58028EE11C196E4F00933E10 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58028EDF1C196E4F00933E10 /* LoginViewController.xib */; };
 		58391B7F1C04EB72007E3C57 /* Deal+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 58391B7C1C04EB72007E3C57 /* Deal+CoreDataProperties.m */; };
 		58391B801C04EB72007E3C57 /* Deal.m in Sources */ = {isa = PBXBuildFile; fileRef = 58391B7E1C04EB72007E3C57 /* Deal.m */; };
-		58391B841C04EEDE007E3C57 /* DealsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58391B821C04EEDE007E3C57 /* DealsTableViewController.m */; };
+		58391B841C04EEDE007E3C57 /* CategoriesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58391B821C04EEDE007E3C57 /* CategoriesTableViewController.m */; };
+		583A48881C1D7807001F8146 /* TextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 583A48871C1D7807001F8146 /* TextField.m */; };
+		583A488C1C1D7E26001F8146 /* CategoryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 583A488A1C1D7E26001F8146 /* CategoryTableViewCell.m */; };
+		583A488D1C1D7E26001F8146 /* DealTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 583A488B1C1D7E26001F8146 /* DealTableViewCell.xib */; };
+		583A48921C1E3F9F001F8146 /* DealsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 583A48911C1E3F9F001F8146 /* DealsTableViewController.m */; };
+		583A48951C1E621B001F8146 /* DealsMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 583A48941C1E621B001F8146 /* DealsMapViewController.m */; };
 		58933F8C1C0115940013BCF2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 58933F8B1C0115940013BCF2 /* main.m */; };
 		58933F8F1C0115940013BCF2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 58933F8E1C0115940013BCF2 /* AppDelegate.m */; };
 		58933F921C0115940013BCF2 /* AuthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58933F911C0115940013BCF2 /* AuthViewController.m */; };
@@ -57,8 +62,17 @@
 		58391B7C1C04EB72007E3C57 /* Deal+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Deal+CoreDataProperties.m"; sourceTree = "<group>"; };
 		58391B7D1C04EB72007E3C57 /* Deal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Deal.h; sourceTree = "<group>"; };
 		58391B7E1C04EB72007E3C57 /* Deal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Deal.m; sourceTree = "<group>"; };
-		58391B811C04EEDE007E3C57 /* DealsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealsTableViewController.h; sourceTree = "<group>"; };
-		58391B821C04EEDE007E3C57 /* DealsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealsTableViewController.m; sourceTree = "<group>"; };
+		58391B811C04EEDE007E3C57 /* CategoriesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoriesTableViewController.h; sourceTree = "<group>"; };
+		58391B821C04EEDE007E3C57 /* CategoriesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoriesTableViewController.m; sourceTree = "<group>"; };
+		583A48861C1D7807001F8146 /* TextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextField.h; sourceTree = "<group>"; };
+		583A48871C1D7807001F8146 /* TextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextField.m; sourceTree = "<group>"; };
+		583A48891C1D7E26001F8146 /* CategoryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryTableViewCell.h; sourceTree = "<group>"; };
+		583A488A1C1D7E26001F8146 /* CategoryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryTableViewCell.m; sourceTree = "<group>"; };
+		583A488B1C1D7E26001F8146 /* DealTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DealTableViewCell.xib; sourceTree = "<group>"; };
+		583A48901C1E3F9F001F8146 /* DealsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealsTableViewController.h; sourceTree = "<group>"; };
+		583A48911C1E3F9F001F8146 /* DealsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealsTableViewController.m; sourceTree = "<group>"; };
+		583A48931C1E621B001F8146 /* DealsMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealsMapViewController.h; sourceTree = "<group>"; };
+		583A48941C1E621B001F8146 /* DealsMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealsMapViewController.m; sourceTree = "<group>"; };
 		58933F871C0115940013BCF2 /* DealSecret.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DealSecret.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		58933F8B1C0115940013BCF2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		58933F8D1C0115940013BCF2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -132,13 +146,6 @@
 			name = Nibs;
 			sourceTree = "<group>";
 		};
-		58391B791C04E990007E3C57 /* Forms */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Forms;
-			sourceTree = "<group>";
-		};
 		58391B7A1C04E9CA007E3C57 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -154,6 +161,15 @@
 				589A0F551C064A3900458E52 /* ManagedObject.m */,
 			);
 			name = Models;
+			sourceTree = "<group>";
+		};
+		583A488E1C1D7E3B001F8146 /* Nibs */ = {
+			isa = PBXGroup;
+			children = (
+				589A0F6C1C0FFC7400458E52 /* DealViewController.xib */,
+				583A488B1C1D7E26001F8146 /* DealTableViewCell.xib */,
+			);
+			name = Nibs;
 			sourceTree = "<group>";
 		};
 		58933F7E1C0115940013BCF2 = {
@@ -181,7 +197,6 @@
 				58933F8E1C0115940013BCF2 /* AppDelegate.m */,
 				589A0F4A1C05588C00458E52 /* Controllers */,
 				589A0F601C07D23500458E52 /* Views */,
-				58391B791C04E990007E3C57 /* Forms */,
 				58391B7A1C04E9CA007E3C57 /* Models */,
 				58933FCB1C02CBC80013BCF2 /* LocationManager.h */,
 				58933FCC1C02CBC80013BCF2 /* LocationManager.m */,
@@ -211,8 +226,10 @@
 			isa = PBXGroup;
 			children = (
 				58028ED71C19612000933E10 /* Nibs */,
-				58391B811C04EEDE007E3C57 /* DealsTableViewController.h */,
-				58391B821C04EEDE007E3C57 /* DealsTableViewController.m */,
+				58391B811C04EEDE007E3C57 /* CategoriesTableViewController.h */,
+				58391B821C04EEDE007E3C57 /* CategoriesTableViewController.m */,
+				583A48901C1E3F9F001F8146 /* DealsTableViewController.h */,
+				583A48911C1E3F9F001F8146 /* DealsTableViewController.m */,
 				58933F901C0115940013BCF2 /* AuthViewController.h */,
 				58933F911C0115940013BCF2 /* AuthViewController.m */,
 				589A0F6A1C0FFC7400458E52 /* DealViewController.h */,
@@ -225,6 +242,8 @@
 				58028ED91C19692E00933E10 /* SplashScreenViewController.m */,
 				58028EDD1C196E4F00933E10 /* LoginViewController.h */,
 				58028EDE1C196E4F00933E10 /* LoginViewController.m */,
+				583A48931C1E621B001F8146 /* DealsMapViewController.h */,
+				583A48941C1E621B001F8146 /* DealsMapViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -232,11 +251,15 @@
 		589A0F601C07D23500458E52 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				589A0F6C1C0FFC7400458E52 /* DealViewController.xib */,
+				583A488E1C1D7E3B001F8146 /* Nibs */,
+				583A48861C1D7807001F8146 /* TextField.h */,
+				583A48871C1D7807001F8146 /* TextField.m */,
 				589A0F5D1C07D22800458E52 /* DealsHeaderView.h */,
 				589A0F5E1C07D22800458E52 /* DealsHeaderView.m */,
 				589A0F611C0BB0B100458E52 /* DealTableViewCell.h */,
 				589A0F621C0BB0B100458E52 /* DealTableViewCell.m */,
+				583A48891C1D7E26001F8146 /* CategoryTableViewCell.h */,
+				583A488A1C1D7E26001F8146 /* CategoryTableViewCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -322,6 +345,7 @@
 				58028EE11C196E4F00933E10 /* LoginViewController.xib in Resources */,
 				589A0F7A1C10487F00458E52 /* SettingsTableViewController.xib in Resources */,
 				58933F9D1C0115950013BCF2 /* LaunchScreen.storyboard in Resources */,
+				583A488D1C1D7E26001F8146 /* DealTableViewCell.xib in Resources */,
 				589A0F6E1C0FFC7400458E52 /* DealViewController.xib in Resources */,
 				58028ED61C19610C00933E10 /* RegistrationViewController.xib in Resources */,
 				58933F9A1C0115950013BCF2 /* Assets.xcassets in Resources */,
@@ -392,6 +416,7 @@
 				58028EE01C196E4F00933E10 /* LoginViewController.m in Sources */,
 				58028EDB1C19692E00933E10 /* SplashScreenViewController.m in Sources */,
 				58391B7F1C04EB72007E3C57 /* Deal+CoreDataProperties.m in Sources */,
+				583A488C1C1D7E26001F8146 /* CategoryTableViewCell.m in Sources */,
 				589A0F6D1C0FFC7400458E52 /* DealViewController.m in Sources */,
 				589A0F631C0BB0B100458E52 /* DealTableViewCell.m in Sources */,
 				58028ED51C19610C00933E10 /* RegistrationViewController.m in Sources */,
@@ -401,10 +426,13 @@
 				58933FCD1C02CBC80013BCF2 /* LocationManager.m in Sources */,
 				58933F8F1C0115940013BCF2 /* AppDelegate.m in Sources */,
 				58933F8C1C0115940013BCF2 /* main.m in Sources */,
+				583A48951C1E621B001F8146 /* DealsMapViewController.m in Sources */,
+				583A48881C1D7807001F8146 /* TextField.m in Sources */,
+				583A48921C1E3F9F001F8146 /* DealsTableViewController.m in Sources */,
 				58933F981C0115940013BCF2 /* DealSecret.xcdatamodeld in Sources */,
 				589A0F561C064A3900458E52 /* ManagedObject.m in Sources */,
 				589A0F5C1C07B8F500458E52 /* User+CoreDataProperties.m in Sources */,
-				58391B841C04EEDE007E3C57 /* DealsTableViewController.m in Sources */,
+				58391B841C04EEDE007E3C57 /* CategoriesTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

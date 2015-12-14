@@ -8,12 +8,13 @@
 
 #import "LoginViewController.h"
 #import "User.h"
-#import "DealsTableViewController.h"
+#import "TextField.h"
+#import "CategoriesTableViewController.h"
 
 @interface LoginViewController ()
 
-@property (nonatomic, weak) IBOutlet UITextField* emailField;
-@property (nonatomic, weak) IBOutlet UITextField* passwordField;
+@property (nonatomic, weak) IBOutlet TextField* emailField;
+@property (nonatomic, weak) IBOutlet TextField* passwordField;
 @property (nonatomic, weak) IBOutlet UIButton* nextButton;
 
 @end
@@ -40,7 +41,7 @@
     [User loginWithEmail:email withPassword:password block:^(NSDictionary * _Nonnull response) {
         NSLog(@"%@", response);
         if ([response valueForKey:@"error"] == nil) {
-            DealsTableViewController *dealsVC = [[DealsTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
+            CategoriesTableViewController *dealsVC = [[CategoriesTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
             [self.navigationController pushViewController:dealsVC animated:YES];
         } else {
             NSLog(@"an error has occured");

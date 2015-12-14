@@ -10,4 +10,11 @@
 
 @interface DealTableViewCell : UITableViewCell
 
+@property (nonatomic, weak) IBOutlet UIImageView *backgroundImage;
+@property (nonatomic, weak) IBOutlet UIImageView *companyImage;
+@property (nonatomic, weak) IBOutlet UILabel *dealLabel;
+@property (nonatomic, weak) IBOutlet UILabel *companyLabel;
+@property (nonatomic, weak) IBOutlet UILabel *distanceLabel;
+@property (nonatomic, weak) IBOutlet UILabel *subtitleLabel;
+
 @end

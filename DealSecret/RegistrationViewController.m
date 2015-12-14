@@ -8,17 +8,19 @@
 
 #import "RegistrationViewController.h"
 #import "User.h"
-#import "DealsTableViewController.h"
+#import "CategoriesTableViewController.h"
+#import "TextField.h"
 
 @interface RegistrationViewController ()
 
+@property (nonatomic, strong) IBOutletCollection(TextField) NSArray* textfields;
 @property (nonatomic, weak) IBOutlet UIScrollView* scrollView;
-@property (nonatomic, weak) IBOutlet UITextField* emailField;
-@property (nonatomic, weak) IBOutlet UITextField* passwordField;
-@property (nonatomic, weak) IBOutlet UITextField* confirmPasswordField;
-@property (nonatomic, weak) IBOutlet UITextField* firstNameField;
-@property (nonatomic, weak) IBOutlet UITextField* lastNameField;
-@property (nonatomic, weak) IBOutlet UITextField* dobField;
+@property (nonatomic, weak) IBOutlet TextField* emailField;
+@property (nonatomic, weak) IBOutlet TextField* passwordField;
+@property (nonatomic, weak) IBOutlet TextField* confirmPasswordField;
+@property (nonatomic, weak) IBOutlet TextField* firstNameField;
+@property (nonatomic, weak) IBOutlet TextField* lastNameField;
+@property (nonatomic, weak) IBOutlet TextField* dobField;
 @property (nonatomic, weak) IBOutlet UISegmentedControl* genderControl;
 @property (nonatomic, weak) IBOutlet UIButton* nextButton;
 
@@ -31,6 +33,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.scrollView.contentSize = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height);
+    self.scrollView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     
     UIDatePicker *datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 200)];
     [datePicker addTarget:self action:@selector(dobSelected:) forControlEvents:UIControlEventValueChanged];
@@ -130,7 +135,7 @@
                         block:^void(NSDictionary* response) {
         NSLog(@"%@", response);
         if ([response valueForKey:@"error"] == nil) {
-            DealsTableViewController *dealsVC = [[DealsTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
+            CategoriesTableViewController *dealsVC = [[CategoriesTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
             [self.navigationController pushViewController:dealsVC animated:YES];
         } else {
             NSLog(@"error registering account");

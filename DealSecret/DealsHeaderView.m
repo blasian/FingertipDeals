@@ -28,7 +28,7 @@
                                                                        140.0f)];
         self.bigTitleLabel.font = [UIFont fontWithName:@"Helvetica" size:78.0f];
         self.bigTitleLabel.adjustsFontSizeToFitWidth = YES;
-        self.bigTitleLabel.textColor = [UIColor blackColor];
+        self.bigTitleLabel.textColor = [UIColor whiteColor];
         self.bigTitleLabel.textAlignment = NSTextAlignmentCenter;
         [self addSubview:self.bigTitleLabel];
         
@@ -38,7 +38,7 @@
                                                                          40.0f)];
         self.smallTitleLabel.font = [UIFont fontWithName:@"Helvetica" size:22.0f];
         self.smallTitleLabel.adjustsFontSizeToFitWidth = YES;
-        self.smallTitleLabel.textColor = [UIColor blackColor];
+        self.smallTitleLabel.textColor = [UIColor whiteColor];
         self.smallTitleLabel.textAlignment = NSTextAlignmentCenter;
         [self addSubview:self.smallTitleLabel];
     }

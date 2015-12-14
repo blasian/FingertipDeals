@@ -9,7 +9,7 @@
 #import "SplashScreenViewController.h"
 #import "LoginViewController.h"
 #import "RegistrationViewController.h"
-#import "DealsTableViewController.h"
+#import "CategoriesTableViewController.h"
 
 @interface SplashScreenViewController ()
 
@@ -22,12 +22,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.signInButton.backgroundColor = [UIColor colorWithRed:147.f/255.f green:69.f/255.f blue:167.f/255.7 alpha:.8f];
-    self.registerButton.backgroundColor = [UIColor colorWithRed:0 green:161.f/255.f blue:64.f/255.7 alpha:.8f];
-    
-    self.registerButton.layer.cornerRadius = self.registerButton.frame.size.width/2;
-    self.signInButton.layer.cornerRadius = self.signInButton.frame.size.width/2;
-    
+    self.
     self.signInButton.titleLabel.textColor = [UIColor whiteColor];
     self.registerButton.titleLabel.textColor = [UIColor whiteColor];
     
@@ -39,7 +34,7 @@
     // If user has credentials saved on device
     UIViewController *nextVC;
     if (false) {
-        nextVC = [[DealsTableViewController alloc] init];
+        nextVC = [[CategoriesTableViewController alloc] init];
     } else {
         nextVC = [[LoginViewController alloc] init];
     }

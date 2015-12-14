@@ -18,33 +18,46 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xER-iz-7B5">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash_background" translatesAutoresizingMaskIntoConstraints="NO" id="h5E-md-QcV">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                    <animations/>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xER-iz-7B5">
                     <rect key="frame" x="217" y="250" width="157" height="157"/>
                     <animations/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="xER-iz-7B5" secondAttribute="height" multiplier="1:1" id="6kB-Ti-gCE"/>
                     </constraints>
-                    <state key="normal" title="Sign in"/>
+                    <state key="normal" title="Sign in" backgroundImage="sign_in_frame"/>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bmq-Af-Plj">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bmq-Af-Plj">
                     <rect key="frame" x="40" y="250" width="157" height="157"/>
                     <animations/>
-                    <state key="normal" title="Register"/>
+                    <state key="normal" title="Register" backgroundImage="register_frame"/>
                 </button>
             </subviews>
             <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstItem="h5E-md-QcV" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="9na-MD-l4D"/>
                 <constraint firstItem="Bmq-Af-Plj" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" constant="-40" id="BRa-Rj-zUR"/>
                 <constraint firstItem="Bmq-Af-Plj" firstAttribute="width" secondItem="xER-iz-7B5" secondAttribute="width" id="EtS-IM-i9m"/>
                 <constraint firstItem="xER-iz-7B5" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" constant="-40" id="GMp-X7-8Ro"/>
                 <constraint firstItem="Bmq-Af-Plj" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="40" id="LIZ-Dn-uUr"/>
                 <constraint firstItem="xER-iz-7B5" firstAttribute="height" secondItem="Bmq-Af-Plj" secondAttribute="height" id="Nzx-jQ-4nR"/>
+                <constraint firstItem="h5E-md-QcV" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Oe0-ko-3CQ"/>
+                <constraint firstItem="h5E-md-QcV" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" id="Orw-rZ-6AI"/>
                 <constraint firstAttribute="trailing" secondItem="xER-iz-7B5" secondAttribute="trailing" constant="40" id="VOO-2y-ChK"/>
                 <constraint firstItem="xER-iz-7B5" firstAttribute="leading" secondItem="Bmq-Af-Plj" secondAttribute="trailing" constant="20" id="eNX-dP-RHJ"/>
+                <constraint firstItem="h5E-md-QcV" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="eTI-g6-bEv"/>
                 <constraint firstItem="xER-iz-7B5" firstAttribute="leading" secondItem="Bmq-Af-Plj" secondAttribute="trailing" constant="20" id="jy6-Bb-TkE"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
         </view>
     </objects>
+    <resources>
+        <image name="register_frame" width="495" height="495"/>
+        <image name="sign_in_frame" width="495" height="495"/>
+        <image name="splash_background" width="1334" height="2367"/>
+    </resources>
 </document>
