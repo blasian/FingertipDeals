@@ -13,6 +13,9 @@
 #import "User.h"
 #import "Constants.h"
 
+// for testing
+#import "PreferencesTableViewController.h"
+
 @interface AppDelegate ()
 
 @end
@@ -30,8 +33,16 @@
         rootVC = [[CategoriesTableViewController alloc] init];
     }
     
+    // for testing
+    rootVC = [[PreferencesTableViewController alloc] init];
+    
     self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:rootVC];
-    ((UINavigationController*)self.window.rootViewController).navigationBarHidden = YES;
+    
+    // Setup Navigation Bar
+    [[UINavigationBar appearance] setBackgroundColor:[UIColor clearColor]];
+    [[UINavigationBar appearance] setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
+    [[UINavigationBar appearance] setShadowImage:[[UIImage alloc] init]];
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName  : [UIColor whiteColor]}];
     
     if ([application respondsToSelector:@selector(isRegisteredForRemoteNotifications)]) {
         // iOS 8 Notifications

@@ -27,7 +27,7 @@
 
     self.dealHeader.text = self.deal.header;
     self.dealContent.text = self.deal.content;
-
+    self.navigationController.navigationBarHidden = NO;
     // Setup map settings.
     self.mapView.delegate = self;
     CLLocationCoordinate2D dealCoordinate = CLLocationCoordinate2DMake([self.deal.latitude doubleValue], [self.deal.longitude doubleValue]);

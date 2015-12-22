@@ -10,6 +10,7 @@
 #import "User.h"
 #import "CategoriesTableViewController.h"
 #import "TextField.h"
+#import "PreferencesTableViewController.h"
 
 @interface RegistrationViewController ()
 
@@ -33,7 +34,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.title = @"Register";
+    self.navigationController.navigationBarHidden = NO;
     self.scrollView.contentSize = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height);
     self.scrollView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     
@@ -135,8 +137,8 @@
                         block:^void(NSDictionary* response) {
         NSLog(@"%@", response);
         if ([response valueForKey:@"error"] == nil) {
-            CategoriesTableViewController *dealsVC = [[CategoriesTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
-            [self.navigationController pushViewController:dealsVC animated:YES];
+            PreferencesTableViewController *prefVC = [[PreferencesTableViewController alloc] init];
+            [self.navigationController pushViewController:prefVC animated:YES];
         } else {
             NSLog(@"error registering account");
             // Display error message to user.

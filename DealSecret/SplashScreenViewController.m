@@ -22,7 +22,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.
+    [self.navigationController setNavigationBarHidden:YES];
     self.signInButton.titleLabel.textColor = [UIColor whiteColor];
     self.registerButton.titleLabel.textColor = [UIColor whiteColor];
     

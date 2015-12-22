@@ -8,6 +8,8 @@
 
 #import "User.h"
 #import "Deal.h"
+#import "DealCategory.h"
+#import "DealSubCategory.h"
 #import "NetworkManager.h"
 #import "Constants.h"
 
@@ -219,6 +221,32 @@
     // fig'ur some shit out to handle this.
 }
 
++ (void)getCategoriesWithLevel:(NSNumber*)lnum
+                     withClass:(NSString* _Nullable)cnum
+                     withBlock:(void (^)(NSDictionary*))block {
+    [[NetworkManager sharedInstance] GET:[NSString stringWithFormat:kUserCategories, lnum, cnum] parameters:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+        
+        NSArray *catDicts = responseObject[@"data"];
+        for (NSDictionary* section in catDicts) {
+            if (lnum.intValue == 1) {
+                DealCategory *category = [[DealCategory alloc] initWithTitle:section[@"c1_type"]];
+                [category save];
+            }
+            if (lnum.intValue == 2) {
+                DealSubCategory *subCategory = [[DealSubCategory alloc] initWithTitle:section[@"c2_type"]];
+                [subCategory save];
+            }
+        }
+        if (block) {
+            block(@{});
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"failed to retrieve sections");
+        if (block) {
+            block(@{@"error":error});
+        }
+    }];
+}
 
 
 @end

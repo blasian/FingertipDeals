@@ -15,6 +15,7 @@
 #import "User.h"
 #import "CategoryTableViewCell.h"
 #import "DealsTableViewController.h"
+#import "DealsMapViewController.h"
 
 const CGFloat kDealsNumberOfPages = 5;
 const CGFloat kDealsNumberOfCategoryCells = 4;
@@ -66,10 +67,10 @@ const CGFloat kDealsCategoryCellHeight = 100.0f;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"Deals";
-    
+    self.title = @"Fingertip Deals";
+    self.navigationController.navigationBarHidden = NO;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Settings" style:UIBarButtonItemStylePlain target:self action:@selector(settingsButtonTapped)];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshData)];
+    
     // Setup tableview header.
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0,
                                                                      0,
@@ -232,10 +233,19 @@ const CGFloat kDealsCategoryCellHeight = 100.0f;
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == 0) {
-        DealsTableViewController *dealsTVC = [[DealsTableViewController alloc] init];
-        [self.navigationController pushViewController:dealsTVC animated:YES];
+    UIViewController *vc;
+    switch (indexPath.row) {
+        case 0:
+            vc = [[DealsTableViewController alloc] init];
+            break;
+        case 3:
+            vc = [[DealsMapViewController alloc] init];
+            break;
+        default:
+            return;
     }
+    
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 @end

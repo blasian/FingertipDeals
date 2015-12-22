@@ -15,6 +15,7 @@ NSString* const kUserLoginEndpoint = @"users/login";
 NSString* const kUserUpdateEndpoint = @"users/update";
 NSString* const kUserLocationEndpoint = @"users/location";
 NSString* const kUserDealsEndpoint = @"users/getdeals?um_lat=%@&um_lon=%@";
+NSString* const kUserCategories = @"users/getclass?level=%@&class1=%@";
 
 @implementation NetworkManager
 

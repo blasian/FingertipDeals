@@ -40,6 +40,10 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)getDealsWithLatitude:(NSString*)lat longitude:(NSString*)lon
                          block:(void (^_Nullable )(NSDictionary* response))block;
 
++ (void)getCategoriesWithLevel:(NSNumber*)lnum
+                     withClass:(NSString* _Nullable)cnum
+                     withBlock:(void (^)(NSDictionary*))block;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -46,28 +46,12 @@ const float kDealCellHeight = 100.0f;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"Current Deals";
+    self.navigationController.navigationBarHidden = NO;
     [self.tableView registerNib:[UINib nibWithNibName:@"DealTableViewCell" bundle:nil] forCellReuseIdentifier:@"DealCell"];
     self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"form_background"]];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
-    CGRect headerFrame = CGRectMake(0, 0, self.view.frame.size.width, 100.0f);
-    UIView *headerView = [[UIView alloc] initWithFrame:headerFrame];
-    headerView.backgroundColor = [UIColor clearColor];
-    UILabel *headerLabel = [[UILabel alloc] initWithFrame:headerFrame];
-    headerLabel.textAlignment = NSTextAlignmentCenter;
-    headerLabel.text = @"Deals";
-    headerLabel.textColor = [UIColor whiteColor];
-    [headerView addSubview:headerLabel];
-    
-    CGRect backFrame = CGRectMake(25.0f, 25.0f, 50.0f, 50.0f);
 
-    UIButton *backButton = [[UIButton alloc] initWithFrame:backFrame];
-    backButton.backgroundColor = [UIColor clearColor];
-    [backButton setBackgroundImage:[UIImage imageNamed:@"back_button_header"] forState:UIControlStateNormal];
-    [backButton addTarget:self action:@selector(backButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [headerView addSubview:backButton];
-    
-    self.tableView.tableHeaderView = headerView;
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     

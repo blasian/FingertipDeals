@@ -7,7 +7,7 @@
 //
 
 #import "SettingsTableViewController.h"
-#import "AuthViewController.h"
+#import "SplashScreenViewController.h"
 #import "Constants.h"
 
 @interface SettingsTableViewController ()
@@ -99,9 +99,9 @@
 - (void)signOut {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setBool:NO forKey:kUserPersistenceKey];
-//    AuthViewController *authVC = [[AuthViewController alloc] init];
-//    [self.navigationController pushViewController:authVC animated:YES];
-//    self.navigationController.viewControllers = @[authVC];
+    SplashScreenViewController *splash = [[SplashScreenViewController alloc] init];
+    [self.navigationController pushViewController:splash animated:YES];
+    self.navigationController.viewControllers = @[splash];
 }
 
 

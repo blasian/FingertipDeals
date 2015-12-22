@@ -7,7 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
+#import <CoreData/CoreData.h>
 
-@interface DealsMapViewController : UIViewController
+@class Deal;
+@interface DealsMapViewController : UIViewController <MKMapViewDelegate, NSFetchedResultsControllerDelegate>
+
+@property (nonatomic, strong) CLLocation *location;
+@property (nonatomic, strong) NSArray<Deal*> *deals;
 
 @end

@@ -23,7 +23,6 @@
 		583A48951C1E621B001F8146 /* DealsMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 583A48941C1E621B001F8146 /* DealsMapViewController.m */; };
 		58933F8C1C0115940013BCF2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 58933F8B1C0115940013BCF2 /* main.m */; };
 		58933F8F1C0115940013BCF2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 58933F8E1C0115940013BCF2 /* AppDelegate.m */; };
-		58933F921C0115940013BCF2 /* AuthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58933F911C0115940013BCF2 /* AuthViewController.m */; };
 		58933F951C0115940013BCF2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58933F931C0115940013BCF2 /* Main.storyboard */; };
 		58933F981C0115940013BCF2 /* DealSecret.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 58933F961C0115940013BCF2 /* DealSecret.xcdatamodeld */; };
 		58933F9A1C0115950013BCF2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 58933F991C0115950013BCF2 /* Assets.xcassets */; };
@@ -42,6 +41,12 @@
 		589A0F701C10312900458E52 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 589A0F6F1C10312900458E52 /* MapKit.framework */; };
 		589A0F791C10487F00458E52 /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 589A0F771C10487F00458E52 /* SettingsTableViewController.m */; };
 		589A0F7A1C10487F00458E52 /* SettingsTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 589A0F781C10487F00458E52 /* SettingsTableViewController.xib */; };
+		58DB63111C26035800B3D9F6 /* PreferencesTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58DB630F1C26035800B3D9F6 /* PreferencesTableViewController.xib */; };
+		58DB63141C26720B00B3D9F6 /* PreferencesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58DB63131C26720B00B3D9F6 /* PreferencesTableViewController.m */; };
+		58DF6D271C27AEA200071717 /* DealSubCategory+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 58DF6D201C27AEA200071717 /* DealSubCategory+CoreDataProperties.m */; };
+		58DF6D281C27AEA200071717 /* DealSubCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 58DF6D221C27AEA200071717 /* DealSubCategory.m */; };
+		58DF6D291C27AEA200071717 /* DealCategory+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 58DF6D241C27AEA200071717 /* DealCategory+CoreDataProperties.m */; };
+		58DF6D2A1C27AEA200071717 /* DealCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 58DF6D261C27AEA200071717 /* DealCategory.m */; };
 		A1856927AF1870455FDF25AC /* libPods-DealSecret.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B4FCBAD5C9639A6E28F31134 /* libPods-DealSecret.a */; settings = {ATTRIBUTES = (Required, ); }; };
 /* End PBXBuildFile section */
 
@@ -77,8 +82,6 @@
 		58933F8B1C0115940013BCF2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		58933F8D1C0115940013BCF2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		58933F8E1C0115940013BCF2 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		58933F901C0115940013BCF2 /* AuthViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AuthViewController.h; sourceTree = "<group>"; };
-		58933F911C0115940013BCF2 /* AuthViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AuthViewController.m; sourceTree = "<group>"; };
 		58933F941C0115940013BCF2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		58933F971C0115940013BCF2 /* DealSecret.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DealSecret.xcdatamodel; sourceTree = "<group>"; };
 		58933F991C0115950013BCF2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -108,6 +111,17 @@
 		589A0F761C10487F00458E52 /* SettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsTableViewController.h; sourceTree = "<group>"; };
 		589A0F771C10487F00458E52 /* SettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsTableViewController.m; sourceTree = "<group>"; };
 		589A0F781C10487F00458E52 /* SettingsTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsTableViewController.xib; sourceTree = "<group>"; };
+		58DB630F1C26035800B3D9F6 /* PreferencesTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreferencesTableViewController.xib; sourceTree = "<group>"; };
+		58DB63121C26720B00B3D9F6 /* PreferencesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferencesTableViewController.h; sourceTree = "<group>"; };
+		58DB63131C26720B00B3D9F6 /* PreferencesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferencesTableViewController.m; sourceTree = "<group>"; };
+		58DF6D1F1C27AEA200071717 /* DealSubCategory+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DealSubCategory+CoreDataProperties.h"; sourceTree = "<group>"; };
+		58DF6D201C27AEA200071717 /* DealSubCategory+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DealSubCategory+CoreDataProperties.m"; sourceTree = "<group>"; };
+		58DF6D211C27AEA200071717 /* DealSubCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealSubCategory.h; sourceTree = "<group>"; };
+		58DF6D221C27AEA200071717 /* DealSubCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealSubCategory.m; sourceTree = "<group>"; };
+		58DF6D231C27AEA200071717 /* DealCategory+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DealCategory+CoreDataProperties.h"; sourceTree = "<group>"; };
+		58DF6D241C27AEA200071717 /* DealCategory+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DealCategory+CoreDataProperties.m"; sourceTree = "<group>"; };
+		58DF6D251C27AEA200071717 /* DealCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealCategory.h; sourceTree = "<group>"; };
+		58DF6D261C27AEA200071717 /* DealCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealCategory.m; sourceTree = "<group>"; };
 		B4FCBAD5C9639A6E28F31134 /* libPods-DealSecret.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DealSecret.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD0C5017E6E7ADB50ADD2242 /* Pods-DealSecret.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DealSecret.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DealSecret/Pods-DealSecret.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -142,6 +156,8 @@
 				58028ED41C19610C00933E10 /* RegistrationViewController.xib */,
 				58028EDA1C19692E00933E10 /* SplashScreenViewController.xib */,
 				58028EDF1C196E4F00933E10 /* LoginViewController.xib */,
+				589A0F6C1C0FFC7400458E52 /* DealViewController.xib */,
+				58DB630F1C26035800B3D9F6 /* PreferencesTableViewController.xib */,
 			);
 			name = Nibs;
 			sourceTree = "<group>";
@@ -149,6 +165,14 @@
 		58391B7A1C04E9CA007E3C57 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				58DF6D1F1C27AEA200071717 /* DealSubCategory+CoreDataProperties.h */,
+				58DF6D201C27AEA200071717 /* DealSubCategory+CoreDataProperties.m */,
+				58DF6D211C27AEA200071717 /* DealSubCategory.h */,
+				58DF6D221C27AEA200071717 /* DealSubCategory.m */,
+				58DF6D231C27AEA200071717 /* DealCategory+CoreDataProperties.h */,
+				58DF6D241C27AEA200071717 /* DealCategory+CoreDataProperties.m */,
+				58DF6D251C27AEA200071717 /* DealCategory.h */,
+				58DF6D261C27AEA200071717 /* DealCategory.m */,
 				589A0F5A1C07B8F500458E52 /* User+CoreDataProperties.h */,
 				589A0F5B1C07B8F500458E52 /* User+CoreDataProperties.m */,
 				58933FA61C0127480013BCF2 /* User.h */,
@@ -166,7 +190,6 @@
 		583A488E1C1D7E3B001F8146 /* Nibs */ = {
 			isa = PBXGroup;
 			children = (
-				589A0F6C1C0FFC7400458E52 /* DealViewController.xib */,
 				583A488B1C1D7E26001F8146 /* DealTableViewCell.xib */,
 			);
 			name = Nibs;
@@ -228,10 +251,10 @@
 				58028ED71C19612000933E10 /* Nibs */,
 				58391B811C04EEDE007E3C57 /* CategoriesTableViewController.h */,
 				58391B821C04EEDE007E3C57 /* CategoriesTableViewController.m */,
+				58DB63121C26720B00B3D9F6 /* PreferencesTableViewController.h */,
+				58DB63131C26720B00B3D9F6 /* PreferencesTableViewController.m */,
 				583A48901C1E3F9F001F8146 /* DealsTableViewController.h */,
 				583A48911C1E3F9F001F8146 /* DealsTableViewController.m */,
-				58933F901C0115940013BCF2 /* AuthViewController.h */,
-				58933F911C0115940013BCF2 /* AuthViewController.m */,
 				589A0F6A1C0FFC7400458E52 /* DealViewController.h */,
 				589A0F6B1C0FFC7400458E52 /* DealViewController.m */,
 				589A0F761C10487F00458E52 /* SettingsTableViewController.h */,
@@ -343,6 +366,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				58028EE11C196E4F00933E10 /* LoginViewController.xib in Resources */,
+				58DB63111C26035800B3D9F6 /* PreferencesTableViewController.xib in Resources */,
 				589A0F7A1C10487F00458E52 /* SettingsTableViewController.xib in Resources */,
 				58933F9D1C0115950013BCF2 /* LaunchScreen.storyboard in Resources */,
 				583A488D1C1D7E26001F8146 /* DealTableViewCell.xib in Resources */,
@@ -410,7 +434,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				58391B801C04EB72007E3C57 /* Deal.m in Sources */,
-				58933F921C0115940013BCF2 /* AuthViewController.m in Sources */,
+				58DB63141C26720B00B3D9F6 /* PreferencesTableViewController.m in Sources */,
 				58933FD01C02D9B50013BCF2 /* NetworkManager.m in Sources */,
 				589A0F4D1C062F2200458E52 /* Constants.m in Sources */,
 				58028EE01C196E4F00933E10 /* LoginViewController.m in Sources */,
@@ -425,14 +449,18 @@
 				589A0F791C10487F00458E52 /* SettingsTableViewController.m in Sources */,
 				58933FCD1C02CBC80013BCF2 /* LocationManager.m in Sources */,
 				58933F8F1C0115940013BCF2 /* AppDelegate.m in Sources */,
+				58DF6D291C27AEA200071717 /* DealCategory+CoreDataProperties.m in Sources */,
 				58933F8C1C0115940013BCF2 /* main.m in Sources */,
 				583A48951C1E621B001F8146 /* DealsMapViewController.m in Sources */,
 				583A48881C1D7807001F8146 /* TextField.m in Sources */,
 				583A48921C1E3F9F001F8146 /* DealsTableViewController.m in Sources */,
 				58933F981C0115940013BCF2 /* DealSecret.xcdatamodeld in Sources */,
+				58DF6D271C27AEA200071717 /* DealSubCategory+CoreDataProperties.m in Sources */,
+				58DF6D2A1C27AEA200071717 /* DealCategory.m in Sources */,
 				589A0F561C064A3900458E52 /* ManagedObject.m in Sources */,
 				589A0F5C1C07B8F500458E52 /* User+CoreDataProperties.m in Sources */,
 				58391B841C04EEDE007E3C57 /* CategoriesTableViewController.m in Sources */,
+				58DF6D281C27AEA200071717 /* DealSubCategory.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
