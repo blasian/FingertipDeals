@@ -2,7 +2,7 @@
 //  DealSubCategory+CoreDataProperties.m
 //  DealSecret
 //
-//  Created by Michael Spearman on 12/20/15.
+//  Created by Michael Spearman on 12/24/15.
 //  Copyright © 2015 Michael Spearman. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -15,5 +15,6 @@
 
 @dynamic title;
 @dynamic belongsTo;
+@dynamic preferredBy;
 
 @end

@@ -10,7 +10,7 @@
 #import <CoreData/CoreData.h>
 #import "ManagedObject.h"
 
-@class DealCategory;
+@class DealCategory, User;
 
 NS_ASSUME_NONNULL_BEGIN
 

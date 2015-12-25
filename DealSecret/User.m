@@ -224,17 +224,54 @@
 + (void)getCategoriesWithLevel:(NSNumber*)lnum
                      withClass:(NSString* _Nullable)cnum
                      withBlock:(void (^)(NSDictionary*))block {
-    [[NetworkManager sharedInstance] GET:[NSString stringWithFormat:kUserCategories, lnum, cnum] parameters:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+    [[NetworkManager sharedInstance] GET:[NSString stringWithFormat:kUserCategoriesEndpoint, lnum, cnum] parameters:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
         
         NSArray *catDicts = responseObject[@"data"];
         for (NSDictionary* section in catDicts) {
             if (lnum.intValue == 1) {
-                DealCategory *category = [[DealCategory alloc] initWithTitle:section[@"c1_type"]];
-                [category save];
+                NSString *categoryTitle = section[@"c1_type"];
+                
+                NSManagedObjectContext* c = [ManagedObject context];
+                NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+                NSEntityDescription *entity = [NSEntityDescription entityForName:@"DealCategory"
+                                                          inManagedObjectContext:c];
+                [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"title LIKE %@", categoryTitle]];
+                [fetchRequest setEntity:entity];
+                NSError* error;
+                DealCategory* category = nil;
+                if ([c countForFetchRequest:fetchRequest
+                                      error:&error] == 0) {
+                    category = [[DealCategory alloc] initWithTitle:categoryTitle];
+                    [category save];
+                }
             }
             if (lnum.intValue == 2) {
-                DealSubCategory *subCategory = [[DealSubCategory alloc] initWithTitle:section[@"c2_type"]];
-                [subCategory save];
+                
+                NSManagedObjectContext* c = [ManagedObject context];
+                NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+                NSEntityDescription *entity = [NSEntityDescription entityForName:@"DealCategory"
+                                                          inManagedObjectContext:c];
+                [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"title LIKE %@", cnum]];
+                [fetchRequest setEntity:entity];
+                NSError *error;
+                if ([c countForFetchRequest:fetchRequest
+                                      error:&error] == 1) {
+                    DealCategory *category = [[[DealCategory context] executeFetchRequest:fetchRequest error:&error] firstObject];
+                    NSString *subCategoryTitle = section[@"c2_type"];
+                    entity = [NSEntityDescription entityForName:@"DealSubCategory"
+                                         inManagedObjectContext:c];
+                    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"title LIKE %@ AND belongsTo.title LIKE %@",
+                                                subCategoryTitle, category.title]];
+                    [fetchRequest setEntity:entity];
+                    
+                    NSError* error;
+                    if ([c countForFetchRequest:fetchRequest
+                                          error:&error] == 0) {
+                        DealSubCategory* subCategory = [[DealSubCategory alloc] initWithTitle:subCategoryTitle];
+                        subCategory.belongsTo = category;
+                        [subCategory save];
+                    }
+                }
             }
         }
         if (block) {
@@ -248,5 +285,69 @@
     }];
 }
 
++ (void)getUserClassesWithBlock:(void (^)(NSDictionary*))block {
+    [[NetworkManager sharedInstance] GET:kUserClassesEndpoint parameters:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+        NSDictionary* dict = responseObject[@"data"];
+        for (NSDictionary* section in dict[@"user_class"]) {
+            NSString *categoryTitle = section[@"c1_type"];
+            NSString *subCategoryTitle = section[@"c2_type"];
+            
+            NSManagedObjectContext* c = [ManagedObject context];
+            NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+            NSEntityDescription *entity = [NSEntityDescription entityForName:@"DealSubCategory"
+                                                      inManagedObjectContext:c];
+            [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"title LIKE %@", subCategoryTitle]];
+            [fetchRequest setEntity:entity];
+            NSError* error;
+            DealSubCategory* subCategory = nil;
+            if ([c countForFetchRequest:fetchRequest
+                                  error:&error] == 0) {
+                // generate belongsTo attribute, c1_type
+                entity = [NSEntityDescription entityForName:@"DealCategory" inManagedObjectContext:c];
+                [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"title LIKE %@", categoryTitle]];
+                [fetchRequest setEntity:entity];
+                DealCategory* category = [[c executeFetchRequest:fetchRequest error:&error] firstObject];
+                subCategory = [[DealSubCategory alloc] initWithTitle:subCategoryTitle];
+                subCategory.belongsTo = category;
+            } else {
+                subCategory = [[c executeFetchRequest:fetchRequest error:&error] firstObject];
+            }
+            subCategory.preferredBy = [User getMe];
+            [subCategory save];
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"failed to retrieve user classes");
+        if (block) {
+            block(@{@"error":error});
+        }
+    }];
+}
+
++ (void)setUserClassesWithBlock:(void (^)(NSDictionary*))block {
+    NSMutableArray *params;
+    NSManagedObjectContext* c = [ManagedObject context];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"DealSubCategory"
+                                              inManagedObjectContext:c];
+    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"preferredBy.userId LIKE %@", [User getMe].userId]];
+    [fetchRequest setEntity:entity];
+    
+    NSError* error;
+    NSArray* results = [c executeFetchRequest:fetchRequest error:&error];
+    for (DealSubCategory* subCat in results) {
+        [params addObject:@{@"c1_type":subCat.belongsTo.title}];
+        [params addObject:@{@"c2_type":subCat.title}];
+    }
+    [[NetworkManager sharedInstance] POST:kUserSetClassesEndpoint parameters:params success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+        if (block) {
+            block(@{});
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"failed to update user classes");
+        if (block) {
+            block(@{@"error":error});
+        }
+    }];
+}
 
 @end

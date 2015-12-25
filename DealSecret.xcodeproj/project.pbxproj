@@ -13,6 +13,7 @@
 		58028EDC1C19692E00933E10 /* SplashScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58028EDA1C19692E00933E10 /* SplashScreenViewController.xib */; };
 		58028EE01C196E4F00933E10 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58028EDE1C196E4F00933E10 /* LoginViewController.m */; };
 		58028EE11C196E4F00933E10 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58028EDF1C196E4F00933E10 /* LoginViewController.xib */; };
+		58360A231C293ECE0057F5E3 /* DealCategoryManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 58360A221C293ECE0057F5E3 /* DealCategoryManager.m */; };
 		58391B7F1C04EB72007E3C57 /* Deal+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 58391B7C1C04EB72007E3C57 /* Deal+CoreDataProperties.m */; };
 		58391B801C04EB72007E3C57 /* Deal.m in Sources */ = {isa = PBXBuildFile; fileRef = 58391B7E1C04EB72007E3C57 /* Deal.m */; };
 		58391B841C04EEDE007E3C57 /* CategoriesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58391B821C04EEDE007E3C57 /* CategoriesTableViewController.m */; };
@@ -41,6 +42,7 @@
 		589A0F701C10312900458E52 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 589A0F6F1C10312900458E52 /* MapKit.framework */; };
 		589A0F791C10487F00458E52 /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 589A0F771C10487F00458E52 /* SettingsTableViewController.m */; };
 		589A0F7A1C10487F00458E52 /* SettingsTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 589A0F781C10487F00458E52 /* SettingsTableViewController.xib */; };
+		58D88BB31C2B942B002087E6 /* SubCategoryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 58D88BB21C2B942B002087E6 /* SubCategoryTableViewCell.m */; };
 		58DB63111C26035800B3D9F6 /* PreferencesTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58DB630F1C26035800B3D9F6 /* PreferencesTableViewController.xib */; };
 		58DB63141C26720B00B3D9F6 /* PreferencesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58DB63131C26720B00B3D9F6 /* PreferencesTableViewController.m */; };
 		58DF6D271C27AEA200071717 /* DealSubCategory+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 58DF6D201C27AEA200071717 /* DealSubCategory+CoreDataProperties.m */; };
@@ -63,6 +65,8 @@
 		58028EDF1C196E4F00933E10 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		5834A3E61C1663F50065F864 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5834A3E81C1665070065F864 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		58360A211C293ECE0057F5E3 /* DealCategoryManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealCategoryManager.h; sourceTree = "<group>"; };
+		58360A221C293ECE0057F5E3 /* DealCategoryManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealCategoryManager.m; sourceTree = "<group>"; };
 		58391B7B1C04EB72007E3C57 /* Deal+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Deal+CoreDataProperties.h"; sourceTree = "<group>"; };
 		58391B7C1C04EB72007E3C57 /* Deal+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Deal+CoreDataProperties.m"; sourceTree = "<group>"; };
 		58391B7D1C04EB72007E3C57 /* Deal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Deal.h; sourceTree = "<group>"; };
@@ -111,6 +115,8 @@
 		589A0F761C10487F00458E52 /* SettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsTableViewController.h; sourceTree = "<group>"; };
 		589A0F771C10487F00458E52 /* SettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsTableViewController.m; sourceTree = "<group>"; };
 		589A0F781C10487F00458E52 /* SettingsTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsTableViewController.xib; sourceTree = "<group>"; };
+		58D88BB11C2B942B002087E6 /* SubCategoryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubCategoryTableViewCell.h; sourceTree = "<group>"; };
+		58D88BB21C2B942B002087E6 /* SubCategoryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubCategoryTableViewCell.m; sourceTree = "<group>"; };
 		58DB630F1C26035800B3D9F6 /* PreferencesTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreferencesTableViewController.xib; sourceTree = "<group>"; };
 		58DB63121C26720B00B3D9F6 /* PreferencesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferencesTableViewController.h; sourceTree = "<group>"; };
 		58DB63131C26720B00B3D9F6 /* PreferencesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferencesTableViewController.m; sourceTree = "<group>"; };
@@ -165,6 +171,8 @@
 		58391B7A1C04E9CA007E3C57 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				58360A211C293ECE0057F5E3 /* DealCategoryManager.h */,
+				58360A221C293ECE0057F5E3 /* DealCategoryManager.m */,
 				58DF6D1F1C27AEA200071717 /* DealSubCategory+CoreDataProperties.h */,
 				58DF6D201C27AEA200071717 /* DealSubCategory+CoreDataProperties.m */,
 				58DF6D211C27AEA200071717 /* DealSubCategory.h */,
@@ -183,6 +191,10 @@
 				58391B7E1C04EB72007E3C57 /* Deal.m */,
 				589A0F541C064A3900458E52 /* ManagedObject.h */,
 				589A0F551C064A3900458E52 /* ManagedObject.m */,
+				58933FCB1C02CBC80013BCF2 /* LocationManager.h */,
+				58933FCC1C02CBC80013BCF2 /* LocationManager.m */,
+				58933FCE1C02D9B50013BCF2 /* NetworkManager.h */,
+				58933FCF1C02D9B50013BCF2 /* NetworkManager.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -221,10 +233,6 @@
 				589A0F4A1C05588C00458E52 /* Controllers */,
 				589A0F601C07D23500458E52 /* Views */,
 				58391B7A1C04E9CA007E3C57 /* Models */,
-				58933FCB1C02CBC80013BCF2 /* LocationManager.h */,
-				58933FCC1C02CBC80013BCF2 /* LocationManager.m */,
-				58933FCE1C02D9B50013BCF2 /* NetworkManager.h */,
-				58933FCF1C02D9B50013BCF2 /* NetworkManager.m */,
 				589A0F4B1C062F2200458E52 /* Constants.h */,
 				589A0F4C1C062F2200458E52 /* Constants.m */,
 				58933F931C0115940013BCF2 /* Main.storyboard */,
@@ -275,6 +283,8 @@
 			isa = PBXGroup;
 			children = (
 				583A488E1C1D7E3B001F8146 /* Nibs */,
+				58D88BB11C2B942B002087E6 /* SubCategoryTableViewCell.h */,
+				58D88BB21C2B942B002087E6 /* SubCategoryTableViewCell.m */,
 				583A48861C1D7807001F8146 /* TextField.h */,
 				583A48871C1D7807001F8146 /* TextField.m */,
 				589A0F5D1C07D22800458E52 /* DealsHeaderView.h */,
@@ -435,6 +445,7 @@
 			files = (
 				58391B801C04EB72007E3C57 /* Deal.m in Sources */,
 				58DB63141C26720B00B3D9F6 /* PreferencesTableViewController.m in Sources */,
+				58360A231C293ECE0057F5E3 /* DealCategoryManager.m in Sources */,
 				58933FD01C02D9B50013BCF2 /* NetworkManager.m in Sources */,
 				589A0F4D1C062F2200458E52 /* Constants.m in Sources */,
 				58028EE01C196E4F00933E10 /* LoginViewController.m in Sources */,
@@ -454,6 +465,7 @@
 				583A48951C1E621B001F8146 /* DealsMapViewController.m in Sources */,
 				583A48881C1D7807001F8146 /* TextField.m in Sources */,
 				583A48921C1E3F9F001F8146 /* DealsTableViewController.m in Sources */,
+				58D88BB31C2B942B002087E6 /* SubCategoryTableViewCell.m in Sources */,
 				58933F981C0115940013BCF2 /* DealSecret.xcdatamodeld in Sources */,
 				58DF6D271C27AEA200071717 /* DealSubCategory+CoreDataProperties.m in Sources */,
 				58DF6D2A1C27AEA200071717 /* DealCategory.m in Sources */,

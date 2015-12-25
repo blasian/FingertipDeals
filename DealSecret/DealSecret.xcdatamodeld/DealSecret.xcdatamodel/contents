@@ -14,11 +14,11 @@
     </entity>
     <entity name="DealCategory" representedClassName="DealCategory" syncable="YES">
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="hasMany" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DealSubCategory" inverseName="belongsTo" inverseEntity="DealSubCategory" syncable="YES"/>
     </entity>
     <entity name="DealSubCategory" representedClassName="DealSubCategory" syncable="YES">
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="belongsTo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DealCategory" inverseName="hasMany" inverseEntity="DealCategory" syncable="YES"/>
+        <relationship name="belongsTo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DealCategory" syncable="YES"/>
+        <relationship name="preferredBy" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" syncable="YES"/>
     </entity>
     <entity name="User" representedClassName="User" syncable="YES">
         <attribute name="birthdate" optional="YES" attributeType="Date" syncable="YES"/>
@@ -34,8 +34,8 @@
     </entity>
     <elements>
         <element name="Deal" positionX="0" positionY="0" width="128" height="195"/>
+        <element name="DealCategory" positionX="9" positionY="72" width="128" height="60"/>
+        <element name="DealSubCategory" positionX="0" positionY="63" width="128" height="90"/>
         <element name="User" positionX="0" positionY="0" width="128" height="195"/>
-        <element name="DealSubCategory" positionX="0" positionY="63" width="128" height="75"/>
-        <element name="DealCategory" positionX="9" positionY="72" width="128" height="75"/>
     </elements>
 </model>

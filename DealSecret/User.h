@@ -42,8 +42,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)getCategoriesWithLevel:(NSNumber*)lnum
                      withClass:(NSString* _Nullable)cnum
-                     withBlock:(void (^)(NSDictionary*))block;
+                     withBlock:(void (^)(NSDictionary* response))block;
 
++ (void)getUserClassesWithBlock:(void (^)(NSDictionary* response))block;
+
++ (void)setUserClassesWithBlock:(void (^)(NSDictionary* response))block;
 @end
 
 NS_ASSUME_NONNULL_END
