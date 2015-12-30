@@ -8,6 +8,7 @@
 
 #import "SettingsTableViewController.h"
 #import "SplashScreenViewController.h"
+#import "PreferencesTableViewController.h"
 #import "Constants.h"
 
 @interface SettingsTableViewController ()
@@ -29,7 +30,7 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
-    self.cellTitles = @[@"Preferences", @"Reset Password", @"Sign Out"];
+    self.cellTitles = @[@"Preferences", @"Sign Out"];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismiss)];
 }
@@ -61,10 +62,6 @@
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             break;
         case 1:
-            // Forgot Password
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            break;
-        case 2:
             // Sign Out
             break;
         default:
@@ -82,11 +79,9 @@
     switch (indexPath.row) {
         case 0:
             // Preferences
+            [self preferencesSelected];
             break;
         case 1:
-            // Forgot Password
-            break;
-        case 2:
             // Sign Out
             [self signOut];
             break;
@@ -96,6 +91,11 @@
 }
 
 #pragma mark - Actions
+- (void)preferencesSelected {
+    PreferencesTableViewController *prefVC = [[PreferencesTableViewController alloc] init];
+    [self.navigationController pushViewController:prefVC animated:YES];
+}
+
 - (void)signOut {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setBool:NO forKey:kUserPersistenceKey];

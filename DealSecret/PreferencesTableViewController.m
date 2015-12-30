@@ -30,6 +30,8 @@
     self.view.backgroundColor = [UIColor clearColor];
     self.tableView.backgroundColor = [UIColor clearColor];
     self.expandedSections = [NSMutableArray array];
+    self.navigationController.navigationBarHidden = NO;
+    self.edgesForExtendedLayout = UIRectEdgeNone;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Next" style:UIBarButtonItemStylePlain target:self action:@selector(nextButtonPressed)];
     [self getSections];
     [self getUserSubSections];
@@ -75,11 +77,8 @@
         }];
     } else {
         DealSubCategory* subCat = [DealCategoryManager subCategoryWithIndexPath:[NSIndexPath indexPathForRow:indexPath.row - 1 inSection:indexPath.section]];
-        if (subCat.preferredBy == nil) {
-            subCat.preferredBy = [User getMe];
-        } else {
-            subCat.preferredBy = nil;
-        }
+        
+        subCat.preferred = subCat.preferred.boolValue ? @NO : @YES;
         [subCat save];
         [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
@@ -102,33 +101,28 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     // disguise first cell as header cell for expanding
-    if (indexPath.row == 0) {
-        static NSString *CellIdentifier = @"CategoryCell";
-        CategoryTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-        if (!cell) {
-            cell = [[CategoryTableViewCell alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 100.0f)];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        }
-        cell.header.text = [DealCategoryManager categoryWithIndex:indexPath.section].title;
-        cell.backgroundImage.image = [UIImage imageNamed:@"category-frame-green"];
-        return cell;
-    }
-    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-    DealSubCategory *sub = [DealCategoryManager subCategoryWithIndexPath:[NSIndexPath indexPathForRow:indexPath.row - 1 inSection:indexPath.section]];
-    if ([sub.preferredBy isEqual:[User getMe]]) {
-        cell.backgroundColor = [UIColor lightGrayColor];
-    } else {
-        cell.backgroundColor = [UIColor clearColor];
-    }
-    cell.textLabel.text = sub.title;
+    cell.backgroundColor = [UIColor clearColor];
     cell.textLabel.textColor = [UIColor whiteColor];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.textLabel.textAlignment = NSTextAlignmentLeft;
+    
+    if (indexPath.row == 0) {
+        cell.textLabel.text = [DealCategoryManager categoryWithIndex:indexPath.section].title;
+        cell.textLabel.textAlignment = NSTextAlignmentCenter;
+    } else {
+        DealSubCategory *sub = [DealCategoryManager subCategoryWithIndexPath:[NSIndexPath indexPathForRow:indexPath.row - 1 inSection:indexPath.section]];
+        cell.textLabel.text = sub.title;
+        if (sub.preferred.boolValue) {
+            cell.backgroundColor = [UIColor lightGrayColor];
+        }
+    }
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
-        return 110.0f;
+        return 75.0;
     }
     return 50.0;
 }

@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
 
-@interface PreferencesTableViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate>
+@interface PreferencesTableViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
 @end

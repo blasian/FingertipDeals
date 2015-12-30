@@ -9,6 +9,9 @@
 #import "DealsTableViewController.h"
 #import "Deal.h"
 #import "DealTableViewCell.h"
+#import "DealViewController.h"
+#import "UIImageView+AFNetworking.h"
+#import "NetworkManager.h"
 
 const float kDealCellHeight = 100.0f;
 
@@ -77,14 +80,22 @@ const float kDealCellHeight = 100.0f;
     return [[self.fetchedResultsController fetchedObjects] count];
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    DealViewController *dealVC = [[DealViewController alloc] init];
+    dealVC.deal = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    [self.navigationController pushViewController:dealVC animated:YES];
+}
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    DealTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DealCell"];
-    if (!cell) {
-        cell = [[DealTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"DealCell"];
-    }
+    DealTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DealCell" forIndexPath:indexPath];
     
     Deal *deal = [[self.fetchedResultsController fetchedObjects] objectAtIndex:indexPath.row];
+    if (deal.imageUrl.length > 0) {
+        [cell.companyImage setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://cms.fingertipdeals.com/%@", deal.imageUrl]]];
+    } else {
+        cell.companyImage = nil;
+    }
     cell.companyLabel.text = deal.header;
     cell.subtitleLabel.text = deal.content;
     NSString *distanceText;

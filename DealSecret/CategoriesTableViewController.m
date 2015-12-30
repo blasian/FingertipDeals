@@ -16,9 +16,12 @@
 #import "CategoryTableViewCell.h"
 #import "DealsTableViewController.h"
 #import "DealsMapViewController.h"
+#import "DealCategoryManager.h"
+#import "DealCategory.h"
+#import "DealSubCategory.h"
 
 const CGFloat kDealsNumberOfPages = 5;
-const CGFloat kDealsNumberOfCategoryCells = 4;
+const CGFloat kNumberOfStaticCells = 3;
 const CGFloat kDealsHeaderSize = 180.0f;
 const CGFloat kDealsCategoryCellHeight = 100.0f;
 
@@ -69,7 +72,8 @@ const CGFloat kDealsCategoryCellHeight = 100.0f;
     
     self.title = @"Fingertip Deals";
     self.navigationController.navigationBarHidden = NO;
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Settings" style:UIBarButtonItemStylePlain target:self action:@selector(settingsButtonTapped)];
+    UIImage *settingsImage = [UIImage imageNamed:@"settings_icon"];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:settingsImage style:UIBarButtonItemStylePlain target:self action:@selector(settingsButtonTapped)];
     
     // Setup tableview header.
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0,
@@ -172,7 +176,13 @@ const CGFloat kDealsCategoryCellHeight = 100.0f;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return kDealsNumberOfCategoryCells;
+    NSArray* preferredSubCategories = [DealCategoryManager preferredSubCategories];
+    NSMutableSet *set = [NSMutableSet set];
+    for (DealSubCategory* subCat in preferredSubCategories) {
+        DealCategory *cat = subCat.belongsTo;
+        [set addObject:cat.title];
+    }
+    return [set count] + kNumberOfStaticCells;
 }
 
 
@@ -183,7 +193,7 @@ const CGFloat kDealsCategoryCellHeight = 100.0f;
         cell = [[CategoryTableViewCell alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, kDealsCategoryCellHeight)];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
-    
+    DealCategory* cat;
     NSString *header;
     NSString *subHeader;
     UIImage *image;
@@ -204,20 +214,30 @@ const CGFloat kDealsCategoryCellHeight = 100.0f;
             background = [UIImage imageNamed:@"category-frame-yellow"];
             break;
         case 2:
-            header = @"Restaurant Deals";
-            subHeader = @"Near You now";
-            image = [UIImage imageNamed:@"utensiles"];
-            background = [UIImage imageNamed:@"category-frame-dark-blue"];
-            break;
-        case 3:
             header = @"All Deals";
             subHeader = @"Around You";
             image = [UIImage imageNamed:@"map"];
             background = [UIImage imageNamed:@"category-frame-teal"];
             break;
         default:
+            if (1){}
+            NSArray* preferredSubCategories = [DealCategoryManager preferredSubCategories];
+            NSMutableArray* cats = [NSMutableArray array];
+            for (DealSubCategory* pref in preferredSubCategories) {
+                [cats addObject:pref.belongsTo];
+            }
+            // remove duplicate
+            NSOrderedSet *set = [NSOrderedSet orderedSetWithArray:cats];
+            NSArray *result = [set array];
+            
+            cat = result[indexPath.row - 3];
+            header = cat.title;
+            subHeader = @"Near you";
+            image = [UIImage imageNamed:@"utensiles"];
+            background = [UIImage imageNamed:@"category-frame-dark-blue"];
             break;
     }
+
     cell.header.text = header;
     cell.subHeader.text = subHeader;
     cell.icon.image = image;
@@ -238,8 +258,9 @@ const CGFloat kDealsCategoryCellHeight = 100.0f;
         case 0:
             vc = [[DealsTableViewController alloc] init];
             break;
-        case 3:
+        case 2:
             vc = [[DealsMapViewController alloc] init];
+            ((DealsMapViewController*)vc).location = [LocationManager sharedInstance].location;
             break;
         default:
             return;

@@ -11,7 +11,7 @@
 
 @interface LocationManager : NSObject <CLLocationManagerDelegate>
 
-@property (nonatomic) CLLocation *location;
+@property (nonatomic, strong) CLLocation *location;
 
 + (LocationManager*)sharedInstance;
 - (void)start;

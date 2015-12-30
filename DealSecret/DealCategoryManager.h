@@ -14,6 +14,7 @@
 @interface DealCategoryManager : NSObject
 
 + (NSArray*)categories;
++ (NSArray*)preferredSubCategories;
 + (DealCategory*)categoryWithIndex:(NSUInteger)index;
 + (DealSubCategory*)subCategoryWithIndexPath:(NSIndexPath*)indexPath;
 + (NSArray*)subCategoriesForCategoryWithIndex:(NSUInteger)index;

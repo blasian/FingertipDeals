@@ -15,18 +15,18 @@
 @implementation DealCategoryManager
 
 // returns array of categories that are preferred by the the user
-+ (NSArray*)preferredCategories {
++ (NSArray*)preferredSubCategories {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"DealCategory" inManagedObjectContext:[DealCategory context]];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"DealSubCategory" inManagedObjectContext:[DealSubCategory context]];
     NSSortDescriptor *sorting = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"preferredBy.userId LIKE %@", [User getMe].userId];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"preferred == YES"];
     [fetchRequest setPredicate:predicate];
     [fetchRequest setEntity:entity];
     [fetchRequest setSortDescriptors:@[sorting]];
     
     NSError *error = nil;
-    NSArray *result = [[DealCategory context] executeFetchRequest:fetchRequest error:&error];
+    NSArray *result = [[DealSubCategory context] executeFetchRequest:fetchRequest error:&error];
     
     if (error) {
         NSLog(@"Unable to execute fetch request.");

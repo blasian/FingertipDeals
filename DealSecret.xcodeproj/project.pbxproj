@@ -343,7 +343,7 @@
 				TargetAttributes = {
 					58933F861C0115940013BCF2 = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = SE9D5PU7WS;
+						DevelopmentTeam = NS39R5GCEM;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -583,12 +583,15 @@
 			baseConfigurationReference = FD0C5017E6E7ADB50ADD2242 /* Pods-DealSecret.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = DealSecret/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.michaelspearman.DealSecret;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fingertipdeal.fingertipdeal;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -597,12 +600,15 @@
 			baseConfigurationReference = 4B85B872E2BA3407E0EF3BB8 /* Pods-DealSecret.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = DealSecret/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.michaelspearman.DealSecret;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fingertipdeal.fingertipdeal;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

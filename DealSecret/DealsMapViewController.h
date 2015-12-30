@@ -11,9 +11,12 @@
 #import <CoreData/CoreData.h>
 
 @class Deal;
+@class DealCategory;
+
 @interface DealsMapViewController : UIViewController <MKMapViewDelegate, NSFetchedResultsControllerDelegate>
 
 @property (nonatomic, strong) CLLocation *location;
+@property (nonatomic, strong) DealCategory *category;
 @property (nonatomic, strong) NSArray<Deal*> *deals;
 
 @end
