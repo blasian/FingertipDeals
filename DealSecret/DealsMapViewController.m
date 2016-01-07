@@ -25,8 +25,10 @@
 - (void)fetch {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Deal"];
     NSSortDescriptor *fetchSort = [NSSortDescriptor sortDescriptorWithKey:@"dealId" ascending:YES];
-//    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"category LIKE %@", self.category.title];
-//    [fetchRequest setPredicate:predicate];
+    if (self.category) {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"category.title LIKE %@", self.category.title];
+        [fetchRequest setPredicate:predicate];
+    }
     [fetchRequest setSortDescriptors:@[fetchSort]];
     NSManagedObjectContext *c = [ManagedObject context];
     
@@ -57,7 +59,7 @@
         self.location = [LocationManager sharedInstance].location;
     self.mapView.delegate = self;
     self.mapView.showsUserLocation = YES;
-    MKCoordinateSpan mapSpan = MKCoordinateSpanMake(.01f, .01f);
+    MKCoordinateSpan mapSpan = MKCoordinateSpanMake(.05f, .05f);
     MKCoordinateRegion mapRegion = MKCoordinateRegionMake(self.location.coordinate, mapSpan);
     [self.mapView setRegion:mapRegion animated:YES];
     [self.view addSubview:self.mapView];
@@ -66,11 +68,20 @@
 }
 
 - (void)refreshDeals {
-    // this should call getDealsWithClass: withLat: withLon: withBlock:
-    [User getDealsWithLatitude:[NSString stringWithFormat:@"%f", self.mapView.centerCoordinate.latitude]
-                     longitude:[NSString stringWithFormat:@"%f", self.mapView.centerCoordinate.longitude] block:^(NSDictionary * _Nonnull response) {
-        [self refreshAnnotations];
-    }];
+    if (!self.category) {
+        [User getDealsWithLatitude:[NSString stringWithFormat:@"%f", self.location.coordinate.latitude]
+                         longitude:[NSString stringWithFormat:@"%f", self.location.coordinate.longitude]
+                             block:^(NSDictionary * _Nonnull response) {
+                                 [self refreshAnnotations];
+                             }];
+    } else {
+        [User getUserDealsWithCategory:self.category
+                          withLatitude:[NSString stringWithFormat:@"%f", self.location.coordinate.latitude]
+                         withLongitude:[NSString stringWithFormat:@"%f", self.location.coordinate.longitude]
+                             withBlock:^(NSDictionary * _Nonnull response) {
+            [self refreshAnnotations];
+        }];
+    }
 }
 
 - (void)refreshAnnotations {

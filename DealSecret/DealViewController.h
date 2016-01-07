@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
+#import "DealButtonStrip.h"
 
 @class Deal;
 
-@interface DealViewController : UIViewController <MKMapViewDelegate>
+@interface DealViewController : UIViewController <MKMapViewDelegate, ButtonStripDelegate>
 
 @property (nonatomic, strong) Deal* deal;
 

@@ -10,7 +10,8 @@
 
 @interface DealsHeaderView : UIView
 
-@property (nonatomic, strong) UILabel* bigTitleLabel;
+//@property (nonatomic, strong) UILabel* bigTitleLabel;
+@property (nonatomic, strong) UIImageView* imageView;
 @property (nonatomic, strong) UILabel* smallTitleLabel;
 
 @end

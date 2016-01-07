@@ -12,6 +12,7 @@
 #import "DealViewController.h"
 #import "UIImageView+AFNetworking.h"
 #import "NetworkManager.h"
+#import "DealCategoryManager.h"
 
 const float kDealCellHeight = 100.0f;
 
@@ -37,6 +38,7 @@ const float kDealCellHeight = 100.0f;
     NSSortDescriptor *fetchSort = [NSSortDescriptor sortDescriptorWithKey:@"dealId" ascending:YES];
     [fetchRequest setSortDescriptors:@[fetchSort]];
     NSManagedObjectContext *c = [ManagedObject context];
+    
     [self setFetchedResultsController:[[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:c sectionNameKeyPath:nil cacheName:nil]];
     [self.fetchedResultsController setDelegate:self];
     

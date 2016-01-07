@@ -19,6 +19,7 @@ extern NSString* const kUserClassesEndpoint;
 extern NSString* const kUserSetClassesEndpoint;
 extern NSString* const kUserDealsWithClassEndpoint;
 extern NSString* const kUserDealsZipEndpoint;
+extern NSString* const kUserUpdateLocationEndpoint;
 
 @interface NetworkManager : AFHTTPSessionManager
 

@@ -11,7 +11,7 @@
 #import "ManagedObject.h"
 
 NS_ASSUME_NONNULL_BEGIN
-
+@class DealCategory;
 @interface User : ManagedObject
 
 - (id)initWithAttributes:(NSDictionary *)attributes;
@@ -37,8 +37,14 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)updateUserWithLocation:(NSArray*)locations
                          block:(void (^_Nullable )(NSDictionary* response))block;
 
-+ (void)getDealsWithLatitude:(NSString*)lat longitude:(NSString*)lon
-                         block:(void (^_Nullable )(NSDictionary* response))block;
++ (void)getDealsWithLatitude:(NSString*)lat
+                   longitude:(NSString*)lon
+                       block:(void (^_Nullable )(NSDictionary* response))block;
+
++ (void)getUserDealsWithCategory:(DealCategory*)category
+                    withLatitude:(NSString*)lat
+                   withLongitude:(NSString*)lon
+                       withBlock:(void (^)(NSDictionary* response))block;
 
 + (void)getCategoriesWithLevel:(NSNumber*)lnum
                      withClass:(NSString* _Nullable)cnum

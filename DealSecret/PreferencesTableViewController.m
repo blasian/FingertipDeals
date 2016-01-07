@@ -13,6 +13,7 @@
 #import "DealSubCategory.h"
 #import "DealCategoryManager.h"
 #import "CategoriesTableViewController.h"
+#import "SubCategoryTableViewCell.h"
 
 @interface PreferencesTableViewController ()
 
@@ -25,7 +26,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"HeaderCell"];
+    [self.tableView registerClass:[SubCategoryTableViewCell class] forCellReuseIdentifier:@"Cell"];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.view.backgroundColor = [UIColor clearColor];
     self.tableView.backgroundColor = [UIColor clearColor];
@@ -101,23 +103,30 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     // disguise first cell as header cell for expanding
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-    cell.backgroundColor = [UIColor clearColor];
-    cell.textLabel.textColor = [UIColor whiteColor];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.textLabel.textAlignment = NSTextAlignmentLeft;
     
     if (indexPath.row == 0) {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HeaderCell" forIndexPath:indexPath];
+        cell.backgroundColor = [UIColor clearColor];
+        cell.textLabel.textColor = [UIColor whiteColor];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.textLabel.text = [DealCategoryManager categoryWithIndex:indexPath.section].title;
         cell.textLabel.textAlignment = NSTextAlignmentCenter;
+        return cell;
     } else {
+        SubCategoryTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+        cell.backgroundColor = [UIColor clearColor];
+        cell.textLabel.textColor = [UIColor whiteColor];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         DealSubCategory *sub = [DealCategoryManager subCategoryWithIndexPath:[NSIndexPath indexPathForRow:indexPath.row - 1 inSection:indexPath.section]];
         cell.textLabel.text = sub.title;
+        cell.textLabel.textAlignment = NSTextAlignmentRight;
         if (sub.preferred.boolValue) {
-            cell.backgroundColor = [UIColor lightGrayColor];
+            cell.checkView.image = [UIImage imageNamed:@"checkmark"];;
+        } else {
+            cell.checkView.image = [UIImage imageNamed:@"checkmark_unchecked"];
         }
+        return cell;
     }
-    return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

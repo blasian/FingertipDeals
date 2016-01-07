@@ -87,16 +87,16 @@
                                       [defaults synchronize];
                                       
                                       if (block) {
-                                          NSDictionary* dict = @{};
-                                          block(dict);
+                                          block(nil);
                                       }
                                       
                                   }
                                   failure:^(NSURLSessionDataTask* task,
                                             NSError* error) {
-                                      NSLog(@"%@", [[NSString alloc] initWithData:error.userInfo[@"com.alamofire.serialization.response.error.data"] encoding:NSUTF8StringEncoding]);
+                                      NSError *jsonError;
+                                      NSDictionary* errorDict = [NSJSONSerialization JSONObjectWithData:error.userInfo[@"com.alamofire.serialization.response.error.data"] options:0 error:&jsonError];
                                       if (block) {
-                                          block([NSDictionary dictionaryWithObject:error forKey:@"error"]);
+                                          block(errorDict);
                                       }
                                   }];
 }
@@ -128,16 +128,17 @@
                                       [defaults setObject:user.token forKey:kUserAPIToken];
                                       [defaults setBool:YES forKey:kUserPersistenceKey];
                                       [defaults synchronize];
+                                      [user save];
                                       if (block) {
-                                          NSDictionary* dict = @{};
-                                          block(dict);
+                                          block(nil);
                                       }
                                   }
                                   failure:^(NSURLSessionDataTask* task,
                                             NSError* error) {
-                                      NSLog(@"%@", [[NSString alloc] initWithData:error.userInfo[@"com.alamofire.serialization.response.error.data"] encoding:NSUTF8StringEncoding]);
+                                      NSError *jsonError;
+                                      NSDictionary* errorDict = [NSJSONSerialization JSONObjectWithData:error.userInfo[@"com.alamofire.serialization.response.error.data"] options:0 error:&jsonError];
                                       if (block) {
-                                          block([NSDictionary dictionaryWithObject:error forKey:@"error"]);
+                                          block(errorDict);
                                       }
                                   }];
 }
@@ -147,20 +148,9 @@
     [[NetworkManager sharedInstance] POST:kUserUpdateEndpoint
                                parameters:params
                                   success:^(NSURLSessionDataTask * task, id responseObject) {
-                                      User *user = [self getMe];
                                       NSDictionary *userDict = [responseObject objectForKey:@"data"];
                                       NSDictionary *attributes = userDict[@"userm"];
-                                      
-                                      user.email     = [attributes valueForKeyPath:@"um_email"];
-                                      user.password  = [attributes valueForKeyPath:@"um_upass"];
-                                      user.firstName = [attributes valueForKeyPath:@"um_fname"];
-                                      user.lastName  = [attributes valueForKeyPath:@"um_lname"];
-                                      user.gender    = [attributes valueForKeyPath:@"um_gender"];
-                                      NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
-                                      [formatter setDateFormat:@"yyyy-MM-dd"];
-                                      user.birthdate = [formatter dateFromString:[attributes valueForKeyPath:@"user_dob"]];
-                                      [user save];
-                                      
+                                      NSLog(@"%@", attributes);
                                       if (block) {
                                           block([NSDictionary dictionary]);
                                       }
@@ -257,7 +247,23 @@
 
 + (void)updateUserWithLocation:(NSArray*)locations
                          block:(void (^_Nullable )(NSDictionary* response))block {
-    // fig'ur some shit out to handle this.
+    NSError* error;
+    NSData *paramsData = [NSJSONSerialization dataWithJSONObject:locations
+                                                         options:0
+                                                           error:&error];
+    NSString* paramsString = [[NSString alloc] initWithData:paramsData encoding:NSUTF8StringEncoding];
+    NSDictionary *paramsDict = @{@"locations":paramsString};
+    
+    [[NetworkManager sharedInstance] POST:kUserUpdateLocationEndpoint parameters:paramsDict success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+        if (block) {
+            block(nil);
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        if (block) {
+            block(@{});
+        }
+    }];
+    
 }
 
 + (void)getCategoriesWithLevel:(NSNumber*)lnum
@@ -347,7 +353,7 @@
             DealCategory* category = nil;
             if ([c countForFetchRequest:fetchRequest
                                   error:&error] == 0) {
-                DealCategory* category = [[DealCategory alloc] initWithTitle:categoryTitle];
+                category = [[DealCategory alloc] initWithTitle:categoryTitle];
                 [category save];
             } else {
                 category = [[c executeFetchRequest:fetchRequest error:&error] firstObject];
@@ -363,6 +369,9 @@
             }
             subCategory.preferred = @YES;
             [subCategory save];
+        }
+        if (block) {
+            block(@{});
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"failed to retrieve user classes");

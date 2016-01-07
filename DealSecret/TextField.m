@@ -31,7 +31,9 @@
 - (void)setupView {
     UIColor *color = [UIColor whiteColor];
     self.textColor = color;
-    self.attributedPlaceholder = [[NSAttributedString alloc] initWithString:self.placeholder attributes:@{NSForegroundColorAttributeName : color}];
+    if (self.placeholder) {
+        self.attributedPlaceholder = [[NSAttributedString alloc] initWithString:self.placeholder attributes:@{NSForegroundColorAttributeName : color}];
+    }
     
     self.background = [UIImage imageNamed:@"textbox"];
     self.borderStyle = UITextBorderStyleNone;

@@ -18,8 +18,9 @@ NSString* const kUserDealsEndpoint = @"users/getdeals?um_lat=%@&um_lon=%@";
 NSString* const kUserCategoriesEndpoint = @"users/getclass?level=%@&class1=%@";
 NSString* const kUserClassesEndpoint = @"users/getuserclass";
 NSString* const kUserSetClassesEndpoint = @"users/setuserclassarray";
-NSString* const kUserDealsWithClassEndpoint = @"users/getdealsbyclass?c1_type=%@&um_lat=%@&um_lon=%@";
+NSString* const kUserDealsWithClassEndpoint = @"users/getdealsbyclass1?c1_type=%@&um_lat=%@&um_lon=%@";
 NSString* const kUserDealsZipEndpoint = @"users/getdealsbyzip?um_zip=%@";
+NSString* const kUserUpdateLocationEndpoint = @"users/location";
 
 @implementation NetworkManager
 

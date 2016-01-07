@@ -11,6 +11,8 @@
 #import "CategoriesTableViewController.h"
 #import "TextField.h"
 #import "PreferencesTableViewController.h"
+#import "LocationManager.h"
+#import "Constants.h"
 
 @interface RegistrationViewController ()
 
@@ -42,6 +44,7 @@
     UIDatePicker *datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 200)];
     [datePicker addTarget:self action:@selector(dobSelected:) forControlEvents:UIControlEventValueChanged];
     datePicker.datePickerMode = UIDatePickerModeDate;
+    datePicker.maximumDate = [NSDate date];
     self.dobField.inputView = datePicker;
     self.dobField.tintColor = [UIColor clearColor];
     
@@ -127,23 +130,63 @@
                              @"gender" : [NSNumber numberWithInteger:gender]};
     NSLog(@"%@", params);
     */
-    
-    [User createUserWithEmail:self.emailField.text
-                     password:self.passwordField.text
-                    firstName:self.firstNameField.text
-                     lastName:self.lastNameField.text
-                          dob:self.dob
-                       gender:[NSNumber numberWithInteger:gender]
-                        block:^void(NSDictionary* response) {
-        NSLog(@"%@", response);
-        if ([response valueForKey:@"error"] == nil) {
-            PreferencesTableViewController *prefVC = [[PreferencesTableViewController alloc] init];
-            [self.navigationController pushViewController:prefVC animated:YES];
-        } else {
-            NSLog(@"error registering account");
-            // Display error message to user.
+    NSString* errors = [self validateForm];
+    if (errors.length == 0) {
+        [User createUserWithEmail:self.emailField.text
+                         password:self.passwordField.text
+                        firstName:self.firstNameField.text
+                         lastName:self.lastNameField.text
+                              dob:self.dob
+                           gender:[NSNumber numberWithInteger:gender]
+                            block:^void(NSDictionary* response) {
+                                NSLog(@"%@", response);
+                                if (!response) {
+                                    // update user with deviceid + timezone
+                                    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                                    NSDictionary *userAttr = @{@"um_deviceidios": [defaults objectForKey:kUserNotificationToken],
+                                                               @"um_timezone":[NSTimeZone systemTimeZone]};
+                                    [User updateUserWithDictionary:userAttr block:^(NSDictionary * _Nonnull response) {
+                                        NSLog(@"user updated with timezone and deviceid");
+                                    }];
+                                    
+                                    PreferencesTableViewController *prefVC = [[PreferencesTableViewController alloc] init];
+                                    [self.navigationController pushViewController:prefVC animated:YES];
+                                } else {
+                                    NSLog(@"error registering account");
+                                    // Display error message to user.
+                                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Please fix error" message:[response valueForKey:@"message"] preferredStyle:UIAlertControllerStyleAlert];
+                                    
+                                    UIAlertAction* ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+                                    [alertController addAction:ok];
+                                    
+                                    [self presentViewController:alertController animated:YES completion:nil];
+                                }
+                            }];
+    } else {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Please fix error" message:errors preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction* ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+        [alertController addAction:ok];
+        
+        [self presentViewController:alertController animated:YES completion:nil];
+    }
+}
+
+- (NSString*)validateForm {
+    NSString* errors = @"";
+    for (TextField* tf in self.textfields) {
+        if (tf.text.length == 0) {
+            errors = @"Form fields cannot be empty";
         }
-    }];
+    }
+    
+    if (self.passwordField.text.length < 6) {
+        errors = [errors stringByAppendingString:@"\n Password is not at least 6 characters"];
+    } else if (self.passwordField.text == self.confirmPasswordField.text) {
+        errors = [errors stringByAppendingString:@"\n Passwords do not match"];
+    }
+    
+    return errors;
 }
 
 /*

@@ -22,15 +22,12 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.bigTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,
-                                                                       0,
-                                                                       self.frame.size.width,
-                                                                       140.0f)];
-        self.bigTitleLabel.font = [UIFont fontWithName:@"Helvetica" size:78.0f];
-        self.bigTitleLabel.adjustsFontSizeToFitWidth = YES;
-        self.bigTitleLabel.textColor = [UIColor whiteColor];
-        self.bigTitleLabel.textAlignment = NSTextAlignmentCenter;
-        [self addSubview:self.bigTitleLabel];
+        
+        float imageLength = self.frame.size.height/2;
+        
+        self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.frame.size.width/2 - imageLength/2, 0, imageLength, imageLength)];
+        
+        [self addSubview:self.imageView];
         
         self.smallTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,
                                                                          110.0f,

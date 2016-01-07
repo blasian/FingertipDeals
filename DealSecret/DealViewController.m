@@ -10,6 +10,7 @@
 #import "Deal.h"
 #import "LocationManager.h"
 
+
 @interface DealViewController ()
 
 @property IBOutlet MKMapView* mapView;
@@ -17,6 +18,7 @@
 @property IBOutlet UILabel* dealHeader;
 @property IBOutlet UILabel* dealContent;
 @property IBOutlet UILabel* dealDistance;
+@property IBOutlet DealButtonStrip* dealStrip;
 
 @end
 
@@ -24,12 +26,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    self.dealStrip.delegate = self;
     self.dealHeader.text = self.deal.header;
     self.dealContent.text = self.deal.content;
     self.navigationController.navigationBarHidden = NO;
     // Setup map settings.
     self.mapView.delegate = self;
+
     CLLocationCoordinate2D dealCoordinate = CLLocationCoordinate2DMake([self.deal.latitude doubleValue], [self.deal.longitude doubleValue]);
     MKCoordinateSpan mapSpan = MKCoordinateSpanMake(.01f, .01f);
     MKCoordinateRegion mapRegion = MKCoordinateRegionMake(dealCoordinate, mapSpan);
@@ -40,6 +43,24 @@
     [self.mapView addAnnotation:dealAnnotation];
     
     self.dealDistance.text = [NSString stringWithFormat:@"%d kms. away", self.deal.distance.intValue/1000];
+}
+
+#pragma mark ButtonStripDelegate Methods
+
+- (void)shareButtonPressed {
+    
+}
+
+- (void)timerButtonPressed {
+    
+}
+
+- (void)favButtonPressed {
+    
+}
+
+- (void)likeButtonPressed {
+    
 }
 
 - (void)didReceiveMemoryWarning {

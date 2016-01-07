@@ -42,12 +42,16 @@
     NSLog(@"EMAIL %@ \n PASS %@", email, password);
     [User loginWithEmail:email withPassword:password block:^(NSDictionary * _Nonnull response) {
         NSLog(@"%@", response);
-        if ([response valueForKey:@"error"] == nil) {
+        if (!response) {
             CategoriesTableViewController *dealsVC = [[CategoriesTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
             [self.navigationController pushViewController:dealsVC animated:YES];
         } else {
-            NSLog(@"an error has occured");
-            // display error message to user.
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Please fix error" message:[response valueForKey:@"message"] preferredStyle:UIAlertControllerStyleAlert];
+            
+            UIAlertAction* ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+            [alertController addAction:ok];
+            
+            [self presentViewController:alertController animated:YES completion:nil];
         }
     }];
 }
@@ -56,20 +60,6 @@
     [self.view endEditing:YES];
 }
 
-/*
-- (void)validateEmail:(id)sender {
-    FXFormTextFieldCell *cell = sender;
-
-    NSString* reg = @"[^@]+@[^.@]+(\\.[^.@]+)+";
-    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", reg];
-
-    if (![emailTest evaluateWithObject:cell.textField.text]) {
-        cell.textLabel.textColor = [UIColor redColor];
-    } else {
-        cell.textLabel.textColor = [UIColor blackColor];
-    }
-}
-*/
 /*
 #pragma mark - Navigation
 

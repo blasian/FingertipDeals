@@ -14,7 +14,7 @@
 - (void)awakeFromNib {
     // Initialization code
     self.backgroundColor = [UIColor clearColor];
-    self.backgroundImage.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.2f];
+    self.backgroundImage.backgroundColor = [UIColor colorWithRed:148.0f/255.0f green:200.0f/255.0f blue:235.0f/255.0f alpha:0.2f];
     
     self.dealLabel.textColor = [UIColor whiteColor];
     self.companyLabel.textColor = [UIColor whiteColor];

@@ -10,6 +10,6 @@
 
 @interface SubCategoryTableViewCell : UITableViewCell
 
-@property (nonatomic, weak) UIButton* checkButton;
+@property (nonatomic, strong) UIImageView* checkView;
 
 @end

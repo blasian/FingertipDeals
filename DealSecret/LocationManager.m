@@ -15,6 +15,7 @@ const float kLocationDistanceFilter = 1000.0f;
 @interface LocationManager ()
 
 @property (nonatomic, strong) CLLocationManager* locationManager;
+@property (nonatomic, strong) NSNumber* isUpdating;
 
 @end
 
@@ -28,6 +29,7 @@ const float kLocationDistanceFilter = 1000.0f;
         self.locationManager.distanceFilter = kLocationDistanceFilter;
         self.locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers;
         self.locationManager.delegate = self;
+        self.isUpdating = @NO;
         if ([self.locationManager respondsToSelector:@selector(allowsBackgroundLocationUpdates)]) {
             self.locationManager.allowsBackgroundLocationUpdates = YES;
         }
@@ -46,14 +48,17 @@ const float kLocationDistanceFilter = 1000.0f;
 
 - (void)stop {
     [self.locationManager stopUpdatingLocation];
+    self.isUpdating = @NO;
 }
 
 - (void)start {
     if ([self.locationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
         [self.locationManager requestAlwaysAuthorization];
     }
-    
-    [self.locationManager startUpdatingLocation];
+    if (!self.isUpdating.boolValue) {
+        [self.locationManager startUpdatingLocation];
+        self.isUpdating = @YES;
+    }
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
@@ -61,8 +66,8 @@ const float kLocationDistanceFilter = 1000.0f;
     self.location = locations.lastObject;
     NSMutableArray* params = [NSMutableArray new];
     for (CLLocation *location in locations) {
-        NSDictionary *locDict = @{@"latitude":[NSNumber numberWithFloat:self.location.coordinate.latitude],
-                                  @"longitude":[NSNumber numberWithFloat:self.location.coordinate.longitude]};
+        NSDictionary *locDict = @{@"um_lat":[NSNumber numberWithFloat:location.coordinate.latitude],
+                                  @"um_lon":[NSNumber numberWithFloat:location.coordinate.longitude]};
         [params addObject:locDict];
     }
     [User updateUserWithLocation:params

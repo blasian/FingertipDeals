@@ -10,6 +10,7 @@
 #import "DealsHeaderView.h"
 #import "DealViewController.h"
 #import "SettingsTableViewController.h"
+#import "ZipViewController.h"
 #import "LocationManager.h"
 #import "Deal.h"
 #import "User.h"
@@ -19,6 +20,7 @@
 #import "DealCategoryManager.h"
 #import "DealCategory.h"
 #import "DealSubCategory.h"
+#import "UIImageView+AFNetworking.h"
 
 const CGFloat kDealsNumberOfPages = 5;
 const CGFloat kNumberOfStaticCells = 3;
@@ -31,7 +33,7 @@ const CGFloat kDealsCategoryCellHeight = 100.0f;
 @property (nonatomic, strong) NSMutableArray *contentArray;
 @property (nonatomic, strong) UIPageControl *pageControl;
 @property (nonatomic, strong) NSFetchedResultsController* fetchedResultsController;
-@property (nonatomic, strong) NSMutableArray *rows;
+@property (nonatomic, strong) NSArray<DealCategory*> *categories;
 
 @end
 
@@ -112,7 +114,30 @@ const CGFloat kDealsCategoryCellHeight = 100.0f;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.tag = 1;
     
+    [User getUserClassesWithBlock:^(NSDictionary * _Nonnull response) {
+        NSMutableArray *catsDupe = [NSMutableArray array];
+        for (DealSubCategory* pref in [DealCategoryManager preferredSubCategories]) {
+            [catsDupe addObject:pref.belongsTo];
+        }
+        NSOrderedSet *set = [NSOrderedSet orderedSetWithArray:catsDupe];
+        self.categories = [set array];
+        [self.tableView reloadData];
+    }];
 }
+
+/*
+- (void)viewDidAppear:(BOOL)animated {
+    [User getUserClassesWithBlock:^(NSDictionary * _Nonnull response) {
+        NSMutableArray *catsDupe = [NSMutableArray array];
+        for (DealSubCategory* pref in [DealCategoryManager preferredSubCategories]) {
+            [catsDupe addObject:pref.belongsTo];
+        }
+        NSOrderedSet *set = [NSOrderedSet orderedSetWithArray:catsDupe];
+        self.categories = [set array];
+        [self.tableView reloadData];
+    }];
+}
+*/
 
 - (void)settingsButtonTapped {
     SettingsTableViewController *settingsVC = [[SettingsTableViewController alloc] init];
@@ -158,7 +183,7 @@ const CGFloat kDealsCategoryCellHeight = 100.0f;
             dispatch_async(dispatch_get_main_queue(), ^{
                 DealsHeaderView *header = self.contentArray[index];
                 Deal *deal = [[[self fetchedResultsController] fetchedObjects] objectAtIndex:index];
-                header.bigTitleLabel.text = deal.header;
+                [header.imageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://cms.fingertipdeals.com/%@", deal.imageUrl]]];
                 header.smallTitleLabel.text = deal.content;
             });
         } else {
@@ -193,7 +218,6 @@ const CGFloat kDealsCategoryCellHeight = 100.0f;
         cell = [[CategoryTableViewCell alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, kDealsCategoryCellHeight)];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
-    DealCategory* cat;
     NSString *header;
     NSString *subHeader;
     UIImage *image;
@@ -220,18 +244,7 @@ const CGFloat kDealsCategoryCellHeight = 100.0f;
             background = [UIImage imageNamed:@"category-frame-teal"];
             break;
         default:
-            if (1){}
-            NSArray* preferredSubCategories = [DealCategoryManager preferredSubCategories];
-            NSMutableArray* cats = [NSMutableArray array];
-            for (DealSubCategory* pref in preferredSubCategories) {
-                [cats addObject:pref.belongsTo];
-            }
-            // remove duplicate
-            NSOrderedSet *set = [NSOrderedSet orderedSetWithArray:cats];
-            NSArray *result = [set array];
-            
-            cat = result[indexPath.row - 3];
-            header = cat.title;
+            header = self.categories[indexPath.row - 3].title;
             subHeader = @"Near you";
             image = [UIImage imageNamed:@"utensiles"];
             background = [UIImage imageNamed:@"category-frame-dark-blue"];
@@ -258,12 +271,17 @@ const CGFloat kDealsCategoryCellHeight = 100.0f;
         case 0:
             vc = [[DealsTableViewController alloc] init];
             break;
+        case 1:
+            vc = [[ZipViewController alloc] init];
+            break;
         case 2:
             vc = [[DealsMapViewController alloc] init];
             ((DealsMapViewController*)vc).location = [LocationManager sharedInstance].location;
             break;
         default:
-            return;
+            vc = [[DealsMapViewController alloc] init];
+            ((DealsMapViewController*)vc).location = [LocationManager sharedInstance].location;
+            ((DealsMapViewController*)vc).category = self.categories[indexPath.row-3];
     }
     
     [self.navigationController pushViewController:vc animated:YES];
