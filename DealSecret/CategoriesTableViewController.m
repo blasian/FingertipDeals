@@ -270,6 +270,7 @@ const CGFloat kDealsCategoryCellHeight = 100.0f;
     switch (indexPath.row) {
         case 0:
             vc = [[DealsTableViewController alloc] init];
+            self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:self.navigationItem.backBarButtonItem.style target:nil action:nil];
             break;
         case 1:
             vc = [[ZipViewController alloc] init];

@@ -87,6 +87,11 @@
 - (void)refreshAnnotations {
     [self fetch];
     [self.mapView removeAnnotations:self.mapView.annotations];
+    MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+    annotation.coordinate = self.location.coordinate;
+    annotation.title = self.annotation_title;
+    [self.mapView setSelectedAnnotations:@[annotation]];
+    [self.mapView addAnnotation:annotation];
     for (Deal *deal in self.deals) {
         MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
         annotation.coordinate = CLLocationCoordinate2DMake(deal.latitude.floatValue, deal.longitude.floatValue);

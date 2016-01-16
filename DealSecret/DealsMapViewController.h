@@ -16,6 +16,7 @@
 @interface DealsMapViewController : UIViewController <MKMapViewDelegate, NSFetchedResultsControllerDelegate>
 
 @property (nonatomic, strong) CLLocation *location;
+@property (nonatomic, strong) NSString *annotation_title;
 @property (nonatomic, strong) DealCategory *category;
 @property (nonatomic, strong) NSArray<Deal*> *deals;
 

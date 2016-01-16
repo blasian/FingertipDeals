@@ -14,7 +14,7 @@
 #import "NetworkManager.h"
 #import "DealCategoryManager.h"
 
-const float kDealCellHeight = 100.0f;
+const float kDealCellHeight = 90.0f;
 
 @interface DealsTableViewController ()
 
@@ -51,19 +51,29 @@ const float kDealCellHeight = 100.0f;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
     self.title = @"Current Deals";
     self.navigationController.navigationBarHidden = NO;
     [self.tableView registerNib:[UINib nibWithNibName:@"DealTableViewCell" bundle:nil] forCellReuseIdentifier:@"DealCell"];
     self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"form_background"]];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
 }
+
+/*
+-(NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    UITableViewRowAction *shareAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"Share" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
+        //insert your editAction here
+    }];
+    shareAction.backgroundColor = [UIColor blueColor];
+    
+    UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"Delete"  handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
+        //insert your deleteAction here
+    }];
+    deleteAction.backgroundColor = [UIColor redColor];
+    return @[deleteAction,shareAction];
+}
+*/
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -98,23 +108,28 @@ const float kDealCellHeight = 100.0f;
     } else {
         cell.companyImage = nil;
     }
-    cell.companyLabel.text = deal.header;
-    cell.subtitleLabel.text = deal.content;
+    cell.dealLabel.text = deal.header;
+    cell.companyLabel.text = deal.content;
+    cell.subtitleLabel.text = @"";
     NSString *distanceText;
     if (deal.distance.intValue < 500) {
         distanceText = [NSString stringWithFormat:@"%.2fm", deal.distance.floatValue];
     } else if (deal.distance.intValue < 100000) {
-        distanceText = [NSString stringWithFormat:@"%.2fkm", deal.distance.floatValue / 1000.0];
+        distanceText = [NSString stringWithFormat:@"%.1fkm", deal.distance.floatValue / 1000.0];
     } else {
         distanceText = @"100+km";
     }
     cell.distanceLabel.text = [NSString stringWithFormat: @"%@", distanceText];
-    
+    if (deal.distance.intValue > 5000) {
+        cell.distanceMeterView.backgroundColor = [UIColor colorWithRed:182.0f/255.0f green:76.0f/255.0f blue:76.0f/255.0f alpha:0.9];
+    } else {
+        cell.distanceMeterView.backgroundColor = [UIColor colorWithRed:143.0f/255.0f green:174.0f/255.0f blue:36.0f/255.0f alpha:0.9];
+    }
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return kDealCellHeight + 15.0f;
+    return kDealCellHeight;
 }
 
 #pragma mark - Navigation

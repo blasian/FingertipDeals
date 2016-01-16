@@ -41,6 +41,9 @@
     self.navigationController.navigationBar.topItem.title = @"Fignertip Deals";
 //    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
     
+//    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60) forBarMetrics:UIBarMetricsDefault];
+
+    
     self.window.rootViewController = self.navigationController;
     
     if ([application respondsToSelector:@selector(isRegisteredForRemoteNotifications)]) {

@@ -16,10 +16,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Qbb-kp-DSf">
-                        <rect key="frame" x="0.0" y="5" width="320" height="89"/>
-                    </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ljB-NR-PZc">
-                        <rect key="frame" x="8" y="8" width="83" height="83"/>
+                        <rect key="frame" x="0.0" y="5" width="320" height="90"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Deal" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rD1-f7-nuw">
                         <rect key="frame" x="99" y="8" width="213" height="29"/>
@@ -28,23 +25,24 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Company Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VLy-nt-IcQ">
-                        <rect key="frame" x="99" y="41" width="213" height="21"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Info" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cvM-f9-bcm">
-                        <rect key="frame" x="99" y="70" width="213" height="21"/>
+                        <rect key="frame" x="99" y="41" width="213" height="45"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="100m" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qti-o1-0wh">
                         <rect key="frame" x="229" y="27" width="83" height="21"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FXl-Ay-i1H">
+                        <rect key="frame" x="268" y="45" width="46" height="13"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ljB-NR-PZc">
+                        <rect key="frame" x="20" y="18" width="63" height="63"/>
+                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="Qbb-kp-DSf" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-3" id="3N2-qe-KGI"/>
@@ -61,8 +59,9 @@
                 <outlet property="companyLabel" destination="VLy-nt-IcQ" id="t59-zS-62m"/>
                 <outlet property="dealLabel" destination="rD1-f7-nuw" id="c9m-0B-Dgq"/>
                 <outlet property="distanceLabel" destination="qti-o1-0wh" id="Npw-ye-qag"/>
-                <outlet property="subtitleLabel" destination="cvM-f9-bcm" id="Caa-JD-2Hh"/>
+                <outlet property="distanceMeterView" destination="FXl-Ay-i1H" id="jGT-N9-yHX"/>
             </connections>
+            <point key="canvasLocation" x="158" y="274"/>
         </tableViewCell>
     </objects>
 </document>

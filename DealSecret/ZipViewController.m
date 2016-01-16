@@ -15,6 +15,7 @@
 
 @property (nonatomic, strong) CLGeocoder* geo;
 @property (nonatomic, strong) TextField* zipField;
+@property (nonatomic, strong) UILabel* headerLabel;
 
 @end
 
@@ -30,7 +31,16 @@
     
     UIImageView *background = [[UIImageView alloc] initWithFrame:self.view.frame];
     background.image = [UIImage imageNamed:@"form_background"];
-    self.zipField = [[TextField alloc] initWithFrame:CGRectMake(10, 100, self.view.frame.size.width - 20, 50)];
+    
+    self.headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 150, self.view.frame.size.width - 40, 100)];
+    self.headerLabel.text = @"Choose your Location";
+    self.headerLabel.textColor = [UIColor whiteColor];
+    self.headerLabel.textAlignment = NSTextAlignmentCenter;
+    self.headerLabel.numberOfLines = 1;
+    self.headerLabel.minimumScaleFactor = .2;
+    self.headerLabel.adjustsFontSizeToFitWidth = YES;
+    
+    self.zipField = [[TextField alloc] initWithFrame:CGRectMake(10, self.headerLabel.frame.origin.y + 100, self.view.frame.size.width - 20, 50)];
     self.zipField.placeholder = @"Address";
     self.zipField.textAlignment = NSTextAlignmentCenter;
     self.zipField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:self.zipField.placeholder attributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
@@ -39,6 +49,7 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Next" style:UIBarButtonItemStylePlain target:self action:@selector(next)];
     
     [self.view addSubview:background];
+    [self.view addSubview:self.headerLabel];
     [self.view addSubview:self.zipField];
     [self.view addGestureRecognizer:tapGR];
 }
@@ -59,6 +70,7 @@
                  completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
                      if (!error) {
                          DealsMapViewController* mapVC = [[DealsMapViewController alloc] init];
+                         mapVC.annotation_title = [placemarks firstObject].name;
                          mapVC.location = [placemarks firstObject].location;
                          [self.navigationController pushViewController:mapVC animated:YES];
                      } else {
