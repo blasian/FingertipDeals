@@ -229,25 +229,25 @@ const CGFloat kDealsCategoryCellHeight = 100.0f;
             header = @"Current Deals";
             subHeader = @"Near You";
             image = [UIImage imageNamed:@"lightening"];
-            background = [UIImage imageNamed:@"category-frame-green"];
+            background = [UIImage imageNamed:@"category-red"];
             break;
         case 1:
             header = @"Location Deals";
             subHeader = @"Choose Your Location";
-            image = [UIImage imageNamed:@"map-marker"];
-            background = [UIImage imageNamed:@"category-frame-yellow"];
+            image = [UIImage imageNamed:@"location_white"];
+            background = [UIImage imageNamed:@"category-green"];
             break;
         case 2:
             header = @"All Deals";
             subHeader = @"Around You";
             image = [UIImage imageNamed:@"map"];
-            background = [UIImage imageNamed:@"category-frame-teal"];
+            background = [UIImage imageNamed:@"category-yellow"];
             break;
         default:
             header = self.categories[indexPath.row - 3].title;
             subHeader = @"Near you";
             image = [UIImage imageNamed:@"utensiles"];
-            background = [UIImage imageNamed:@"category-frame-dark-blue"];
+            background = [UIImage imageNamed:@"category-blue"];
             break;
     }
 

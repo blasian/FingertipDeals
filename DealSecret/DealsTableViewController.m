@@ -8,13 +8,14 @@
 
 #import "DealsTableViewController.h"
 #import "Deal.h"
-#import "DealTableViewCell.h"
 #import "DealViewController.h"
 #import "UIImageView+AFNetworking.h"
 #import "NetworkManager.h"
+#import "LocationManager.h"
 #import "DealCategoryManager.h"
+#import "User.h"
 
-const float kDealCellHeight = 90.0f;
+const float kDealCellHeight = 100.0f;
 
 @interface DealsTableViewController ()
 
@@ -49,38 +50,36 @@ const float kDealCellHeight = 90.0f;
     }
 }
 
+- (void)dealSelected:(DealTableViewCell*)cell {
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
     self.title = @"Current Deals";
     self.navigationController.navigationBarHidden = NO;
-    [self.tableView registerNib:[UINib nibWithNibName:@"DealTableViewCell" bundle:nil] forCellReuseIdentifier:@"DealCell"];
+    
+    [self.tableView registerClass:[DealTableViewCell class] forCellReuseIdentifier:@"DealCell"];
+    
     self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"form_background"]];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [self refreshDeals];
 }
 
-/*
--(NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    UITableViewRowAction *shareAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"Share" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
-        //insert your editAction here
-    }];
-    shareAction.backgroundColor = [UIColor blueColor];
-    
-    UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"Delete"  handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
-        //insert your deleteAction here
-    }];
-    deleteAction.backgroundColor = [UIColor redColor];
-    return @[deleteAction,shareAction];
+- (void)refreshDeals {
+    [User getDealsWithLatitude:[NSString stringWithFormat:@"%f", [LocationManager sharedInstance].location.coordinate.latitude]
+                     longitude:[NSString stringWithFormat:@"%f", [LocationManager sharedInstance].location.coordinate.longitude]
+                         block:^(NSDictionary * _Nonnull response) {
+                             [self.tableView reloadData];
+                         }];
 }
-*/
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-
 
 #pragma mark - Table view data source
 
@@ -101,7 +100,9 @@ const float kDealCellHeight = 90.0f;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     DealTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DealCell" forIndexPath:indexPath];
-    
+    if (!cell.delegate) {
+        cell.delegate = self;
+    }
     Deal *deal = [[self.fetchedResultsController fetchedObjects] objectAtIndex:indexPath.row];
     if (deal.imageUrl.length > 0) {
         [cell.companyImage setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://cms.fingertipdeals.com/%@", deal.imageUrl]]];
@@ -109,8 +110,8 @@ const float kDealCellHeight = 90.0f;
         cell.companyImage = nil;
     }
     cell.dealLabel.text = deal.header;
-    cell.companyLabel.text = deal.content;
-    cell.subtitleLabel.text = @"";
+//    cell.companyLabel.text = deal.content;
+//    cell.subtitleLabel.text = @"";
     NSString *distanceText;
     if (deal.distance.intValue < 500) {
         distanceText = [NSString stringWithFormat:@"%.2fm", deal.distance.floatValue];
@@ -136,47 +137,5 @@ const float kDealCellHeight = 90.0f;
 - (void)backButtonPressed:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }
-
-/*
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- } */
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 @end

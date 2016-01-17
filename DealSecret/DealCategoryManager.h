@@ -18,5 +18,7 @@
 + (DealCategory*)categoryWithIndex:(NSUInteger)index;
 + (DealSubCategory*)subCategoryWithIndexPath:(NSIndexPath*)indexPath;
 + (NSArray*)subCategoriesForCategoryWithIndex:(NSUInteger)index;
++ (void)getSectionsWithBlock:(void(^)())block;
++ (void)getSubsectionsForSection:(NSString*)section withBlock:(void(^)())block;
 
 @end

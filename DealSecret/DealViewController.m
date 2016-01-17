@@ -48,7 +48,7 @@
 #pragma mark ButtonStripDelegate Methods
 
 - (void)shareButtonPressed {
-    
+
 }
 
 - (void)timerButtonPressed {

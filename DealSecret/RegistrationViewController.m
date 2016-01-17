@@ -182,7 +182,7 @@
     
     if (self.passwordField.text.length < 6) {
         errors = [errors stringByAppendingString:@"\n Password is not at least 6 characters"];
-    } else if (self.passwordField.text == self.confirmPasswordField.text) {
+    } else if ([self.passwordField.text isEqualToString:self.confirmPasswordField.text]) {
         errors = [errors stringByAppendingString:@"\n Passwords do not match"];
     }
     

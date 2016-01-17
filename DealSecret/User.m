@@ -211,6 +211,23 @@
     [[NetworkManager sharedInstance] GET:route
                               parameters:nil
                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+                                     
+                                     // removes all deals from core data
+                                     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+                                     NSManagedObjectContext* c = [ManagedObject context];
+                                     [fetchRequest setEntity:[NSEntityDescription entityForName:@"Deal" inManagedObjectContext:c]];
+                                     [fetchRequest setIncludesPropertyValues:NO]; //only fetch the managedObjectID
+                                     
+                                     NSError *error = nil;
+                                     NSArray *deals = [c executeFetchRequest:fetchRequest error:&error];
+                                     
+                                     //error handling goes here
+                                     for (NSManagedObject *deal in deals) {
+                                         [c deleteObject:deal];
+                                     }
+                                     NSError *saveError = nil;
+                                     [c save:&saveError];
+                                     
                                      NSDictionary *dealsDict = [responseObject valueForKey:@"data"];
                                      for (NSDictionary *dealDict in dealsDict) {
                                          NSString* dealId = [dealDict valueForKeyPath:@"dm_no"];
@@ -263,7 +280,6 @@
             block(@{});
         }
     }];
-    
 }
 
 + (void)getCategoriesWithLevel:(NSNumber*)lnum
@@ -386,11 +402,28 @@
                    withLongitude:(NSString*)lon
                        withBlock:(void (^)(NSDictionary*))block {
     [[NetworkManager sharedInstance] GET:[NSString stringWithFormat:kUserDealsWithClassEndpoint, category.title, lat, lon] parameters:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+        
+        // remove all previous deals in this category
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+        NSManagedObjectContext* c = [ManagedObject context];
+        [fetchRequest setEntity:[NSEntityDescription entityForName:@"Deal" inManagedObjectContext:c]];
+        [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"category.title LiKE %@", category.title]];
+        [fetchRequest setIncludesPropertyValues:NO]; //only fetch the managedObjectID
+        
+        NSError *error = nil;
+        NSArray *deals = [c executeFetchRequest:fetchRequest error:&error];
+
+        //error handling goes here
+        for (NSManagedObject *deal in deals) {
+            [c deleteObject:deal];
+        }
+        NSError *saveError = nil;
+        [c save:&saveError];
+        
         NSDictionary *dealsDict = [responseObject valueForKey:@"data"];
         for (NSDictionary *dealDict in dealsDict) {
             NSString* dealId = [dealDict valueForKeyPath:@"dm_no"];
-            NSManagedObjectContext* c = [ManagedObject context];
-            NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+            fetchRequest = [[NSFetchRequest alloc] init];
             NSEntityDescription *entity = [NSEntityDescription entityForName:@"Deal"
                                                       inManagedObjectContext:c];
             [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"dealId == %@",

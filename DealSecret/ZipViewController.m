@@ -32,6 +32,9 @@
     UIImageView *background = [[UIImageView alloc] initWithFrame:self.view.frame];
     background.image = [UIImage imageNamed:@"form_background"];
     
+    UIImageView *headerIcon = [[UIImageView alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2 - 25.0f, 125.0f, 50.0f, 50.0f)];
+    headerIcon.image = [UIImage imageNamed:@"location_white"];
+    
     self.headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 150, self.view.frame.size.width - 40, 100)];
     self.headerLabel.text = @"Choose your Location";
     self.headerLabel.textColor = [UIColor whiteColor];
@@ -49,6 +52,7 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Next" style:UIBarButtonItemStylePlain target:self action:@selector(next)];
     
     [self.view addSubview:background];
+    [self.view addSubview:headerIcon];
     [self.view addSubview:self.headerLabel];
     [self.view addSubview:self.zipField];
     [self.view addGestureRecognizer:tapGR];

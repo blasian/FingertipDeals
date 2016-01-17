@@ -14,6 +14,22 @@
 
 @implementation DealCategoryManager
 
++ (void)getSectionsWithBlock:(void(^)())block {
+    [User getCategoriesWithLevel:@1 withClass:nil withBlock:^(NSDictionary * _Nonnull response) {
+        if (block) {
+            block();
+        }
+    }];
+}
+
++ (void)getSubsectionsForSection:(NSString*)section withBlock:(void(^)())block {
+    [User getCategoriesWithLevel:@2 withClass:section withBlock:^(NSDictionary * _Nonnull response) {
+        if (block) {
+            block();
+        }
+    }];
+}
+
 // returns array of categories that are preferred by the the user
 + (NSArray*)preferredSubCategories {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];

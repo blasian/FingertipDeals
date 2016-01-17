@@ -35,8 +35,13 @@
     self.navigationController.navigationBarHidden = NO;
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Next" style:UIBarButtonItemStylePlain target:self action:@selector(nextButtonPressed)];
-    [self getSections];
-    [self getUserSubSections];
+    [DealCategoryManager getSectionsWithBlock:^{
+        for (int i=0;i<[DealCategoryManager categories].count;i++) {
+            [self.expandedSections addObject:@0];
+        }
+        [self.tableView reloadData];
+    }];
+    [self getPreferredSubSections];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -44,26 +49,9 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)getUserSubSections {
+- (void)getPreferredSubSections {
     [User getUserClassesWithBlock:^(NSDictionary * _Nonnull response) {
         [self.tableView reloadData];
-    }];
-}
-
-- (void)getSections {
-    [User getCategoriesWithLevel:@1 withClass:nil withBlock:^(NSDictionary * _Nonnull response) {
-        for (int i=0;i<[DealCategoryManager categories].count;i++) {
-            [self.expandedSections addObject:@0];
-        }
-        [self.tableView reloadData];
-    }];
-}
-
-- (void)getSubsectionsForSection:(NSString*)section withBlock:(void(^)())block {
-    [User getCategoriesWithLevel:@2 withClass:section withBlock:^(NSDictionary * _Nonnull response) {
-        if (block) {
-            block();
-        }
     }];
 }
 
@@ -74,7 +62,7 @@
         BOOL isSelected = [self.expandedSections[indexPath.section]  isEqual: @1];
         self.expandedSections[indexPath.section] = isSelected ? @0 : @1;
         NSString* sectionName = [DealCategoryManager categoryWithIndex:indexPath.section].title;
-        [self getSubsectionsForSection:sectionName withBlock:^{
+        [DealCategoryManager getSubsectionsForSection:sectionName withBlock:^{
             [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
         }];
     } else {
