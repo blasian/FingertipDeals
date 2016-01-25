@@ -38,7 +38,6 @@
 		589A0F5F1C07D22800458E52 /* DealsHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 589A0F5E1C07D22800458E52 /* DealsHeaderView.m */; };
 		589A0F631C0BB0B100458E52 /* DealTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 589A0F621C0BB0B100458E52 /* DealTableViewCell.m */; };
 		589A0F6D1C0FFC7400458E52 /* DealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 589A0F6B1C0FFC7400458E52 /* DealViewController.m */; };
-		589A0F6E1C0FFC7400458E52 /* DealViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 589A0F6C1C0FFC7400458E52 /* DealViewController.xib */; };
 		589A0F701C10312900458E52 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 589A0F6F1C10312900458E52 /* MapKit.framework */; };
 		589A0F791C10487F00458E52 /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 589A0F771C10487F00458E52 /* SettingsTableViewController.m */; };
 		589A0F7A1C10487F00458E52 /* SettingsTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 589A0F781C10487F00458E52 /* SettingsTableViewController.xib */; };
@@ -113,7 +112,6 @@
 		589A0F621C0BB0B100458E52 /* DealTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealTableViewCell.m; sourceTree = "<group>"; };
 		589A0F6A1C0FFC7400458E52 /* DealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealViewController.h; sourceTree = "<group>"; };
 		589A0F6B1C0FFC7400458E52 /* DealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealViewController.m; sourceTree = "<group>"; };
-		589A0F6C1C0FFC7400458E52 /* DealViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DealViewController.xib; sourceTree = "<group>"; };
 		589A0F6F1C10312900458E52 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		589A0F761C10487F00458E52 /* SettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsTableViewController.h; sourceTree = "<group>"; };
 		589A0F771C10487F00458E52 /* SettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsTableViewController.m; sourceTree = "<group>"; };
@@ -171,7 +169,6 @@
 				58028ED41C19610C00933E10 /* RegistrationViewController.xib */,
 				58028EDA1C19692E00933E10 /* SplashScreenViewController.xib */,
 				58028EDF1C196E4F00933E10 /* LoginViewController.xib */,
-				589A0F6C1C0FFC7400458E52 /* DealViewController.xib */,
 				58DB630F1C26035800B3D9F6 /* PreferencesTableViewController.xib */,
 			);
 			name = Nibs;
@@ -363,6 +360,9 @@
 							com.apple.BackgroundModes = {
 								enabled = 1;
 							};
+							com.apple.Push = {
+								enabled = 0;
+							};
 						};
 					};
 				};
@@ -395,7 +395,6 @@
 				589A0F7A1C10487F00458E52 /* SettingsTableViewController.xib in Resources */,
 				58933F9D1C0115950013BCF2 /* LaunchScreen.storyboard in Resources */,
 				583A488D1C1D7E26001F8146 /* DealTableViewCell.xib in Resources */,
-				589A0F6E1C0FFC7400458E52 /* DealViewController.xib in Resources */,
 				58028ED61C19610C00933E10 /* RegistrationViewController.xib in Resources */,
 				58933F9A1C0115950013BCF2 /* Assets.xcassets in Resources */,
 				58933F951C0115940013BCF2 /* Main.storyboard in Resources */,

@@ -10,6 +10,7 @@
 #import "Deal.h"
 #import "DealCategory.h"
 #import "DealSubCategory.h"
+#import "DealCategoryManager.h"
 #import "NetworkManager.h"
 #import "Constants.h"
 
@@ -206,7 +207,7 @@
 + (void)getDealsWithLatitude:(NSString*)lat
                    longitude:(NSString*)lon
                        block:(void (^)(NSDictionary* _Nonnull))block {
-    NSString *route = [NSString stringWithFormat:kUserDealsEndpoint, lat, lon];
+    NSString *route = [NSString stringWithFormat:kUserDealsByLocationEndpoint, lat, lon];
     
     [[NetworkManager sharedInstance] GET:route
                               parameters:nil
@@ -383,7 +384,7 @@
                 subCategory = [[DealSubCategory alloc] initWithTitle:subCategoryTitle];
                 subCategory.belongsTo = category;
             }
-            subCategory.preferred = @YES;
+            subCategory.isPreferred = @YES;
             [subCategory save];
         }
         if (block) {
@@ -402,7 +403,6 @@
                    withLongitude:(NSString*)lon
                        withBlock:(void (^)(NSDictionary*))block {
     [[NetworkManager sharedInstance] GET:[NSString stringWithFormat:kUserDealsWithClassEndpoint, category.title, lat, lon] parameters:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
-        
         // remove all previous deals in this category
         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
         NSManagedObjectContext* c = [ManagedObject context];
@@ -435,10 +435,10 @@
                                   error:&error] != 0) {
                 NSArray *fetchedObjects = [c executeFetchRequest:fetchRequest error:&error];
                 deal = [fetchedObjects firstObject];
-            }
-            else {
+            } else {
                 deal = [[Deal alloc] initWithAttributes:dealDict];
             }
+            deal.category = category;
             [deal save];
         }
         if (block) {
@@ -450,16 +450,16 @@
 }
 
 + (void)setUserClassesWithBlock:(void (^)(NSDictionary*))block {
+    NSMutableArray *paramsArray = [NSMutableArray array];
     NSManagedObjectContext* c = [ManagedObject context];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"DealSubCategory"
-                                              inManagedObjectContext:c];
-    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"preferred == YES"]];
-    [fetchRequest setEntity:entity];
+    [fetchRequest setEntity:[NSEntityDescription entityForName:@"DealSubCategory"
+                                        inManagedObjectContext:c]];
+    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"isPreferred == YES or belongsTo.isPreferred == YES"]];
     
     NSError* error;
     NSArray* results = [c executeFetchRequest:fetchRequest error:&error];
-    NSMutableArray *paramsArray = [NSMutableArray array];
+    
     for (DealSubCategory* subCat in results) {
         NSMutableDictionary *param = [NSMutableDictionary dictionary];
         param[@"c1_type"] = subCat.belongsTo.title;

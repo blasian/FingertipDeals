@@ -19,6 +19,7 @@
 
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray<NSNumber*> *expandedSections;
+@property (nonatomic, strong) NSMutableArray<NSNumber*> *allSelected;
 
 @end
 
@@ -38,6 +39,7 @@
     [DealCategoryManager getSectionsWithBlock:^{
         for (int i=0;i<[DealCategoryManager categories].count;i++) {
             [self.expandedSections addObject:@0];
+            [self.allSelected addObject:@0];
         }
         [self.tableView reloadData];
     }];
@@ -65,10 +67,14 @@
         [DealCategoryManager getSubsectionsForSection:sectionName withBlock:^{
             [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
         }];
+    } else if (indexPath.row == 1) {
+        DealCategory* cat = [DealCategoryManager categoryWithIndex:indexPath.section];
+        cat.isPreferred = cat.isPreferred.boolValue ? @NO : @YES;
+        [cat save];
+        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     } else {
-        DealSubCategory* subCat = [DealCategoryManager subCategoryWithIndexPath:[NSIndexPath indexPathForRow:indexPath.row - 1 inSection:indexPath.section]];
-        
-        subCat.preferred = subCat.preferred.boolValue ? @NO : @YES;
+        DealSubCategory* subCat = [DealCategoryManager subCategoryWithIndexPath:[NSIndexPath indexPathForRow:indexPath.row - 2 inSection:indexPath.section]];
+        subCat.isPreferred = subCat.isPreferred.boolValue ? @NO : @YES;
         [subCat save];
         [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
@@ -83,7 +89,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger length = 1;
     if (self.expandedSections[section].intValue == 1) {
-        length = [[DealCategoryManager subCategoriesForCategoryWithIndex:section] count] + 1;
+        length = [[DealCategoryManager subCategoriesForCategoryWithIndex:section] count] + 2;
     }
     
     return length;
@@ -91,27 +97,29 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     // disguise first cell as header cell for expanding
-    
     if (indexPath.row == 0) {
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HeaderCell" forIndexPath:indexPath];
+        SubCategoryTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
         cell.backgroundColor = [UIColor clearColor];
         cell.textLabel.textColor = [UIColor whiteColor];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.textLabel.text = [DealCategoryManager categoryWithIndex:indexPath.section].title;
         cell.textLabel.textAlignment = NSTextAlignmentCenter;
+        cell.checkView.image = self.expandedSections[indexPath.section].boolValue ? [UIImage imageNamed:@"checkmark"] : [UIImage imageNamed:@"checkmark_unchecked"];
         return cell;
     } else {
         SubCategoryTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
         cell.backgroundColor = [UIColor clearColor];
         cell.textLabel.textColor = [UIColor whiteColor];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        DealSubCategory *sub = [DealCategoryManager subCategoryWithIndexPath:[NSIndexPath indexPathForRow:indexPath.row - 1 inSection:indexPath.section]];
-        cell.textLabel.text = sub.title;
         cell.textLabel.textAlignment = NSTextAlignmentRight;
-        if (sub.preferred.boolValue) {
-            cell.checkView.image = [UIImage imageNamed:@"checkmark"];;
+        if (indexPath.row == 1) {
+            cell.textLabel.text = @"All";
+            DealCategory* cat = [DealCategoryManager categoryWithIndex:indexPath.section];
+            cell.checkView.image = cat.isPreferred.boolValue ? [UIImage imageNamed:@"checkmark"] : [UIImage imageNamed:@"checkmark_unchecked"];
         } else {
-            cell.checkView.image = [UIImage imageNamed:@"checkmark_unchecked"];
+            DealSubCategory *sub = [DealCategoryManager subCategoryWithIndexPath:[NSIndexPath indexPathForRow:indexPath.row - 2 inSection:indexPath.section]];
+            cell.textLabel.text = sub.title;
+            cell.checkView.image = sub.isPreferred.boolValue ? [UIImage imageNamed:@"checkmark"] : [UIImage imageNamed:@"checkmark_unchecked"];
         }
         return cell;
     }

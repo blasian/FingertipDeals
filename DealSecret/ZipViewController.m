@@ -44,17 +44,22 @@
     self.headerLabel.adjustsFontSizeToFitWidth = YES;
     
     self.zipField = [[TextField alloc] initWithFrame:CGRectMake(10, self.headerLabel.frame.origin.y + 100, self.view.frame.size.width - 20, 50)];
-    self.zipField.placeholder = @"Address";
+    self.zipField.placeholder = @"Postal Code";
     self.zipField.textAlignment = NSTextAlignmentCenter;
     self.zipField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:self.zipField.placeholder attributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     self.zipField.delegate = self;
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Next" style:UIBarButtonItemStylePlain target:self action:@selector(next)];
     
+    UIButton* nextButton = [[UIButton alloc] initWithFrame:CGRectMake((self.view.frame.size.width - 75.0f)/2, self.view.frame.size.height - 150.0f, 75.0f, 75.0f)];
+    [nextButton setImage:[UIImage imageNamed:@"next_button"] forState:UIControlStateNormal];
+    [nextButton addTarget:self action:@selector(next) forControlEvents:UIControlEventTouchUpInside];
+    
     [self.view addSubview:background];
     [self.view addSubview:headerIcon];
     [self.view addSubview:self.headerLabel];
     [self.view addSubview:self.zipField];
+    [self.view addSubview:nextButton];
     [self.view addGestureRecognizer:tapGR];
 }
 

@@ -143,7 +143,12 @@
                                 if (!response) {
                                     // update user with deviceid + timezone
                                     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                                    NSDictionary *userAttr = @{@"um_deviceidios": [defaults objectForKey:kUserNotificationToken],
+                                    NSString *deviceId = [defaults objectForKey:kUserNotificationToken];
+                                    if (!deviceId) {
+                                        deviceId = @"";
+                                    }
+
+                                    NSDictionary *userAttr = @{@"um_deviceidios": deviceId,
                                                                @"um_timezone":[NSTimeZone systemTimeZone]};
                                     [User updateUserWithDictionary:userAttr block:^(NSDictionary * _Nonnull response) {
                                         NSLog(@"user updated with timezone and deviceid");
@@ -182,7 +187,7 @@
     
     if (self.passwordField.text.length < 6) {
         errors = [errors stringByAppendingString:@"\n Password is not at least 6 characters"];
-    } else if ([self.passwordField.text isEqualToString:self.confirmPasswordField.text]) {
+    } else if (![self.passwordField.text isEqualToString:self.confirmPasswordField.text]) {
         errors = [errors stringByAppendingString:@"\n Passwords do not match"];
     }
     

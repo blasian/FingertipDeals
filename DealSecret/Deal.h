@@ -11,10 +11,12 @@
 #import <CoreData/CoreData.h>
 #import <UIKit/UIKit.h>
 #import "ManagedObject.h"
+#import "DealCategory.h"
+#import "DealSubCategory.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface Deal : ManagedObject
+@interface Deal : ManagedObject <MKAnnotation>
 
 - (instancetype)initWithAttributes:(NSDictionary*)attributes;
 
@@ -24,7 +26,8 @@ NS_ASSUME_NONNULL_BEGIN
  * @return NSNumber distance in meters.
  */
 - (NSNumber*)distance;
-
+- (NSString*)title;
+- (CLLocationCoordinate2D)coordinate;
 
 @end
 

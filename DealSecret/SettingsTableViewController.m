@@ -10,6 +10,7 @@
 #import "SplashScreenViewController.h"
 #import "PreferencesTableViewController.h"
 #import "Constants.h"
+#import "ManagedObject.h"
 
 @interface SettingsTableViewController ()
 
@@ -99,6 +100,30 @@
 - (void)signOut {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setBool:NO forKey:kUserPersistenceKey];
+    
+    // remove all cached data
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSManagedObjectContext* c = [ManagedObject context];
+    [fetchRequest setEntity:[NSEntityDescription entityForName:@"Deal" inManagedObjectContext:c]];
+    [fetchRequest setIncludesPropertyValues:NO]; //only fetch the managedObjectID
+    
+    NSError *error = nil;
+    NSArray *objects = [c executeFetchRequest:fetchRequest error:&error];
+    
+    [fetchRequest setEntity:[NSEntityDescription entityForName:@"DealCategory" inManagedObjectContext:c]];
+    objects = [objects arrayByAddingObjectsFromArray:[c executeFetchRequest:fetchRequest error:&error]];
+    
+    [fetchRequest setEntity:[NSEntityDescription entityForName:@"DealSubCategory" inManagedObjectContext:c]];
+    objects = [objects arrayByAddingObjectsFromArray:[c executeFetchRequest:fetchRequest error:&error]];
+
+    //error handling goes here
+    for (NSManagedObject *object in objects) {
+        [c deleteObject:object];
+    }
+    
+    NSError *saveError = nil;
+    [c save:&saveError];
+    
     SplashScreenViewController *splash = [[SplashScreenViewController alloc] init];
     [self.navigationController pushViewController:splash animated:YES];
     self.navigationController.viewControllers = @[splash];

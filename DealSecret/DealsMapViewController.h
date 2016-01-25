@@ -13,7 +13,7 @@
 @class Deal;
 @class DealCategory;
 
-@interface DealsMapViewController : UIViewController <MKMapViewDelegate, NSFetchedResultsControllerDelegate>
+@interface DealsMapViewController : UIViewController <MKMapViewDelegate, NSFetchedResultsControllerDelegate, MKMapViewDelegate>
 
 @property (nonatomic, strong) CLLocation *location;
 @property (nonatomic, strong) NSString *annotation_title;

@@ -34,6 +34,10 @@ const float kDealCellHeight = 100.0f;
     return self;
 }
 
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+    [self.tableView reloadData];
+}
+
 - (void)initializeFetchResultsController {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Deal"];
     NSSortDescriptor *fetchSort = [NSSortDescriptor sortDescriptorWithKey:@"dealId" ascending:YES];
@@ -59,7 +63,11 @@ const float kDealCellHeight = 100.0f;
     [super viewDidLoad];
 
     self.title = @"Current Deals";
-    self.navigationController.navigationBarHidden = NO;
+    
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    self.refreshControl.backgroundColor = [UIColor purpleColor];
+    self.refreshControl.tintColor = [UIColor whiteColor];
+    [self.refreshControl addTarget:self action:@selector(refreshTable) forControlEvents:UIControlEventValueChanged];
     
     [self.tableView registerClass:[DealTableViewCell class] forCellReuseIdentifier:@"DealCell"];
     
@@ -68,12 +76,19 @@ const float kDealCellHeight = 100.0f;
     [self refreshDeals];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    self.navigationController.navigationBarHidden = NO;
+}
+
+-(void)refreshTable {
+    [self.tableView reloadData];
+    [self.refreshControl endRefreshing];
+}
+
 - (void)refreshDeals {
     [User getDealsWithLatitude:[NSString stringWithFormat:@"%f", [LocationManager sharedInstance].location.coordinate.latitude]
                      longitude:[NSString stringWithFormat:@"%f", [LocationManager sharedInstance].location.coordinate.longitude]
-                         block:^(NSDictionary * _Nonnull response) {
-                             [self.tableView reloadData];
-                         }];
+                         block:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -93,7 +108,7 @@ const float kDealCellHeight = 100.0f;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     DealViewController *dealVC = [[DealViewController alloc] init];
-    dealVC.deal = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    dealVC.deal = [self.fetchedResultsController fetchedObjects][indexPath.row];
     [self.navigationController pushViewController:dealVC animated:YES];
 }
 
@@ -107,7 +122,7 @@ const float kDealCellHeight = 100.0f;
     if (deal.imageUrl.length > 0) {
         [cell.companyImage setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://cms.fingertipdeals.com/%@", deal.imageUrl]]];
     } else {
-        cell.companyImage = nil;
+        cell.companyImage.image = nil;
     }
     cell.dealLabel.text = deal.header;
 //    cell.companyLabel.text = deal.content;

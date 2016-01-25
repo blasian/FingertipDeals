@@ -97,7 +97,7 @@ const double kCatchWidth = 200.0f;
 }
 
 - (void)dealSelected:(id)sender {
-    [self.delegate dealSelected:(DealTableViewCell*)sender];
+    [self.delegate dealSelected:self];
 }
 
 # pragma mark ScrollViewDelegateMethods

@@ -65,6 +65,10 @@ const CGFloat kDealsCategoryCellHeight = 100.0f;
     }
 }
 
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+    [self.tableView reloadData];
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     [self getHeaderDeals:0];
 }
@@ -77,6 +81,18 @@ const CGFloat kDealsCategoryCellHeight = 100.0f;
     UIImage *settingsImage = [UIImage imageNamed:@"settings_icon"];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:settingsImage style:UIBarButtonItemStylePlain target:self action:@selector(settingsButtonTapped)];
     
+    // chevrons
+    UIButton *chevronBack = [[UIButton alloc] initWithFrame:CGRectMake(20.0f, 70.0, 30.0f, 30.0f)];
+    chevronBack.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    [chevronBack setImage:[UIImage imageNamed:@"chevron_back"] forState:UIControlStateNormal];
+    [chevronBack addTarget:self action:@selector(nextHeader) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIButton *chevronNext = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width - 50.0f, 70.0, 30.0f, 30.0f)];
+    chevronNext.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    [chevronNext setImage:[UIImage imageNamed:@"chevron_next"] forState:UIControlStateNormal];
+    [chevronNext addTarget:self action:@selector(nextHeader) forControlEvents:UIControlEventTouchUpInside];
+
+
     // Setup tableview header.
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0,
                                                                      0,
@@ -88,6 +104,7 @@ const CGFloat kDealsCategoryCellHeight = 100.0f;
     self.scrollView.showsHorizontalScrollIndicator = NO;
     self.scrollView.showsVerticalScrollIndicator = NO;
     self.scrollView.delegate = self;
+
     
     self.contentArray = [[NSMutableArray alloc] init];
     for (NSUInteger i = 0; i < kDealsNumberOfPages; i++) {
@@ -108,6 +125,8 @@ const CGFloat kDealsCategoryCellHeight = 100.0f;
     self.pageControl.pageIndicatorTintColor = [UIColor colorWithRed:206.0/255 green:230.0/255 blue:240.0/255 alpha:1.0];
     
     [self.tableView addSubview:self.pageControl];
+    [self.tableView addSubview:chevronNext];
+    [self.tableView addSubview:chevronBack];
     self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"form_background"]];
     self.tableView.tableHeaderView = self.scrollView;
     self.tableView.scrollEnabled = YES;
@@ -168,6 +187,10 @@ const CGFloat kDealsCategoryCellHeight = 100.0f;
     [self getAllDealsWithBlock:nil];
 }
 
+- (void)nextHeader {
+    [self.scrollView setContentOffset:CGPointMake(self.scrollView.contentOffset.x + kDealsHeaderSize/kDealsNumberOfPages, 0.0) animated:YES];
+}
+
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
@@ -184,7 +207,7 @@ const CGFloat kDealsCategoryCellHeight = 100.0f;
                 DealsHeaderView *header = self.contentArray[index];
                 Deal *deal = [[[self fetchedResultsController] fetchedObjects] objectAtIndex:index];
                 [header.imageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://cms.fingertipdeals.com/%@", deal.imageUrl]]];
-                header.smallTitleLabel.text = deal.content;
+                header.smallTitleLabel.text = deal.header;
             });
         } else {
             [self getAllDealsWithBlock:^{

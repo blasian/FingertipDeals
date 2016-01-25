@@ -14,7 +14,7 @@ NSString* const kUserEndpoint = @"users";
 NSString* const kUserLoginEndpoint = @"users/login";
 NSString* const kUserUpdateEndpoint = @"users/update";
 NSString* const kUserLocationEndpoint = @"users/location";
-NSString* const kUserDealsEndpoint = @"users/getdeals?um_lat=%@&um_lon=%@";
+NSString* const kUserDealsByLocationEndpoint = @"users/getdealsbylocation?um_lat=%@&um_lon=%@";
 NSString* const kUserCategoriesEndpoint = @"users/getclass?level=%@&class1=%@";
 NSString* const kUserClassesEndpoint = @"users/getuserclass";
 NSString* const kUserSetClassesEndpoint = @"users/setuserclassarray";

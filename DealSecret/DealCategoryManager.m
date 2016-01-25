@@ -36,7 +36,7 @@
     
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"DealSubCategory" inManagedObjectContext:[DealSubCategory context]];
     NSSortDescriptor *sorting = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"preferred == YES"];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isPreferred == YES"];
     [fetchRequest setPredicate:predicate];
     [fetchRequest setEntity:entity];
     [fetchRequest setSortDescriptors:@[sorting]];

@@ -2,8 +2,8 @@
 //  Deal+CoreDataProperties.m
 //  DealSecret
 //
-//  Created by Michael Spearman on 12/2/15.
-//  Copyright © 2015 Michael Spearman. All rights reserved.
+//  Created by Michael Spearman on 1/17/16.
+//  Copyright © 2016 Michael Spearman. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
 //  to delete and recreate this implementation file for your updated model.
@@ -13,15 +13,17 @@
 
 @implementation Deal (CoreDataProperties)
 
-@dynamic dealId;
 @dynamic content;
+@dynamic dealId;
 @dynamic endDate;
+@dynamic header;
 @dynamic imageUrl;
 @dynamic latitude;
-@dynamic status;
-@dynamic startDate;
 @dynamic longitude;
-@dynamic header;
+@dynamic startDate;
+@dynamic status;
 @dynamic zip;
+@dynamic category;
+@dynamic subCategory;
 
 @end

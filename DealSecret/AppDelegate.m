@@ -38,7 +38,7 @@
     
     // Setup Navigation Bar
     self.navigationController = [[UINavigationController alloc] initWithRootViewController:rootVC];
-    self.navigationController.navigationBar.topItem.title = @"Fignertip Deals";
+    self.navigationController.navigationBar.topItem.title = @"Fingertip Deals";
 //    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
     
 //    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60) forBarMetrics:UIBarMetricsDefault];
@@ -58,6 +58,10 @@
     }
     
     return YES;
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+    
 }
 
 - (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)devToken
@@ -98,7 +102,6 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     // Saves changes in the application's managed object context before the application terminates.
-//    [self saveContext];
 }
 
 @end

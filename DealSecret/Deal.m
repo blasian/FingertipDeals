@@ -33,6 +33,13 @@
     return self;
 }
 
+- (NSString*)title {
+    return self.header;
+}
+- (CLLocationCoordinate2D)coordinate {
+    return CLLocationCoordinate2DMake(self.latitude.doubleValue, self.longitude.doubleValue);
+}
+
 - (NSNumber*)distance {
     return [NSNumber numberWithFloat:[[[CLLocation alloc] initWithLatitude:[self.latitude doubleValue] longitude:[self.longitude doubleValue]] distanceFromLocation:[LocationManager sharedInstance].location]];
 }
