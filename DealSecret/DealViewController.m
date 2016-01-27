@@ -11,6 +11,7 @@
 #import "LocationManager.h"
 
 
+
 @interface DealViewController ()
 
 @property MKMapView* mapView;
@@ -121,7 +122,20 @@
 }
 
 - (void)shareButtonPressed {
-
+    ACAccountStore* store = [[ACAccountStore alloc] init];
+    ACAccountType* facebookAccountType = [store accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierFacebook];
+    NSArray * permissions = @[@"publish_stream"];
+    NSDictionary * dict = @{ACFacebookAppIdKey : @"1663485317249203", ACFacebookPermissionsKey : permissions, ACFacebookAudienceKey : ACFacebookAudienceOnlyMe};
+    [store requestAccessToAccountsWithType:facebookAccountType options:dict completion:^(BOOL granted, NSError *error) {
+        if (granted) {
+            NSArray * accounts = [store accountsWithAccountType:facebookAccountType];
+            ACAccount* fbAccount = [accounts lastObject];
+            NSLog(@"account is: %@", fbAccount);
+        }
+        else {
+            NSLog(@"error is: %@", error);
+        }
+    }];
 }
 
 - (void)timerButtonPressed {

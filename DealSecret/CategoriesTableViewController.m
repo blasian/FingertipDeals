@@ -70,13 +70,12 @@ const CGFloat kDealsCategoryCellHeight = 100.0f;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    self.title = @"Fingertip Deals";
     [self getHeaderDeals:0];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.title = @"Fingertip Deals";
     self.navigationController.navigationBarHidden = NO;
     UIImage *settingsImage = [UIImage imageNamed:@"settings_icon"];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:settingsImage style:UIBarButtonItemStylePlain target:self action:@selector(settingsButtonTapped)];
@@ -142,6 +141,11 @@ const CGFloat kDealsCategoryCellHeight = 100.0f;
         self.categories = [set array];
         [self.tableView reloadData];
     }];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    self.title = @"";
 }
 
 /*

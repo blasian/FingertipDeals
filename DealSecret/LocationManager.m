@@ -64,7 +64,7 @@ const float kLocationDistanceFilter = 1000.0f;
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
     NSLog(@"Updated Location");
-//    self.location = locations.lastObject;
+    self.location = locations.lastObject;
     NSMutableArray* params = [NSMutableArray new];
     for (CLLocation *location in locations) {
         NSDictionary *locDict = @{@"um_lat":[NSNumber numberWithFloat:location.coordinate.latitude],

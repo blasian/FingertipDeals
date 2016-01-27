@@ -52,6 +52,7 @@
 		AA16B7FC1C3C6CF80033F57C /* ZipViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA16B7FB1C3C6CF80033F57C /* ZipViewController.m */; };
 		AA16B8021C3CC00E0033F57C /* CategoryHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA16B8011C3CC00E0033F57C /* CategoryHeaderView.m */; };
 		AA16B8051C3DC03C0033F57C /* DealButtonStrip.m in Sources */ = {isa = PBXBuildFile; fileRef = AA16B8041C3DC03C0033F57C /* DealButtonStrip.m */; };
+		AAE2F3F51C55D3CC000D2FC7 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAE2F3F41C55D3CC000D2FC7 /* Social.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -135,6 +136,7 @@
 		AA16B8011C3CC00E0033F57C /* CategoryHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryHeaderView.m; sourceTree = "<group>"; };
 		AA16B8031C3DC03C0033F57C /* DealButtonStrip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealButtonStrip.h; sourceTree = "<group>"; };
 		AA16B8041C3DC03C0033F57C /* DealButtonStrip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealButtonStrip.m; sourceTree = "<group>"; };
+		AAE2F3F41C55D3CC000D2FC7 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		B4FCBAD5C9639A6E28F31134 /* libPods-DealSecret.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DealSecret.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD0C5017E6E7ADB50ADD2242 /* Pods-DealSecret.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DealSecret.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DealSecret/Pods-DealSecret.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -144,6 +146,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AAE2F3F51C55D3CC000D2FC7 /* Social.framework in Frameworks */,
 				589A0F701C10312900458E52 /* MapKit.framework in Frameworks */,
 				58933FCA1C02CBA10013BCF2 /* CoreLocation.framework in Frameworks */,
 				A1856927AF1870455FDF25AC /* libPods-DealSecret.a in Frameworks */,
@@ -312,6 +315,7 @@
 		68709F70408DEE08F8C6D948 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AAE2F3F41C55D3CC000D2FC7 /* Social.framework */,
 				5834A3E81C1665070065F864 /* CoreFoundation.framework */,
 				5834A3E61C1663F50065F864 /* Foundation.framework */,
 				589A0F6F1C10312900458E52 /* MapKit.framework */,
