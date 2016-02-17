@@ -34,6 +34,8 @@ const CGFloat kDealsCategoryCellHeight = 100.0f;
 @property (nonatomic, strong) UIPageControl *pageControl;
 @property (nonatomic, strong) NSFetchedResultsController* fetchedResultsController;
 @property (nonatomic, strong) NSArray<DealCategory*> *categories;
+@property (nonatomic, strong) UIButton* chevronBack;
+@property (nonatomic, strong) UIButton* chevronNext;
 
 @end
 
@@ -71,27 +73,31 @@ const CGFloat kDealsCategoryCellHeight = 100.0f;
 
 - (void)viewWillAppear:(BOOL)animated {
     self.title = @"Fingertip Deals";
+    [self.tableView addSubview:self.chevronNext];
+    [self.tableView addSubview:self.chevronBack];
     [self getHeaderDeals:0];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationController.navigationBarHidden = NO;
+    
     UIImage *settingsImage = [UIImage imageNamed:@"settings_icon"];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:settingsImage style:UIBarButtonItemStylePlain target:self action:@selector(settingsButtonTapped)];
     
     // chevrons
-    UIButton *chevronBack = [[UIButton alloc] initWithFrame:CGRectMake(20.0f, 70.0, 30.0f, 30.0f)];
-    chevronBack.imageView.contentMode = UIViewContentModeScaleAspectFit;
-    [chevronBack setImage:[UIImage imageNamed:@"chevron_back"] forState:UIControlStateNormal];
-    [chevronBack addTarget:self action:@selector(nextHeader) forControlEvents:UIControlEventTouchUpInside];
+    self.chevronBack = [[UIButton alloc] initWithFrame:CGRectMake(20.0f, kDealsHeaderSize/2.0f - 15.0f, 30.0f, 30.0f)];
+    self.chevronBack.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    [self.chevronBack setImage:[UIImage imageNamed:@"chevron_back"] forState:UIControlStateNormal];
+    self.chevronBack.tag = 0;
+    [self.chevronBack addTarget:self action:@selector(nextHeader:) forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *chevronNext = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width - 50.0f, 70.0, 30.0f, 30.0f)];
-    chevronNext.imageView.contentMode = UIViewContentModeScaleAspectFit;
-    [chevronNext setImage:[UIImage imageNamed:@"chevron_next"] forState:UIControlStateNormal];
-    [chevronNext addTarget:self action:@selector(nextHeader) forControlEvents:UIControlEventTouchUpInside];
-
-
+    self.chevronNext = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width - 50.0f, kDealsHeaderSize/2.0f - 15.0f, 30.0f, 30.0f)];
+    self.chevronNext.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    [self.chevronNext setImage:[UIImage imageNamed:@"chevron_next"] forState:UIControlStateNormal];
+    self.chevronNext.tag = 1;
+    [self.chevronNext addTarget:self action:@selector(nextHeader:) forControlEvents:UIControlEventTouchUpInside];
+    
     // Setup tableview header.
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0,
                                                                      0,
@@ -103,6 +109,9 @@ const CGFloat kDealsCategoryCellHeight = 100.0f;
     self.scrollView.showsHorizontalScrollIndicator = NO;
     self.scrollView.showsVerticalScrollIndicator = NO;
     self.scrollView.delegate = self;
+    self.scrollView.userInteractionEnabled = YES;
+    
+    // to allow button usage
 
     
     self.contentArray = [[NSMutableArray alloc] init];
@@ -124,8 +133,6 @@ const CGFloat kDealsCategoryCellHeight = 100.0f;
     self.pageControl.pageIndicatorTintColor = [UIColor colorWithRed:206.0/255 green:230.0/255 blue:240.0/255 alpha:1.0];
     
     [self.tableView addSubview:self.pageControl];
-    [self.tableView addSubview:chevronNext];
-    [self.tableView addSubview:chevronBack];
     self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"form_background"]];
     self.tableView.tableHeaderView = self.scrollView;
     self.tableView.scrollEnabled = YES;
@@ -146,21 +153,9 @@ const CGFloat kDealsCategoryCellHeight = 100.0f;
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     self.title = @"";
+    [self.chevronNext removeFromSuperview];
+    [self.chevronBack removeFromSuperview];
 }
-
-/*
-- (void)viewDidAppear:(BOOL)animated {
-    [User getUserClassesWithBlock:^(NSDictionary * _Nonnull response) {
-        NSMutableArray *catsDupe = [NSMutableArray array];
-        for (DealSubCategory* pref in [DealCategoryManager preferredSubCategories]) {
-            [catsDupe addObject:pref.belongsTo];
-        }
-        NSOrderedSet *set = [NSOrderedSet orderedSetWithArray:catsDupe];
-        self.categories = [set array];
-        [self.tableView reloadData];
-    }];
-}
-*/
 
 - (void)settingsButtonTapped {
     SettingsTableViewController *settingsVC = [[SettingsTableViewController alloc] init];
@@ -191,8 +186,24 @@ const CGFloat kDealsCategoryCellHeight = 100.0f;
     [self getAllDealsWithBlock:nil];
 }
 
-- (void)nextHeader {
-    [self.scrollView setContentOffset:CGPointMake(self.scrollView.contentOffset.x + kDealsHeaderSize/kDealsNumberOfPages, 0.0) animated:YES];
+- (void)nextHeader:(id)sender {
+    UIButton* button = sender;
+    int currentPage = self.scrollView.contentOffset.x/self.view.frame.size.width;
+    if (button.tag == 0) {
+        if (currentPage > 0) {
+            // back button
+            [self.scrollView setContentOffset:CGPointMake(self.scrollView.contentOffset.x - self.scrollView.contentSize.width/kDealsNumberOfPages, 0.0) animated:YES];
+            [self getHeaderDeals:currentPage-1];
+            self.pageControl.currentPage-=1;
+        }
+    } else {
+        if (currentPage < kDealsNumberOfPages-1) {
+            // next button
+            [self.scrollView setContentOffset:CGPointMake(self.scrollView.contentOffset.x + self.scrollView.contentSize.width/kDealsNumberOfPages, 0.0) animated:YES];
+            [self getHeaderDeals:currentPage+1];
+            self.pageControl.currentPage+=1;
+        }
+    }
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -205,7 +216,7 @@ const CGFloat kDealsCategoryCellHeight = 100.0f;
 }
 
 - (void)getHeaderDeals:(int)index {
-    if (self.contentArray.count > index) {
+    if (self.contentArray.count > index && index > -1) {
         if ([[[self fetchedResultsController] fetchedObjects] count] > index) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 DealsHeaderView *header = self.contentArray[index];
@@ -253,14 +264,14 @@ const CGFloat kDealsCategoryCellHeight = 100.0f;
     // Set up the cell
     switch (indexPath.row) {
         case 0:
-            header = @"Current Deals";
+            header = @"Find Deals Around Me";
             subHeader = @"Near You";
             image = [UIImage imageNamed:@"lightening"];
             background = [UIImage imageNamed:@"category-red"];
             break;
         case 1:
             header = @"Location Deals";
-            subHeader = @"Choose Your Location";
+            subHeader = @"Locate Deals By Location";
             image = [UIImage imageNamed:@"location_white"];
             background = [UIImage imageNamed:@"category-green"];
             break;

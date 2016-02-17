@@ -38,6 +38,40 @@
     return self;
 }
 
++ (void)getDealWithId:(NSString *)dealId block:(void (^)(NSDictionary *))block {
+    [[NetworkManager sharedInstance] GET:[NSString stringWithFormat:kUserDealEndpoint, dealId]  parameters:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+        NSDictionary* dealDict = [responseObject valueForKey:@"data"][0];
+        NSString* dealId = [dealDict valueForKeyPath:@"dm_no"];
+        NSManagedObjectContext* c = [ManagedObject context];
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Deal"
+                                                  inManagedObjectContext:c];
+        [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"dealId == %@",
+                                    dealId]];
+        [fetchRequest setEntity:entity];
+        NSError* error;
+        Deal* deal = nil;
+        if ([c countForFetchRequest:fetchRequest
+                              error:&error] != 0) {
+            NSArray *fetchedObjects = [c executeFetchRequest:fetchRequest error:&error];
+            deal = [fetchedObjects firstObject];
+        }
+        else {
+            deal = [[Deal alloc] initWithAttributes:dealDict];
+        }
+        [deal save];
+        if (block) {
+            block(nil);
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSError *jsonError;
+        NSDictionary* errorDict = [NSJSONSerialization JSONObjectWithData:error.userInfo[@"com.alamofire.serialization.response.error.data"] options:0 error:&jsonError];
+        if (block) {
+            block(errorDict);
+        }
+    }];
+}
+
 + (User*)getMe {
     User* user = nil;
     
@@ -102,22 +136,123 @@
                                   }];
 }
 
++ (void)loginWithEmail:(NSString*)email
+          withSource:(NSString*)source
+                 block:(void (^_Nullable)(NSDictionary* response))block {
+    
+    NSDictionary *params = @{@"um_email":email,
+                             @"um_source":source};
+    
+    [[NetworkManager sharedInstance] POST:kUserLoginFromSourceEndpoint
+                               parameters:params
+                                  success:^(NSURLSessionDataTask* task,
+                                            id responseObject) {
+                                      
+                                      NSDictionary* userDict = [responseObject objectForKey:@"data"];
+                                      User *user = [[User alloc] initWithAttributes:userDict[@"userm"]];
+                                      [user save];
+                                      
+                                      NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+                                      [defaults setObject:user.token forKey:kUserAPIToken];
+                                      [defaults setBool:YES forKey:kUserPersistenceKey];
+                                      [defaults synchronize];
+                                      
+                                      if (block) {
+                                          block(nil);
+                                      }
+                                      
+                                  }
+                                  failure:^(NSURLSessionDataTask* task,
+                                            NSError* error) {
+                                      NSError *jsonError;
+                                      NSDictionary* errorDict = [NSJSONSerialization JSONObjectWithData:error.userInfo[@"com.alamofire.serialization.response.error.data"] options:0 error:&jsonError];
+                                      if (block) {
+                                          block(errorDict);
+                                      }
+                                  }];
+}
+
++ (void)forgotPasswordWithEmail:(NSString*)email
+                      withBlock:(void (^_Nullable)(NSDictionary* response))block {
+    NSDictionary* params = @{@"email":email};
+    [[NetworkManager sharedInstance] GET:kUserForgotPassword
+                               parameters:params
+                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+                                      NSLog(@"success");
+                                  } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                                      NSLog(@"fail");
+                                  }];
+}
+
 + (void)createUserWithEmail:(NSString*)email
                    password:(NSString*)password
                   firstName:(NSString*)firstName
                    lastName:(NSString*)lastName
                         dob:(NSDate*)dob
                      gender:(NSNumber*)gender
+                   timezone:(NSTimeZone*)timezone
+                   deviceId:(NSString*)deviceId
                       block:(void (^_Nullable)(NSDictionary* response))block
 {
+    if (!deviceId) {
+        deviceId = @"";
+    }
     NSDictionary* params = @{@"um_email" : email,
                              @"um_upass" : password,
                              @"um_fname" : firstName,
                              @"um_lname" : lastName,
                              @"um_dob"   : dob,
-                             @"um_gender": gender};
+                             @"um_gender": gender,
+                             @"um_timezone":timezone,
+                             @"um_deviceidios":deviceId};
 
     [[NetworkManager sharedInstance] POST:kUserEndpoint
+                               parameters:params
+                                  success:^(NSURLSessionDataTask* task,
+                                            id responseObject) {
+                                      
+                                      NSDictionary* userDict = [responseObject objectForKey:@"data"];
+                                      User* user = [[User alloc] initWithAttributes:userDict];
+                                      
+                                      NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+                                      [defaults setObject:user.token forKey:kUserAPIToken];
+                                      [defaults setBool:YES forKey:kUserPersistenceKey];
+                                      [defaults synchronize];
+                                      [user save];
+                                      if (block) {
+                                          block(nil);
+                                      }
+                                  }
+                                  failure:^(NSURLSessionDataTask* task,
+                                            NSError* error) {
+                                      NSError *jsonError;
+                                      NSDictionary* errorDict = [NSJSONSerialization JSONObjectWithData:error.userInfo[@"com.alamofire.serialization.response.error.data"] options:0 error:&jsonError];
+                                      if (block) {
+                                          block(errorDict);
+                                      }
+                                  }];
+}
+
++ (void)createUserWithEmail:(NSString*)email
+                   source:(NSString*)source
+                  firstName:(NSString*)firstName
+                   lastName:(NSString*)lastName
+                        dob:(NSDate*)dob
+                     gender:(NSNumber*)gender
+                   timezone:(NSTimeZone*)timezone
+                   deviceId:(NSString*)deviceId
+                      block:(void (^_Nullable)(NSDictionary* response))block
+{
+    NSDictionary* params = @{@"um_email" : email,
+                             @"um_source" : source,
+                             @"um_fname" : firstName,
+                             @"um_lname" : lastName,
+                             @"um_dob"   : dob,
+                             @"um_gender": gender,
+                             @"um_timezone":timezone,
+                             @"um_deviceidios":deviceId};
+    
+    [[NetworkManager sharedInstance] POST:kUserCreateFromSourceEndpoint
                                parameters:params
                                   success:^(NSURLSessionDataTask* task,
                                             id responseObject) {

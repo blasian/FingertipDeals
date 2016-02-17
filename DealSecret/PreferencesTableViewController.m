@@ -64,8 +64,12 @@
         BOOL isSelected = [self.expandedSections[indexPath.section]  isEqual: @1];
         self.expandedSections[indexPath.section] = isSelected ? @0 : @1;
         NSString* sectionName = [DealCategoryManager categoryWithIndex:indexPath.section].title;
+        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
+        int originalLength = [[DealCategoryManager subCategoriesForCategoryWithIndex:indexPath.section] count];
         [DealCategoryManager getSubsectionsForSection:sectionName withBlock:^{
-            [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
+            if (originalLength != [[DealCategoryManager subCategoriesForCategoryWithIndex:indexPath.section] count]) {
+                [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
+            }
         }];
     } else if (indexPath.row == 1) {
         DealCategory* cat = [DealCategoryManager categoryWithIndex:indexPath.section];

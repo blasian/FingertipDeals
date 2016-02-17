@@ -5,4 +5,8 @@ platform :ios, '7.0'
 
 target 'DealSecret' do
 	pod "AFNetworking", "~> 2.0"
+	pod 'FBSDKCoreKit'
+	pod 'FBSDKShareKit'
+	pod 'FBSDKLoginKit'
+	pod 'STTwitter'
 end

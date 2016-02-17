@@ -108,7 +108,7 @@ const float kDealCellHeight = 100.0f;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     DealViewController *dealVC = [[DealViewController alloc] init];
-    dealVC.deal = [self.fetchedResultsController fetchedObjects][indexPath.row];
+    dealVC.dealId = ((Deal*)[self.fetchedResultsController fetchedObjects][indexPath.row]).dealId;
     [self.navigationController pushViewController:dealVC animated:YES];
 }
 

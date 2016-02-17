@@ -9,7 +9,7 @@
 #import "DealViewController.h"
 #import "Deal.h"
 #import "LocationManager.h"
-
+#import "User.h"
 
 
 @interface DealViewController ()
@@ -20,6 +20,8 @@
 @property UILabel* dealContent;
 @property UILabel* dealDistance;
 @property DealButtonStrip* dealStrip;
+@property Deal* deal;
+@property UIButton* backButton;
 
 @end
 
@@ -29,20 +31,27 @@
     [super viewDidLoad];
     self.navigationController.navigationBarHidden = YES;
     
+    [User getDealWithId:self.dealId block:^(NSDictionary * _Nonnull response) {
+        // get dealid from core data
+        NSManagedObjectContext* c = [ManagedObject context];
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Deal"
+                                                  inManagedObjectContext:c];
+        [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"dealId == %@",
+                                    self.dealId]];
+        [fetchRequest setEntity:entity];
+        NSError* error;
+        NSArray *fetchedObjects = [c executeFetchRequest:fetchRequest error:&error];
+        self.deal = [fetchedObjects firstObject];
+        [self reloadDeal];
+    }];
+    
     UIImageView *background = [[UIImageView alloc] initWithFrame:self.view.frame];
     background.image = [UIImage imageNamed:@"form_background"];
     
-    // Setup map.
+    // Setup mapview
     self.mapView = [[MKMapView alloc] initWithFrame:CGRectMake(10.0f, 20.0f, self.view.frame.size.width - 20.0, self.view.frame.size.height/3)];
     self.mapView.delegate = self;
-    CLLocationCoordinate2D dealCoordinate = CLLocationCoordinate2DMake([self.deal.latitude doubleValue], [self.deal.longitude doubleValue]);
-    MKCoordinateSpan mapSpan = MKCoordinateSpanMake(.01f, .01f);
-    MKCoordinateRegion mapRegion = MKCoordinateRegionMake(dealCoordinate, mapSpan);
-    [self.mapView setRegion:mapRegion animated:YES];
-    MKPointAnnotation *dealAnnotation = [[MKPointAnnotation alloc] init];
-    dealAnnotation.coordinate = dealCoordinate;
-    dealAnnotation.title = @"Restaurant Name";
-    [self.mapView addAnnotation:dealAnnotation];
     
     // Setup button strip
     self.dealStrip = [[DealButtonStrip alloc] initWithFrame:CGRectMake(10.0f, self.mapView.frame.origin.y + self.mapView.frame.size.height + 10.0f, self.view.frame.size.width - 20.0f, 25.0f)];
@@ -54,44 +63,31 @@
     self.scrollView.backgroundColor = [UIColor colorWithWhite:1.0f alpha:0.3f];
     
     // setup header
-    self.dealHeader = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.scrollView.frame.size.width, 100.0f)];
-    self.dealHeader.text = self.deal.header;
+    self.dealHeader = [[UILabel alloc] init];
     self.dealHeader.textAlignment = NSTextAlignmentCenter;
     self.dealHeader.lineBreakMode = NSLineBreakByWordWrapping;
     self.dealHeader.numberOfLines = 0;
     self.dealHeader.textColor = [UIColor whiteColor];
-    [self heightToFit:self.dealHeader];
     
     // setup content
-    self.dealContent = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, self.dealHeader.frame.origin.y + self.dealHeader.frame.size.height, self.scrollView.frame.size.width, 100.0f)];
-    self.dealContent.text = self.deal.content;
+    self.dealContent = [[UILabel alloc] init];
     self.dealContent.textAlignment = NSTextAlignmentCenter;
     self.dealContent.lineBreakMode = NSLineBreakByWordWrapping;
     self.dealContent.numberOfLines = 0;
     self.dealContent.textColor = [UIColor whiteColor];
-    [self heightToFit:self.dealContent];
     
     // setup distance
-    self.dealDistance = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, self.dealContent.frame.origin.y + self.dealContent.frame.size.height, self.scrollView.frame.size.width, 100.0f)];
-    self.dealDistance.text = [NSString stringWithFormat:@"%d kms. away", self.deal.distance.intValue/1000];
+    self.dealDistance = [[UILabel alloc] init];
     self.dealDistance.textAlignment = NSTextAlignmentCenter;
     self.dealDistance.lineBreakMode = NSLineBreakByWordWrapping;
     self.dealDistance.numberOfLines = 0;
     self.dealDistance.textColor = [UIColor whiteColor];
-    [self heightToFit:self.dealDistance];
-    
-    CGRect contentRect = CGRectZero;
-    contentRect = CGRectUnion(contentRect, self.dealHeader.frame);
-    contentRect = CGRectUnion(contentRect, self.dealContent.frame);
-    contentRect = CGRectUnion(contentRect, self.dealDistance.frame);
-//    contentRect.size.height -= 1.0f;
-    
-    [self.scrollView setContentSize:contentRect.size];
+
     
     // setup nextButton
-    UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake((self.view.frame.size.width - 75.0f)/2, self.scrollView.frame.origin.y + self.scrollView.frame.size.height + 10.0f, 75.0f, 75.0f)];
-    [backButton setImage:[UIImage imageNamed:@"back_button"] forState:UIControlStateNormal];
-    [backButton addTarget:self action:@selector(backButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    self.backButton = [[UIButton alloc] init];
+    [self.backButton setImage:[UIImage imageNamed:@"back_button"] forState:UIControlStateNormal];
+    [self.backButton addTarget:self action:@selector(backButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:background];
     [self.view addSubview:self.mapView];
@@ -100,7 +96,44 @@
     [self.scrollView addSubview:self.dealHeader];
     [self.scrollView addSubview:self.dealContent];
     [self.scrollView addSubview:self.dealDistance];
-    [self.view addSubview:backButton];
+    [self.view addSubview:self.backButton];
+}
+
+- (void)reloadDeal {
+    // Setup map.
+    CLLocationCoordinate2D dealCoordinate = CLLocationCoordinate2DMake([self.deal.latitude doubleValue], [self.deal.longitude doubleValue]);
+    MKCoordinateSpan mapSpan = MKCoordinateSpanMake(.01f, .01f);
+    MKCoordinateRegion mapRegion = MKCoordinateRegionMake(dealCoordinate, mapSpan);
+    [self.mapView setRegion:mapRegion animated:YES];
+    MKPointAnnotation *dealAnnotation = [[MKPointAnnotation alloc] init];
+    dealAnnotation.coordinate = dealCoordinate;
+    dealAnnotation.title = @"Restaurant Name";
+    [self.mapView addAnnotation:dealAnnotation];
+    
+    self.dealHeader.frame = CGRectMake(0.0f, 0.0f, self.scrollView.frame.size.width, 100.0f);
+    self.dealHeader.text = self.deal.header;
+    [self heightToFit:self.dealHeader];
+    
+    self.dealContent.frame = CGRectMake(0.0f, self.dealHeader.frame.origin.y + self.dealHeader.frame.size.height, self.scrollView.frame.size.width, 100.0f);
+    self.dealContent.text = self.deal.content;
+    [self heightToFit:self.dealContent];
+    
+    self.dealDistance.frame = CGRectMake(0.0f, self.dealContent.frame.origin.y + self.dealContent.frame.size.height, self.scrollView.frame.size.width, 100.0f);
+    self.dealDistance.text = [NSString stringWithFormat:@"%d kms. away", self.deal.distance.intValue/1000];
+    [self heightToFit:self.dealDistance];
+    
+    CGRect contentRect = CGRectZero;
+    contentRect = CGRectUnion(contentRect, self.dealHeader.frame);
+    contentRect = CGRectUnion(contentRect, self.dealContent.frame);
+    contentRect = CGRectUnion(contentRect, self.dealDistance.frame);
+    //    contentRect.size.height -= 1.0f;
+    [self.scrollView setContentSize:contentRect.size];
+    
+    self.backButton.frame = CGRectMake((self.view.frame.size.width - 75.0f)/2, self.scrollView.frame.origin.y + self.scrollView.frame.size.height + 10.0f, 75.0f, 75.0f);
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    self.navigationController.navigationBarHidden = NO;
 }
 
 - (void)heightToFit:(UILabel*)label {
@@ -122,21 +155,41 @@
 }
 
 - (void)shareButtonPressed {
-    ACAccountStore* store = [[ACAccountStore alloc] init];
-    ACAccountType* facebookAccountType = [store accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierFacebook];
-    NSArray * permissions = @[@"publish_stream"];
-    NSDictionary * dict = @{ACFacebookAppIdKey : @"1663485317249203", ACFacebookPermissionsKey : permissions, ACFacebookAudienceKey : ACFacebookAudienceOnlyMe};
-    [store requestAccessToAccountsWithType:facebookAccountType options:dict completion:^(BOOL granted, NSError *error) {
-        if (granted) {
-            NSArray * accounts = [store accountsWithAccountType:facebookAccountType];
-            ACAccount* fbAccount = [accounts lastObject];
-            NSLog(@"account is: %@", fbAccount);
-        }
-        else {
-            NSLog(@"error is: %@", error);
-        }
-    }];
+    // UIActionSheet was depreciated in iOS 8.0 but Nikhil has iOS 7.x sooo...
+    UIActionSheet *popup = [[UIActionSheet alloc] initWithTitle:@"Select Sharing option:" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:
+                            @"Share on Facebook",
+                            @"Share on Twitter",
+                            nil];
+    [popup showInView:self.view];
 }
+
+- (void)actionSheet:(UIActionSheet *)popup clickedButtonAtIndex:(NSInteger)buttonIndex {
+    NSString* serviceType;
+    switch (buttonIndex) {
+        case 0:
+            serviceType = SLServiceTypeFacebook;
+            break;
+        case 1:
+            serviceType = SLServiceTypeTwitter;
+            break;
+        default:
+            break;
+    }
+    SLComposeViewController *composeVC = [SLComposeViewController composeViewControllerForServiceType:serviceType];
+    if (composeVC) {
+        [composeVC setInitialText:self.deal.header];
+        [self presentViewController:composeVC animated:YES completion:nil];
+    } else {
+//        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Error" message:@"There was an error sharing your content, please ensure that you have internet connection." preferredStyle:UIAlertControllerStyleAlert];
+//        
+//        UIAlertAction* ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+//        [alertController addAction:ok];
+//        
+//        [self presentViewController:alertController animated:YES completion:nil];
+    }
+}
+
+
 
 - (void)timerButtonPressed {
     

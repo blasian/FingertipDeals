@@ -24,18 +24,39 @@ NS_ASSUME_NONNULL_BEGIN
                    lastName:(NSString*)lastName
                         dob:(NSDate*)dob
                      gender:(NSNumber*)gender
+                   timezone:(NSTimeZone*)timezone
+                   deviceId:(NSString*)deviceId
                       block:(void (^_Nullable)(NSDictionary* response))block;
 
++ (void)createUserWithEmail:(NSString*)email
+                     source:(NSString*)source
+                  firstName:(NSString*)firstName
+                   lastName:(NSString*)lastName
+                        dob:(NSDate*)dob
+                     gender:(NSNumber*)gender
+                   timezone:(NSTimeZone*)timezone
+                   deviceId:(NSString*)deviceId
+                      block:(void (^_Nullable)(NSDictionary* response))block;
 
 + (void)loginWithEmail:(NSString*)email
           withPassword:(NSString*)password
                  block:(void (^_Nullable)(NSDictionary* response))block;
+
++ (void)loginWithEmail:(NSString*)email
+            withSource:(NSString*)source
+                 block:(void (^_Nullable)(NSDictionary* response))block;
+
++ (void)forgotPasswordWithEmail:(NSString*)email
+                      withBlock:(void (^_Nullable)(NSDictionary* response))block;
 
 + (void)updateUserWithDictionary:(NSDictionary*)params
                            block:(void (^_Nullable )(NSDictionary* response))block;
 
 + (void)updateUserWithLocation:(NSArray*)locations
                          block:(void (^_Nullable )(NSDictionary* response))block;
+
++ (void)getDealWithId:(NSString*)dealId
+                block:(void (^_Nullable )(NSDictionary* response))block;
 
 + (void)getDealsWithLatitude:(NSString*)lat
                    longitude:(NSString*)lon

@@ -15,8 +15,9 @@
 
 @property (nonatomic, weak) IBOutlet TextField* emailField;
 @property (nonatomic, weak) IBOutlet TextField* passwordField;
+@property (nonatomic, weak) IBOutlet FBSDKLoginButton* facebookButton;
 @property (nonatomic, weak) IBOutlet UIButton* nextButton;
-
+@property (nonatomic, weak) IBOutlet UIButton* forgotPasswordButton;
 @end
 
 @implementation LoginViewController
@@ -28,6 +29,53 @@
     [self.nextButton addTarget:self action:@selector(nextButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(backgroundTapped)]];
+    
+    [self.forgotPasswordButton addTarget:self action:@selector(forgotPasswordTapped:) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.facebookButton.delegate = self;
+}
+
+- (void)forgotPasswordTapped:(id)sender {
+    UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"What is your email?"
+                                                      message:nil
+                                                     delegate:self
+                                            cancelButtonTitle:@"Cancel"
+                                            otherButtonTitles:@"Reset", nil];
+    
+    [message setAlertViewStyle:UIAlertViewStylePlainTextInput];
+    
+    [message show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1) {
+        NSString *email = [alertView textFieldAtIndex:0].text;
+        [User forgotPasswordWithEmail:email withBlock:^(NSDictionary * _Nonnull response) {
+            
+        }];
+    }
+}
+
+#pragma mark Facebook Delegate Methods
+- (void)loginButton:(FBSDKLoginButton *)loginButton didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result error:(NSError *)error {
+    if ([FBSDKAccessToken currentAccessToken]) {
+        [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:@{@"fields": @"email"}]
+         startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+             if (!error) {
+                 NSLog(@"fetched user:%@", result);
+                 // goto registration/login page depending on...
+                 CategoriesTableViewController *dealsVC = [[CategoriesTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
+                 [self.navigationController pushViewController:dealsVC animated:YES];
+             } else {
+                 // handle error
+                 NSLog(@"error: %@", error);
+             }
+         }];
+    }
+}
+
+- (void)loginButtonDidLogOut:(FBSDKLoginButton *)loginButton {
+    
 }
 
 - (void)didReceiveMemoryWarning {

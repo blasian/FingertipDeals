@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import "STTwitter.h"
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
 
-@interface SplashScreenViewController : UIViewController
+@interface SplashScreenViewController : UIViewController <FBSDKLoginButtonDelegate, STTwitterAPIOSProtocol>
 
 @end

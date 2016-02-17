@@ -132,28 +132,19 @@
     */
     NSString* errors = [self validateForm];
     if (errors.length == 0) {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSString *deviceId = [defaults objectForKey:kUserNotificationToken];
         [User createUserWithEmail:self.emailField.text
                          password:self.passwordField.text
                         firstName:self.firstNameField.text
                          lastName:self.lastNameField.text
                               dob:self.dob
                            gender:[NSNumber numberWithInteger:gender]
+                         timezone:[NSTimeZone systemTimeZone]
+                         deviceId:deviceId
                             block:^void(NSDictionary* response) {
                                 NSLog(@"%@", response);
                                 if (!response) {
-                                    // update user with deviceid + timezone
-                                    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                                    NSString *deviceId = [defaults objectForKey:kUserNotificationToken];
-                                    if (!deviceId) {
-                                        deviceId = @"";
-                                    }
-
-                                    NSDictionary *userAttr = @{@"um_deviceidios": deviceId,
-                                                               @"um_timezone":[NSTimeZone systemTimeZone]};
-                                    [User updateUserWithDictionary:userAttr block:^(NSDictionary * _Nonnull response) {
-                                        NSLog(@"user updated with timezone and deviceid");
-                                    }];
-                                    
                                     PreferencesTableViewController *prefVC = [[PreferencesTableViewController alloc] init];
                                     [self.navigationController pushViewController:prefVC animated:YES];
                                 } else {

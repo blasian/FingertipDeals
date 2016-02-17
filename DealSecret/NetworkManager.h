@@ -10,6 +10,7 @@
 
 extern NSString* const kBaseUrl;
 extern NSString* const kUserEndpoint;
+extern NSString* const kUserDealEndpoint;
 extern NSString* const kUserLoginEndpoint;
 extern NSString* const kUserUpdateEndpoint;
 extern NSString* const kUserLocationEndpoint;
@@ -20,6 +21,9 @@ extern NSString* const kUserSetClassesEndpoint;
 extern NSString* const kUserDealsWithClassEndpoint;
 extern NSString* const kUserDealsZipEndpoint;
 extern NSString* const kUserUpdateLocationEndpoint;
+extern NSString* const kUserForgotPassword;
+extern NSString* const kUserLoginFromSourceEndpoint;
+extern NSString* const kUserCreateFromSourceEndpoint;
 
 @interface NetworkManager : AFHTTPSessionManager
 

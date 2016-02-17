@@ -11,6 +11,7 @@
 
 NSString* const kBaseUrl = @"http://api.fingertipdeals.com/api/v1/";
 NSString* const kUserEndpoint = @"users";
+NSString* const kUserDealEndpoint = @"users/getonedeal?dm_no=%@";
 NSString* const kUserLoginEndpoint = @"users/login";
 NSString* const kUserUpdateEndpoint = @"users/update";
 NSString* const kUserLocationEndpoint = @"users/location";
@@ -21,6 +22,9 @@ NSString* const kUserSetClassesEndpoint = @"users/setuserclassarray";
 NSString* const kUserDealsWithClassEndpoint = @"users/getdealsbyclass1?c1_type=%@&um_lat=%@&um_lon=%@";
 NSString* const kUserDealsZipEndpoint = @"users/getdealsbyzip?um_zip=%@";
 NSString* const kUserUpdateLocationEndpoint = @"users/location";
+NSString* const kUserForgotPassword = @"users/forgotpassword";
+NSString* const kUserLoginFromSourceEndpoint = @"users/loginfromsource";
+NSString* const kUserCreateFromSourceEndpoint = @"users/createfromsource";
 
 @implementation NetworkManager
 

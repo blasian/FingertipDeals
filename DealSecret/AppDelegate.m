@@ -6,13 +6,15 @@
 //  Copyright © 2015 Michael Spearman. All rights reserved.
 //
 
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import "AppDelegate.h"
 #import "SplashScreenViewController.h"
 #import "CategoriesTableViewController.h"
 #import "LocationManager.h"
 #import "User.h"
 #import "Constants.h"
-
+#import "DealViewController.h"
 // for testing
 #import "PreferencesTableViewController.h"
 
@@ -65,8 +67,26 @@
     return YES;
 }
 
+
+
+// Facebook Integration
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation {
+    return [[FBSDKApplicationDelegate sharedInstance] application:application
+                                                          openURL:url
+                                                sourceApplication:sourceApplication
+                                                       annotation:annotation];
+}
+
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+    NSLog(@"%@", userInfo);
     
+    DealViewController* dealVC = [[DealViewController alloc] init];
+    dealVC.dealId = userInfo[@"aps"][@"dm_no"];
+    // extract pn_id
+    [self.navigationController pushViewController:dealVC animated:YES];
 }
 
 - (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)devToken

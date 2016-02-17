@@ -14,8 +14,8 @@
 
 @class Deal;
 
-@interface DealViewController : UIViewController <MKMapViewDelegate, ButtonStripDelegate>
+@interface DealViewController : UIViewController <MKMapViewDelegate, ButtonStripDelegate, UIActionSheetDelegate>
 
-@property (nonatomic, strong) Deal* deal;
+@property (nonatomic, strong) NSString* dealId;
 
 @end

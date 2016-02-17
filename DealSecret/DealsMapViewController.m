@@ -155,7 +155,7 @@
 #pragma mark - Navigation
 - (void)navigateToDeal {
     DealViewController *dealVC = [[DealViewController alloc] init];
-    dealVC.deal = self.selectedDeal;
+    dealVC.dealId = self.selectedDeal.dealId;
     [self.navigationController pushViewController:dealVC animated:YES];
 }
 

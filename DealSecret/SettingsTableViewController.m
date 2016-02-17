@@ -98,6 +98,9 @@
 }
 
 - (void)signOut {
+    
+    [[[FBSDKLoginManager alloc] init] logOut];
+    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setBool:NO forKey:kUserPersistenceKey];
     
