@@ -24,25 +24,25 @@
 
 @implementation DealsMapViewController
 
-- (void)fetch {
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Deal"];
-    NSSortDescriptor *fetchSort = [NSSortDescriptor sortDescriptorWithKey:@"dealId" ascending:YES];
-    if (self.category) {
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"category.title LIKE %@", self.category.title];
-        [fetchRequest setPredicate:predicate];
-    }
-    [fetchRequest setSortDescriptors:@[fetchSort]];
-    NSManagedObjectContext *c = [ManagedObject context];
-    
-    NSError *error = nil;
-    NSArray *result = [c executeFetchRequest:fetchRequest error:&error];
-    if (!result) {
-        NSLog(@"Failed to perform fetch for %@: %@\n%@", self.category.title, [error localizedDescription], [error userInfo]);
-        abort();
-    } else {
-        self.deals = result;
-    }
-}
+//- (void)fetch {
+//    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Deal"];
+//    NSSortDescriptor *fetchSort = [NSSortDescriptor sortDescriptorWithKey:@"dealId" ascending:YES];
+//    if (self.category) {
+//        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"category.title LIKE %@", self.category.title];
+//        [fetchRequest setPredicate:predicate];
+//    }
+//    [fetchRequest setSortDescriptors:@[fetchSort]];
+//    NSManagedObjectContext *c = [ManagedObject context];
+//    
+//    NSError *error = nil;
+//    NSArray *result = [c executeFetchRequest:fetchRequest error:&error];
+//    if (!result) {
+//        NSLog(@"Failed to perform fetch for %@: %@\n%@", self.category.title, [error localizedDescription], [error userInfo]);
+//        abort();
+//    } else {
+//        self.deals = result;
+//    }
+//}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -101,14 +101,20 @@
         [User getDealsWithLatitude:[NSString stringWithFormat:@"%f", self.location.coordinate.latitude]
                          longitude:[NSString stringWithFormat:@"%f", self.location.coordinate.longitude]
                              block:^(NSDictionary * _Nonnull response) {
-                                 [self refreshAnnotations];
+                                 if (!response[@"error"]) {
+                                     self.deals = response[@"deals"];
+                                     [self refreshAnnotations];
+                                 }
                              }];
     } else {
         [User getUserDealsWithCategory:self.category
                           withLatitude:[NSString stringWithFormat:@"%f", self.location.coordinate.latitude]
                          withLongitude:[NSString stringWithFormat:@"%f", self.location.coordinate.longitude]
                              withBlock:^(NSDictionary * _Nonnull response) {
-            [self refreshAnnotations];
+                                 if (!response[@"error"]) {
+                                     self.deals = response[@"deals"];
+                                     [self refreshAnnotations];
+                                 }
         }];
     }
 }
@@ -130,8 +136,8 @@
     [self navigateToDeal];
 }
 
+
 - (void)refreshAnnotations {
-    [self fetch];
     [self.mapView removeAnnotations:self.mapView.annotations];
     MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
     annotation.coordinate = self.location.coordinate;

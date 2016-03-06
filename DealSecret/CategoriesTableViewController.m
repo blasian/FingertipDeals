@@ -32,10 +32,11 @@ const CGFloat kDealsCategoryCellHeight = 100.0f;
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) NSMutableArray *contentArray;
 @property (nonatomic, strong) UIPageControl *pageControl;
-@property (nonatomic, strong) NSFetchedResultsController* fetchedResultsController;
+//@property (nonatomic, strong) NSFetchedResultsController* fetchedResultsController;
 @property (nonatomic, strong) NSArray<DealCategory*> *categories;
 @property (nonatomic, strong) UIButton* chevronBack;
 @property (nonatomic, strong) UIButton* chevronNext;
+@property (nonatomic, strong) NSMutableArray* deals;
 
 @end
 
@@ -45,27 +46,27 @@ const CGFloat kDealsCategoryCellHeight = 100.0f;
 {
     self = [super initWithStyle:style];
     if (self) {
-        [self getAllDealsWithBlock:^{
-            [self initializeFetchResultsController];
-        }];
+//        [self getAllDealsWithBlock:^{
+//            [self initializeFetchResultsController];
+//        }];
     }
     return self;
 }
 
-- (void)initializeFetchResultsController {
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Deal"];
-    NSSortDescriptor *fetchSort = [NSSortDescriptor sortDescriptorWithKey:@"dealId" ascending:YES];
-    [fetchRequest setSortDescriptors:@[fetchSort]];
-    NSManagedObjectContext *c = [ManagedObject context];
-    [self setFetchedResultsController:[[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:c sectionNameKeyPath:nil cacheName:nil]];
-    [self.fetchedResultsController setDelegate:self];
-    
-    NSError *error = nil;
-    if (![[self fetchedResultsController] performFetch:&error]) {
-        NSLog(@"Failed to initialize FetchedResultsController: %@\n%@", [error localizedDescription], [error userInfo]);
-        abort();
-    }
-}
+//- (void)initializeFetchResultsController {
+//    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Deal"];
+//    NSSortDescriptor *fetchSort = [NSSortDescriptor sortDescriptorWithKey:@"dealId" ascending:YES];
+//    [fetchRequest setSortDescriptors:@[fetchSort]];
+//    NSManagedObjectContext *c = [ManagedObject context];
+//    [self setFetchedResultsController:[[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:c sectionNameKeyPath:nil cacheName:nil]];
+//    [self.fetchedResultsController setDelegate:self];
+//    
+//    NSError *error = nil;
+//    if (![[self fetchedResultsController] performFetch:&error]) {
+//        NSLog(@"Failed to initialize FetchedResultsController: %@\n%@", [error localizedDescription], [error userInfo]);
+//        abort();
+//    }
+//}
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
     [self.tableView reloadData];
@@ -81,6 +82,8 @@ const CGFloat kDealsCategoryCellHeight = 100.0f;
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationController.navigationBarHidden = NO;
+    
+    self.deals = [NSMutableArray array];
     
     UIImage *settingsImage = [UIImage imageNamed:@"settings_icon"];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:settingsImage style:UIBarButtonItemStylePlain target:self action:@selector(settingsButtonTapped)];
@@ -170,6 +173,9 @@ const CGFloat kDealsCategoryCellHeight = 100.0f;
     NSString* latitude = [NSString stringWithFormat:@"%f", location.latitude];
     NSString* longitude = [NSString stringWithFormat:@"%f", location.longitude];
     [User getDealsWithLatitude:latitude longitude:longitude block:^(NSDictionary * _Nonnull response) {
+        if (!response[@"error"]) {
+            self.deals = response[@"deals"];
+        }
         if (block) {
             block();
         }
@@ -217,10 +223,10 @@ const CGFloat kDealsCategoryCellHeight = 100.0f;
 
 - (void)getHeaderDeals:(int)index {
     if (self.contentArray.count > index && index > -1) {
-        if ([[[self fetchedResultsController] fetchedObjects] count] > index) {
+        if ([self.deals count] > index) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 DealsHeaderView *header = self.contentArray[index];
-                Deal *deal = [[[self fetchedResultsController] fetchedObjects] objectAtIndex:index];
+                Deal *deal = [self.deals objectAtIndex:index];
                 [header.imageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://cms.fingertipdeals.com/%@", deal.imageUrl]]];
                 header.smallTitleLabel.text = deal.header;
             });

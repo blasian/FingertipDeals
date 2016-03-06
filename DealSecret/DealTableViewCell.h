@@ -12,6 +12,8 @@
 @protocol DealTableViewCellDelegate
 
 - (void)dealSelected:(DealTableViewCell*)cell;
+- (void)likeButtonTapped:(DealTableViewCell*)cell;
+- (void)shareButtonTapped:(DealTableViewCell*)cell;
 
 @end
 

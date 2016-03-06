@@ -26,6 +26,8 @@
         float imageLength = self.frame.size.height/2;
         
         self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.frame.size.width/2 - imageLength/2, 0, imageLength, imageLength)];
+        self.imageView.layer.masksToBounds = YES;
+        self.imageView.layer.cornerRadius = self.imageView.frame.size.height/2;
         
         [self addSubview:self.imageView];
         

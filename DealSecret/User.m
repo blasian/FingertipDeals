@@ -339,65 +339,6 @@
                                  }];
 }
 
-+ (void)getDealsWithLatitude:(NSString*)lat
-                   longitude:(NSString*)lon
-                       block:(void (^)(NSDictionary* _Nonnull))block {
-    NSString *route = [NSString stringWithFormat:kUserDealsByLocationEndpoint, lat, lon];
-    
-    [[NetworkManager sharedInstance] GET:route
-                              parameters:nil
-                                 success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
-                                     
-                                     // removes all deals from core data
-                                     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-                                     NSManagedObjectContext* c = [ManagedObject context];
-                                     [fetchRequest setEntity:[NSEntityDescription entityForName:@"Deal" inManagedObjectContext:c]];
-                                     [fetchRequest setIncludesPropertyValues:NO]; //only fetch the managedObjectID
-                                     
-                                     NSError *error = nil;
-                                     NSArray *deals = [c executeFetchRequest:fetchRequest error:&error];
-                                     
-                                     //error handling goes here
-                                     for (NSManagedObject *deal in deals) {
-                                         [c deleteObject:deal];
-                                     }
-                                     NSError *saveError = nil;
-                                     [c save:&saveError];
-                                     
-                                     NSDictionary *dealsDict = [responseObject valueForKey:@"data"];
-                                     for (NSDictionary *dealDict in dealsDict) {
-                                         NSString* dealId = [dealDict valueForKeyPath:@"dm_no"];
-                                         NSManagedObjectContext* c = [ManagedObject context];
-                                         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-                                         NSEntityDescription *entity = [NSEntityDescription entityForName:@"Deal"
-                                                                                   inManagedObjectContext:c];
-                                         [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"dealId == %@",
-                                                                     dealId]];
-                                         [fetchRequest setEntity:entity];
-                                         NSError* error;
-                                         Deal* deal = nil;
-                                         if ([c countForFetchRequest:fetchRequest
-                                                               error:&error] != 0) {
-                                             NSArray *fetchedObjects = [c executeFetchRequest:fetchRequest error:&error];
-                                             deal = [fetchedObjects firstObject];
-                                         }
-                                         else {
-                                             deal = [[Deal alloc] initWithAttributes:dealDict];
-                                         }
-                                         [deal save];
-                                     }
-                                     if (block) {
-                                         block([NSDictionary dictionary]);
-                                     }
-                                 }
-                                 failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                                     NSLog(@"%@", [[NSString alloc] initWithData:error.userInfo[@"com.alamofire.serialization.response.error.data"] encoding:NSUTF8StringEncoding]);
-                                     if (block) {
-                                         block([NSDictionary dictionaryWithObject:error forKey:@"error"]);
-                                     }
-                                 }];
-}
-
 + (void)updateUserWithLocation:(NSArray*)locations
                          block:(void (^_Nullable )(NSDictionary* response))block {
     NSError* error;
@@ -482,6 +423,54 @@
     }];
 }
 
++ (void)getDealsWithLatitude:(NSString*)lat
+                   longitude:(NSString*)lon
+                       block:(void (^)(NSDictionary* _Nonnull))block {
+    NSString *route = [NSString stringWithFormat:kUserDealsByLocationEndpoint, lat, lon];
+    
+    [[NetworkManager sharedInstance] GET:route
+                              parameters:nil
+                                 success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+                                     NSDictionary *dealsDict = [responseObject valueForKey:@"data"];
+                                     NSMutableArray *deals = [NSMutableArray array];
+                                     for (NSDictionary *dealDict in dealsDict) {
+                                         Deal* deal = [[Deal alloc] initWithAttributes:dealDict];
+                                         [deals addObject:deal];
+                                     }
+                                     if (block) {
+                                         block(@{@"deals":deals});
+                                     }
+                                 }
+                                 failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                                     NSLog(@"%@", [[NSString alloc] initWithData:error.userInfo[@"com.alamofire.serialization.response.error.data"] encoding:NSUTF8StringEncoding]);
+                                     if (block) {
+                                         block(@{@"error":error, @"deals":@[]});
+                                     }
+                                 }];
+}
+
++ (void)getUserDealsWithCategory:(DealCategory*)category
+                    withLatitude:(NSString*)lat
+                   withLongitude:(NSString*)lon
+                       withBlock:(void (^)(NSDictionary*))block {
+    [[NetworkManager sharedInstance] GET:[NSString stringWithFormat:kUserDealsWithClassEndpoint, category.title, lat, lon] parameters:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+        NSDictionary *dealsDict = [responseObject valueForKey:@"data"];
+        NSMutableArray *deals = [NSMutableArray array];
+        for (NSDictionary *dealDict in dealsDict) {
+            Deal* deal = [[Deal alloc] initWithAttributes:dealDict];
+            [deals addObject:deal];
+        }
+        if (block) {
+            block(@{@"deals":deals});
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"%@", [[NSString alloc] initWithData:error.userInfo[@"com.alamofire.serialization.response.error.data"] encoding:NSUTF8StringEncoding]);
+        if (block) {
+            block(@{@"error":error, @"deals":@[]});
+        }
+    }];
+}
+
 + (void)getUserClassesWithBlock:(void (^)(NSDictionary*))block {
     [[NetworkManager sharedInstance] GET:kUserClassesEndpoint parameters:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
         NSDictionary* dict = responseObject[@"data"];
@@ -518,6 +507,8 @@
                                   error:&error] == 0) {
                 subCategory = [[DealSubCategory alloc] initWithTitle:subCategoryTitle];
                 subCategory.belongsTo = category;
+            } else {
+                subCategory = [[c executeFetchRequest:fetchRequest error:&error] firstObject];
             }
             subCategory.isPreferred = @YES;
             [subCategory save];
@@ -530,57 +521,6 @@
         if (block) {
             block(@{@"error":error});
         }
-    }];
-}
-
-+ (void)getUserDealsWithCategory:(DealCategory*)category
-                    withLatitude:(NSString*)lat
-                   withLongitude:(NSString*)lon
-                       withBlock:(void (^)(NSDictionary*))block {
-    [[NetworkManager sharedInstance] GET:[NSString stringWithFormat:kUserDealsWithClassEndpoint, category.title, lat, lon] parameters:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
-        // remove all previous deals in this category
-        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-        NSManagedObjectContext* c = [ManagedObject context];
-        [fetchRequest setEntity:[NSEntityDescription entityForName:@"Deal" inManagedObjectContext:c]];
-        [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"category.title LiKE %@", category.title]];
-        [fetchRequest setIncludesPropertyValues:NO]; //only fetch the managedObjectID
-        
-        NSError *error = nil;
-        NSArray *deals = [c executeFetchRequest:fetchRequest error:&error];
-
-        //error handling goes here
-        for (NSManagedObject *deal in deals) {
-            [c deleteObject:deal];
-        }
-        NSError *saveError = nil;
-        [c save:&saveError];
-        
-        NSDictionary *dealsDict = [responseObject valueForKey:@"data"];
-        for (NSDictionary *dealDict in dealsDict) {
-            NSString* dealId = [dealDict valueForKeyPath:@"dm_no"];
-            fetchRequest = [[NSFetchRequest alloc] init];
-            NSEntityDescription *entity = [NSEntityDescription entityForName:@"Deal"
-                                                      inManagedObjectContext:c];
-            [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"dealId == %@",
-                                        dealId]];
-            [fetchRequest setEntity:entity];
-            NSError* error;
-            Deal* deal = nil;
-            if ([c countForFetchRequest:fetchRequest
-                                  error:&error] != 0) {
-                NSArray *fetchedObjects = [c executeFetchRequest:fetchRequest error:&error];
-                deal = [fetchedObjects firstObject];
-            } else {
-                deal = [[Deal alloc] initWithAttributes:dealDict];
-            }
-            deal.category = category;
-            [deal save];
-        }
-        if (block) {
-            block([NSDictionary dictionary]);
-        }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
     }];
 }
 

@@ -10,6 +10,6 @@
 #import <CoreData/CoreData.h>
 #import "DealTableViewCell.h"
 
-@interface DealsTableViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, DealTableViewCellDelegate>
+@interface DealsTableViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, DealTableViewCellDelegate, UIActionSheetDelegate>
 
 @end

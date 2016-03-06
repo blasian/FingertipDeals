@@ -10,7 +10,7 @@
 
 @implementation DealTableViewCell
 
-const double kCatchWidth = 200.0f;
+const double kCatchWidth = 150.0f;
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -67,18 +67,18 @@ const double kCatchWidth = 200.0f;
     // Set up our two buttons
     UIButton *shareButton = [UIButton buttonWithType:UIButtonTypeCustom];
     shareButton.backgroundColor = [UIColor colorWithRed:0.0f green:174.0f/255.0f blue:177.0f/255.0f alpha:1.0f];
-    shareButton.frame = CGRectMake(kCatchWidth / 3.0f, 0, kCatchWidth / 3.0f, CGRectGetHeight(self.scrollViewButtonView.bounds));
+    shareButton.frame = CGRectMake(kCatchWidth / 2.0f, 0, kCatchWidth / 2.0f, CGRectGetHeight(self.scrollViewButtonView.bounds));
     [shareButton setTitle:@"Share" forState:UIControlStateNormal];
     [shareButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    //[shareButton addTarget:self action:@selector(userPressedMoreButton:) forControlEvents:UIControlEventTouchUpInside];
+    [shareButton addTarget:self action:@selector(shareDeal:) forControlEvents:UIControlEventTouchUpInside];
     [self.scrollViewButtonView addSubview:shareButton];
     
     UIButton *deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
     deleteButton.backgroundColor = [UIColor colorWithRed:231.0f/255.0f green:193.0f/255.0f blue:24.0f/255.0f alpha:1.0f];
-    deleteButton.frame = CGRectMake(kCatchWidth / 3.0f+kCatchWidth / 3.0f, 0, kCatchWidth / 3.0f, CGRectGetHeight(self.scrollViewButtonView.bounds));
+    deleteButton.frame = CGRectMake(0, 0, kCatchWidth / 2.0f, CGRectGetHeight(self.scrollViewButtonView.bounds));
     [deleteButton setTitle:@"Like" forState:UIControlStateNormal];
     [deleteButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    //[deleteButton addTarget:self action:@selector(userPressedDeleteButton:) forControlEvents:UIControlEventTouchUpInside];
+    [deleteButton addTarget:self action:@selector(likeDeal:) forControlEvents:UIControlEventTouchUpInside];
     [self.scrollViewButtonView addSubview:deleteButton];
     
     self.scrollViewContentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds))];
@@ -94,6 +94,14 @@ const double kCatchWidth = 200.0f;
     [self.scrollViewContentView addGestureRecognizer:tapGR];
     
     [self.scrollView addSubview:self.scrollViewContentView];
+}
+
+- (void)likeDeal:(id)sender {
+    [self.delegate likeButtonTapped:self];
+}
+
+- (void)shareDeal:(id)sender {
+    [self.delegate shareButtonTapped:self];
 }
 
 - (void)dealSelected:(id)sender {

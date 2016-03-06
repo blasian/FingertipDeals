@@ -20,6 +20,9 @@ const float kDealCellHeight = 100.0f;
 @interface DealsTableViewController ()
 
 @property (nonatomic, strong) NSFetchedResultsController* fetchedResultsController;
+@property (nonatomic, strong) CLLocation* location;
+@property (nonatomic, strong) NSMutableArray* deals;
+@property (nonatomic, strong) Deal* selectedDeal;
 
 @end
 
@@ -29,11 +32,54 @@ const float kDealCellHeight = 100.0f;
 {
     self = [super initWithStyle:style];
     if (self) {
-        [self initializeFetchResultsController];
+//        [self initializeFetchResultsController];
+        self.location = [LocationManager sharedInstance].location;
     }
     return self;
 }
 
+- (void)shareButtonTapped:(DealTableViewCell *)cell {
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    self.selectedDeal = [self.deals objectAtIndex:indexPath.row];
+    
+    // UIActionSheet was depreciated in iOS 8.0 but Nikhil has iOS 7.x sooo...
+    UIActionSheet *popup = [[UIActionSheet alloc] initWithTitle:@"Select Sharing option:" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:
+                            @"Share on Facebook",
+                            @"Share on Twitter",
+                            nil];
+    [popup showInView:self.view];
+}
+
+- (void)actionSheet:(UIActionSheet *)popup clickedButtonAtIndex:(NSInteger)buttonIndex {
+    NSString* serviceType;
+    switch (buttonIndex) {
+        case 0:
+            serviceType = SLServiceTypeFacebook;
+            break;
+        case 1:
+            serviceType = SLServiceTypeTwitter;
+            break;
+        default:
+            break;
+    }
+    SLComposeViewController *composeVC = [SLComposeViewController composeViewControllerForServiceType:serviceType];
+    if (composeVC) {
+        [composeVC setInitialText:self.selectedDeal.header];
+        [self presentViewController:composeVC animated:YES completion:nil];
+    }
+}
+
+- (void)likeButtonTapped:(DealTableViewCell *)cell {
+    UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Deal has been liked."
+                                                      message:nil
+                                                     delegate:self
+                                            cancelButtonTitle:@"Cancel"
+                                            otherButtonTitles:nil];
+    
+    [message show];
+}
+
+/*
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
     [self.tableView reloadData];
 }
@@ -53,6 +99,7 @@ const float kDealCellHeight = 100.0f;
         abort();
     }
 }
+*/
 
 - (void)dealSelected:(DealTableViewCell*)cell {
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
@@ -73,7 +120,7 @@ const float kDealCellHeight = 100.0f;
     
     self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"form_background"]];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [self refreshDeals];
+    [self refreshDealsWithBlock:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -85,10 +132,18 @@ const float kDealCellHeight = 100.0f;
     [self.refreshControl endRefreshing];
 }
 
-- (void)refreshDeals {
+- (void)refreshDealsWithBlock:(void (^)())block {
     [User getDealsWithLatitude:[NSString stringWithFormat:@"%f", [LocationManager sharedInstance].location.coordinate.latitude]
                      longitude:[NSString stringWithFormat:@"%f", [LocationManager sharedInstance].location.coordinate.longitude]
-                         block:nil];
+                         block:^(NSDictionary * _Nonnull response) {
+                             if (!response[@"error"]) {
+                                 self.deals = response[@"deals"];
+                             }
+                             if (block) {
+                                 block();
+                             }
+                             [self refreshTable];
+                         }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -103,12 +158,12 @@ const float kDealCellHeight = 100.0f;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [[self.fetchedResultsController fetchedObjects] count];
+    return self.deals.count;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     DealViewController *dealVC = [[DealViewController alloc] init];
-    dealVC.dealId = ((Deal*)[self.fetchedResultsController fetchedObjects][indexPath.row]).dealId;
+    dealVC.dealId = ((Deal*)self.deals[indexPath.row]).dealId;
     [self.navigationController pushViewController:dealVC animated:YES];
 }
 
@@ -118,7 +173,7 @@ const float kDealCellHeight = 100.0f;
     if (!cell.delegate) {
         cell.delegate = self;
     }
-    Deal *deal = [[self.fetchedResultsController fetchedObjects] objectAtIndex:indexPath.row];
+    Deal *deal = [self.deals objectAtIndex:indexPath.row];
     if (deal.imageUrl.length > 0) {
         [cell.companyImage setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://cms.fingertipdeals.com/%@", deal.imageUrl]]];
     } else {
