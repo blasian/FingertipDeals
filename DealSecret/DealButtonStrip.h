@@ -19,6 +19,8 @@
 
 @interface DealButtonStrip : UIView
 
+- (void)likeButtonPressed;
+
 @property (nonatomic, strong) UIButton* shareButton;
 @property (nonatomic, strong) UIButton* timerButton;
 @property (nonatomic, strong) UIButton* favButton;

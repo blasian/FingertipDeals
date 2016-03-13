@@ -61,6 +61,11 @@
     [self addSubview:self.likeButton];
 }
 
+- (void)likeButtonPressed {
+    [self.likeButton setSelected:!self.likeButton.isSelected];
+    [self.delegate likeButtonPressed];
+}
+
 - (void)buttonPressed:(id)sender {
     UIButton* button = sender;
     switch (button.tag)
@@ -75,8 +80,7 @@
             [self.delegate favButtonPressed];
             break;
         case 3:
-            [self.likeButton setSelected:!self.likeButton.isSelected];
-            [self.delegate likeButtonPressed];
+            [self likeButtonPressed];
             break;
         default:
             break;

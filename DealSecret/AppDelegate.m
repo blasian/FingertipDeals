@@ -8,6 +8,8 @@
 
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
+#import <Fabric/Fabric.h>
+#import <TwitterKit/TwitterKit.h>
 #import "AppDelegate.h"
 #import "SplashScreenViewController.h"
 #import "CategoriesTableViewController.h"
@@ -28,6 +30,8 @@
     // Override point for customization after application launch.
     
     [[LocationManager sharedInstance] start];
+    
+    [Fabric with:@[[Twitter class]]];
     
     UIViewController* rootVC = [[SplashScreenViewController alloc] init];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];

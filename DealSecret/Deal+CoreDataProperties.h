@@ -2,7 +2,7 @@
 //  Deal+CoreDataProperties.h
 //  DealSecret
 //
-//  Created by Michael Spearman on 2/14/16.
+//  Created by Michael Spearman on 3/12/16.
 //  Copyright © 2016 Michael Spearman. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -21,12 +21,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSString *header;
 @property (nullable, nonatomic, retain) NSString *imageUrl;
 @property (nullable, nonatomic, retain) NSString *latitude;
+@property (nullable, nonatomic, retain) NSNumber *liked;
 @property (nullable, nonatomic, retain) NSString *longitude;
 @property (nullable, nonatomic, retain) NSDate *startDate;
 @property (nullable, nonatomic, retain) NSNumber *status;
 @property (nullable, nonatomic, retain) NSString *zip;
-@property (nullable, nonatomic, retain) NSDecimalNumber *distance;
-@property (nullable, nonatomic, retain) DealCategory *category;
 @property (nullable, nonatomic, retain) DealSubCategory *subCategory;
 
 @end

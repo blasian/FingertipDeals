@@ -2,7 +2,7 @@
 //  DealSubCategory+CoreDataProperties.h
 //  DealSecret
 //
-//  Created by Michael Spearman on 1/17/16.
+//  Created by Michael Spearman on 3/12/16.
 //  Copyright © 2016 Michael Spearman. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nullable, nonatomic, retain) NSNumber *isPreferred;
 @property (nullable, nonatomic, retain) NSString *title;
-@property (nullable, nonatomic, retain) DealCategory *belongsTo;
+@property (nullable, nonatomic, retain) DealCategory *category;
 
 @end
 

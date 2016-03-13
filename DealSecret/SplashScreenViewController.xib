@@ -11,7 +11,6 @@
                 <outlet property="facebookButton" destination="w05-iD-SUZ" id="jRX-Sx-S04"/>
                 <outlet property="registerButton" destination="Bmq-Af-Plj" id="aHg-X6-OKX"/>
                 <outlet property="signInButton" destination="xER-iz-7B5" id="4oR-02-Qj1"/>
-                <outlet property="twitterButton" destination="AVd-5x-RyB" id="wYM-l7-vUE"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -38,10 +37,6 @@
                     <rect key="frame" x="192" y="507" width="30" height="34"/>
                     <state key="normal" title="FB"/>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AVd-5x-RyB">
-                    <rect key="frame" x="128" y="571" width="158" height="28"/>
-                    <state key="normal" image="sign-in-with-twitter-gray"/>
-                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
@@ -51,13 +46,11 @@
                 <constraint firstItem="w05-iD-SUZ" firstAttribute="centerX" secondItem="h5E-md-QcV" secondAttribute="centerX" id="FtJ-2I-XqW"/>
                 <constraint firstItem="xER-iz-7B5" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" constant="-40" id="GMp-X7-8Ro"/>
                 <constraint firstItem="Bmq-Af-Plj" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="40" id="LIZ-Dn-uUr"/>
-                <constraint firstItem="AVd-5x-RyB" firstAttribute="centerX" secondItem="h5E-md-QcV" secondAttribute="centerX" id="LRA-NU-8qZ"/>
                 <constraint firstItem="w05-iD-SUZ" firstAttribute="top" secondItem="Bmq-Af-Plj" secondAttribute="bottom" constant="100" id="MMI-eM-ipE"/>
                 <constraint firstItem="xER-iz-7B5" firstAttribute="height" secondItem="Bmq-Af-Plj" secondAttribute="height" id="Nzx-jQ-4nR"/>
                 <constraint firstItem="h5E-md-QcV" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Oe0-ko-3CQ"/>
                 <constraint firstItem="h5E-md-QcV" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" id="Orw-rZ-6AI"/>
                 <constraint firstAttribute="trailing" secondItem="xER-iz-7B5" secondAttribute="trailing" constant="40" id="VOO-2y-ChK"/>
-                <constraint firstItem="AVd-5x-RyB" firstAttribute="top" secondItem="w05-iD-SUZ" secondAttribute="bottom" constant="30" id="YSr-cO-Tyl"/>
                 <constraint firstItem="xER-iz-7B5" firstAttribute="leading" secondItem="Bmq-Af-Plj" secondAttribute="trailing" constant="20" id="eNX-dP-RHJ"/>
                 <constraint firstItem="h5E-md-QcV" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="eTI-g6-bEv"/>
                 <constraint firstItem="xER-iz-7B5" firstAttribute="leading" secondItem="Bmq-Af-Plj" secondAttribute="trailing" constant="20" id="jy6-Bb-TkE"/>
@@ -67,7 +60,6 @@
     </objects>
     <resources>
         <image name="register_frame" width="495" height="495"/>
-        <image name="sign-in-with-twitter-gray" width="158" height="28"/>
         <image name="sign_in_frame" width="495" height="495"/>
         <image name="splash_background_blur" width="1334" height="2367"/>
     </resources>

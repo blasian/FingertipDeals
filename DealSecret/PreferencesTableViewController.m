@@ -52,7 +52,7 @@
 }
 
 - (void)getPreferredSubSections {
-    [User getUserClassesWithBlock:^(NSDictionary * _Nonnull response) {
+    [DealCategoryManager getPreferredCategoriesWithBlock:^(NSDictionary *response) {
         [self.tableView reloadData];
     }];
 }
@@ -61,21 +61,17 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
-        BOOL isSelected = [self.expandedSections[indexPath.section]  isEqual: @1];
+        BOOL isSelected = [self.expandedSections[indexPath.section] isEqual: @1];
         self.expandedSections[indexPath.section] = isSelected ? @0 : @1;
         NSString* sectionName = [DealCategoryManager categoryWithIndex:indexPath.section].title;
-        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
-        int originalLength = [[DealCategoryManager subCategoriesForCategoryWithIndex:indexPath.section] count];
         [DealCategoryManager getSubsectionsForSection:sectionName withBlock:^{
-            if (originalLength != [[DealCategoryManager subCategoriesForCategoryWithIndex:indexPath.section] count]) {
-                [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
-            }
+            [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
         }];
     } else if (indexPath.row == 1) {
         DealCategory* cat = [DealCategoryManager categoryWithIndex:indexPath.section];
         cat.isPreferred = cat.isPreferred.boolValue ? @NO : @YES;
         [cat save];
-        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
     } else {
         DealSubCategory* subCat = [DealCategoryManager subCategoryWithIndexPath:[NSIndexPath indexPathForRow:indexPath.row - 2 inSection:indexPath.section]];
         subCat.isPreferred = subCat.isPreferred.boolValue ? @NO : @YES;
@@ -140,7 +136,7 @@
 #pragma mark - Navigation
 
 - (void)nextButtonPressed {
-    [User setUserClassesWithBlock:^(NSDictionary * _Nonnull response) {
+    [DealCategoryManager setPreferredCategoriesWithBlock:^(NSDictionary *response) {
         CategoriesTableViewController *catVC = [[CategoriesTableViewController alloc] init];
         [self.navigationController pushViewController:catVC animated:YES];
     }];

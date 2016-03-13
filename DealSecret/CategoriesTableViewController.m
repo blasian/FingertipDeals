@@ -73,6 +73,7 @@ const CGFloat kDealsCategoryCellHeight = 100.0f;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     self.title = @"Fingertip Deals";
     [self.tableView addSubview:self.chevronNext];
     [self.tableView addSubview:self.chevronBack];
@@ -142,13 +143,8 @@ const CGFloat kDealsCategoryCellHeight = 100.0f;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.tag = 1;
     
-    [User getUserClassesWithBlock:^(NSDictionary * _Nonnull response) {
-        NSMutableArray *catsDupe = [NSMutableArray array];
-        for (DealSubCategory* pref in [DealCategoryManager preferredSubCategories]) {
-            [catsDupe addObject:pref.belongsTo];
-        }
-        NSOrderedSet *set = [NSOrderedSet orderedSetWithArray:catsDupe];
-        self.categories = [set array];
+    [DealCategoryManager getPreferredCategoriesWithBlock:^(NSDictionary *response) {
+        self.categories = [DealCategoryManager preferredCategories];
         [self.tableView reloadData];
     }];
 }
@@ -230,7 +226,8 @@ const CGFloat kDealsCategoryCellHeight = 100.0f;
                 [header.imageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://cms.fingertipdeals.com/%@", deal.imageUrl]]];
                 header.smallTitleLabel.text = deal.header;
             });
-        } else {
+        }
+        else {
             [self getAllDealsWithBlock:^{
                 [self getHeaderDeals:index];
             }];
@@ -245,13 +242,8 @@ const CGFloat kDealsCategoryCellHeight = 100.0f;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSArray* preferredSubCategories = [DealCategoryManager preferredSubCategories];
-    NSMutableSet *set = [NSMutableSet set];
-    for (DealSubCategory* subCat in preferredSubCategories) {
-        DealCategory *cat = subCat.belongsTo;
-        [set addObject:cat.title];
-    }
-    return [set count] + kNumberOfStaticCells;
+    NSArray* preferredCategories = [DealCategoryManager preferredCategories];
+    return [preferredCategories count] + kNumberOfStaticCells;
 }
 
 

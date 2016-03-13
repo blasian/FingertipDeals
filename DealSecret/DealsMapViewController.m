@@ -13,6 +13,7 @@
 #import "DealCategory.h"
 #import "DealSubCategory.h"
 #import "DealViewController.h"
+#import "DealsTableViewController.h"
 
 @interface DealsMapViewController ()
 
@@ -23,26 +24,6 @@
 @end
 
 @implementation DealsMapViewController
-
-//- (void)fetch {
-//    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Deal"];
-//    NSSortDescriptor *fetchSort = [NSSortDescriptor sortDescriptorWithKey:@"dealId" ascending:YES];
-//    if (self.category) {
-//        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"category.title LIKE %@", self.category.title];
-//        [fetchRequest setPredicate:predicate];
-//    }
-//    [fetchRequest setSortDescriptors:@[fetchSort]];
-//    NSManagedObjectContext *c = [ManagedObject context];
-//    
-//    NSError *error = nil;
-//    NSArray *result = [c executeFetchRequest:fetchRequest error:&error];
-//    if (!result) {
-//        NSLog(@"Failed to perform fetch for %@: %@\n%@", self.category.title, [error localizedDescription], [error userInfo]);
-//        abort();
-//    } else {
-//        self.deals = result;
-//    }
-//}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -62,7 +43,7 @@
     }
     
     // Map setup
-    self.mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 50.0f)];
+    self.mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     self.mapView.scrollEnabled = YES;
     if (!self.location)
         self.location = [LocationManager sharedInstance].location;
@@ -73,13 +54,11 @@
     [self.mapView setRegion:mapRegion animated:YES];
     
     // Navigation Button Setup
-    self.nextButton = [[UIButton alloc] initWithFrame:CGRectMake(0.0f, self.mapView.frame.origin.y + self.mapView.frame.size.height, self.view.frame.size.width, 50.0f)];
-    self.nextButton.backgroundColor = [UIColor grayColor];
-    [self.nextButton setTitle:@"Go to deal" forState:UIControlStateNormal];
-    [self.nextButton addTarget:self action:@selector(navigateToDeal) forControlEvents:UIControlEventTouchUpInside];
-    [self.nextButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [self.view addSubview:self.nextButton];
+    self.nextButton = [[UIButton alloc] initWithFrame:CGRectMake((self.mapView.frame.size.width - 75.0f)/2, self.mapView.frame.size.height - 150.0f, 75.0f, 75.0f)];
+    [self.nextButton setImage:[UIImage imageNamed:@"next_button"] forState:UIControlStateNormal];
+    [self.nextButton addTarget:self action:@selector(navigateToDeals) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.mapView];
+    [self.view addSubview:self.nextButton];
     
     [self refreshDeals];
 }
@@ -87,13 +66,11 @@
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
     if ([view.annotation isKindOfClass:[Deal class]]) {
         self.selectedDeal = view.annotation;
-        self.nextButton.backgroundColor = self.view.tintColor;
     }
 }
 
 - (void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(nonnull MKAnnotationView *)view {
     self.selectedDeal = nil;
-    self.nextButton.backgroundColor = [UIColor grayColor];
 }
 
 - (void)refreshDeals {
@@ -133,7 +110,14 @@
 }
 
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
-    [self navigateToDeal];
+    NSString* dealId = ((Deal*)view.annotation).dealId;
+    [self navigateToDeal:dealId];
+}
+
+- (void)navigateToDeal:(NSString*)dealId {
+    DealViewController *dealVC = [[DealViewController alloc] init];
+    dealVC.dealId = dealId;
+    [self.navigationController pushViewController:dealVC animated:YES];
 }
 
 
@@ -159,10 +143,9 @@
 
 
 #pragma mark - Navigation
-- (void)navigateToDeal {
-    DealViewController *dealVC = [[DealViewController alloc] init];
-    dealVC.dealId = self.selectedDeal.dealId;
-    [self.navigationController pushViewController:dealVC animated:YES];
+- (void)navigateToDeals {
+    DealsTableViewController *dealsVC = [[DealsTableViewController alloc] init];
+    [self.navigationController pushViewController:dealsVC animated:YES];
 }
 
 - (void)backButtonPressed:(id)sender {

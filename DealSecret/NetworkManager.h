@@ -24,6 +24,7 @@ extern NSString* const kUserUpdateLocationEndpoint;
 extern NSString* const kUserForgotPassword;
 extern NSString* const kUserLoginFromSourceEndpoint;
 extern NSString* const kUserCreateFromSourceEndpoint;
+extern NSString* const kUserLikeDealEndpoint;
 
 @interface NetworkManager : AFHTTPSessionManager
 

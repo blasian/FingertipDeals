@@ -52,6 +52,7 @@
 		AA16B7FC1C3C6CF80033F57C /* ZipViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA16B7FB1C3C6CF80033F57C /* ZipViewController.m */; };
 		AA16B8021C3CC00E0033F57C /* CategoryHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA16B8011C3CC00E0033F57C /* CategoryHeaderView.m */; };
 		AA16B8051C3DC03C0033F57C /* DealButtonStrip.m in Sources */ = {isa = PBXBuildFile; fileRef = AA16B8041C3DC03C0033F57C /* DealButtonStrip.m */; };
+		AAD63F2F1C8D342B008FE7B2 /* UIColor+CustomColors.m in Sources */ = {isa = PBXBuildFile; fileRef = AAD63F2E1C8D342B008FE7B2 /* UIColor+CustomColors.m */; };
 		AAE2F3F51C55D3CC000D2FC7 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAE2F3F41C55D3CC000D2FC7 /* Social.framework */; };
 /* End PBXBuildFile section */
 
@@ -136,6 +137,8 @@
 		AA16B8011C3CC00E0033F57C /* CategoryHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryHeaderView.m; sourceTree = "<group>"; };
 		AA16B8031C3DC03C0033F57C /* DealButtonStrip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealButtonStrip.h; sourceTree = "<group>"; };
 		AA16B8041C3DC03C0033F57C /* DealButtonStrip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealButtonStrip.m; sourceTree = "<group>"; };
+		AAD63F2D1C8D342B008FE7B2 /* UIColor+CustomColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+CustomColors.h"; sourceTree = "<group>"; };
+		AAD63F2E1C8D342B008FE7B2 /* UIColor+CustomColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+CustomColors.m"; sourceTree = "<group>"; };
 		AAE2F3F41C55D3CC000D2FC7 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		B4FCBAD5C9639A6E28F31134 /* libPods-DealSecret.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DealSecret.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD0C5017E6E7ADB50ADD2242 /* Pods-DealSecret.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DealSecret.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DealSecret/Pods-DealSecret.debug.xcconfig"; sourceTree = "<group>"; };
@@ -274,6 +277,8 @@
 				58DB63131C26720B00B3D9F6 /* PreferencesTableViewController.m */,
 				583A48901C1E3F9F001F8146 /* DealsTableViewController.h */,
 				583A48911C1E3F9F001F8146 /* DealsTableViewController.m */,
+				AAD63F2D1C8D342B008FE7B2 /* UIColor+CustomColors.h */,
+				AAD63F2E1C8D342B008FE7B2 /* UIColor+CustomColors.m */,
 				589A0F6A1C0FFC7400458E52 /* DealViewController.h */,
 				589A0F6B1C0FFC7400458E52 /* DealViewController.m */,
 				589A0F761C10487F00458E52 /* SettingsTableViewController.h */,
@@ -338,6 +343,7 @@
 				58933F851C0115940013BCF2 /* Resources */,
 				5A90AA86C81CD2F3DC70D384 /* Embed Pods Frameworks */,
 				53D1D50B7FB906D9AA94F658 /* Copy Pods Resources */,
+				AAD63F321C94FD42008FE7B2 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -454,6 +460,19 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
+		AAD63F321C94FD42008FE7B2 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" 51b79a3213537a38334b07e26af5b8b99887791f bed663d742b06117ac60702514f9e5d51f6658a955ce165c0d4b5f3d5510e05a";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -475,6 +494,7 @@
 				58028ED51C19610C00933E10 /* RegistrationViewController.m in Sources */,
 				58933FA91C0127480013BCF2 /* User.m in Sources */,
 				589A0F5F1C07D22800458E52 /* DealsHeaderView.m in Sources */,
+				AAD63F2F1C8D342B008FE7B2 /* UIColor+CustomColors.m in Sources */,
 				AA16B8051C3DC03C0033F57C /* DealButtonStrip.m in Sources */,
 				589A0F791C10487F00458E52 /* SettingsTableViewController.m in Sources */,
 				58933FCD1C02CBC80013BCF2 /* LocationManager.m in Sources */,

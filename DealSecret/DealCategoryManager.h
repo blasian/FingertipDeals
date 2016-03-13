@@ -14,11 +14,17 @@
 @interface DealCategoryManager : NSObject
 
 + (NSArray*)categories;
++ (NSArray*)subCategories;
++ (NSArray*)subCategoriesForCategoryWithIndex:(NSUInteger)index;
 + (NSArray*)preferredSubCategories;
++ (NSArray*)preferredCategories;
+
 + (DealCategory*)categoryWithIndex:(NSUInteger)index;
 + (DealSubCategory*)subCategoryWithIndexPath:(NSIndexPath*)indexPath;
-+ (NSArray*)subCategoriesForCategoryWithIndex:(NSUInteger)index;
+
 + (void)getSectionsWithBlock:(void(^)())block;
 + (void)getSubsectionsForSection:(NSString*)section withBlock:(void(^)())block;
++ (void)getPreferredCategoriesWithBlock:(void (^)(NSDictionary*))block;
++ (void)setPreferredCategoriesWithBlock:(void (^)(NSDictionary*))block;
 
 @end

@@ -19,9 +19,14 @@
 
 @interface DealTableViewCell : UITableViewCell <UIScrollViewDelegate>
 
+- (void)setLike:(BOOL)like;
+
 @property (nonatomic, strong) UIImageView *backgroundImage;
 @property (nonatomic, strong) UIImageView *companyImage;
 @property (nonatomic, strong) UILabel *dealLabel;
+
+@property (nonatomic, strong) UIButton *likeButton;
+@property (nonatomic, strong) UIButton *shareButton;
 
 //@property (nonatomic, weak) IBOutlet UILabel *companyLabel;
 @property (nonatomic, strong) UILabel *distanceLabel;
@@ -33,5 +38,6 @@
 @property (nonatomic, strong) UIView *scrollViewContentView;
 @property (nonatomic, strong) UILabel *scrollViewLabel;
 @property (nonatomic, strong) id<DealTableViewCellDelegate> delegate;
+
 
 @end

@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface DealSubCategory : ManagedObject
 
 // Insert code here to declare functionality of your managed object subclass
-- (id)initWithTitle:(NSString*)title;
+- (id)initWithTitle:(NSString*)title withCategory:(DealCategory*)category;
 @end
 
 NS_ASSUME_NONNULL_END

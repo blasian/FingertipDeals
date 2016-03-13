@@ -49,6 +49,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)forgotPasswordWithEmail:(NSString*)email
                       withBlock:(void (^_Nullable)(NSDictionary* response))block;
 
++ (void)likeDealWithId:(NSString*)dealId withBool:(BOOL)like block:(void (^)(NSDictionary * response))block;
+
 + (void)updateUserWithDictionary:(NSDictionary*)params
                            block:(void (^_Nullable )(NSDictionary* response))block;
 
@@ -67,13 +69,6 @@ NS_ASSUME_NONNULL_BEGIN
                    withLongitude:(NSString*)lon
                        withBlock:(void (^)(NSDictionary* response))block;
 
-+ (void)getCategoriesWithLevel:(NSNumber*)lnum
-                     withClass:(NSString* _Nullable)cnum
-                     withBlock:(void (^)(NSDictionary* response))block;
-
-+ (void)getUserClassesWithBlock:(void (^)(NSDictionary* response))block;
-
-+ (void)setUserClassesWithBlock:(void (^)(NSDictionary* response))block;
 @end
 
 NS_ASSUME_NONNULL_END

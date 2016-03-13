@@ -57,6 +57,9 @@
     self.dealStrip = [[DealButtonStrip alloc] initWithFrame:CGRectMake(10.0f, self.mapView.frame.origin.y + self.mapView.frame.size.height + 10.0f, self.view.frame.size.width - 20.0f, 25.0f)];
     self.dealStrip.backgroundColor = [UIColor colorWithWhite:1.0f alpha:0.3f];
     self.dealStrip.delegate = self;
+    if (self.deal.liked.boolValue) {
+        [self.dealStrip likeButtonPressed];
+    }
     
     // setup Scrollview
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(10.0f, self.dealStrip.frame.origin.y + self.dealStrip.frame.size.height + 10.0f, self.view.frame.size.width - 20.0f, self.view.frame.size.height - self.dealStrip.frame.origin.y - self.dealStrip.frame.size.height - 30.0f - 75.0f)];
@@ -119,7 +122,15 @@
     [self heightToFit:self.dealContent];
     
     self.dealDistance.frame = CGRectMake(0.0f, self.dealContent.frame.origin.y + self.dealContent.frame.size.height, self.scrollView.frame.size.width, 100.0f);
-    self.dealDistance.text = [NSString stringWithFormat:@"%d kms. away", self.deal.distance.intValue/1000];
+    NSString *distanceText;
+    if (self.deal.distance.intValue < 500) {
+        distanceText = [NSString stringWithFormat:@"%.2fm", self.deal.distance.floatValue];
+    } else if (self.deal.distance.intValue < 100000) {
+        distanceText = [NSString stringWithFormat:@"%.1fkm", self.deal.distance.floatValue / 1000.0];
+    } else {
+        distanceText = @"100+km";
+    }
+    self.dealDistance.text = [NSString stringWithFormat:@"%@ away", distanceText];
     [self heightToFit:self.dealDistance];
     
     CGRect contentRect = CGRectZero;
@@ -133,6 +144,7 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = NO;
 }
 
@@ -200,6 +212,10 @@
 }
 
 - (void)likeButtonPressed {
+    self.deal.liked = self.deal.liked.boolValue ? @1 : @0;
+    [User likeDealWithId:self.dealId withBool:self.deal.liked.boolValue block:^(NSDictionary * _Nonnull response) {
+        NSLog(@"success");
+    }];
     
 }
 

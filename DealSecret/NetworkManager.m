@@ -25,6 +25,7 @@ NSString* const kUserUpdateLocationEndpoint = @"users/location";
 NSString* const kUserForgotPassword = @"users/forgotpassword";
 NSString* const kUserLoginFromSourceEndpoint = @"users/loginfromsource";
 NSString* const kUserCreateFromSourceEndpoint = @"users/createfromsource";
+NSString* const kUserLikeDealEndpoint = @"users/setdeallike";
 
 @implementation NetworkManager
 

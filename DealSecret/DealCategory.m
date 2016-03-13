@@ -11,8 +11,6 @@
 
 @implementation DealCategory
 
-// Insert code here to add functionality to your managed object subclass
-
 - (instancetype)initWithTitle:(NSString*)title
 {
     self = [super init];
@@ -21,5 +19,13 @@
     }
     return self;
 }
+
+//- (void)setIsPreferred:(NSNumber*)prefer {
+//    self.isPreferred = prefer;
+//    for (DealSubCategory* subcat in self.subCategories) {
+//        subcat.isPreferred = prefer;
+//        [subcat save];
+//    }
+//}
 
 @end

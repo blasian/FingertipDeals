@@ -7,6 +7,13 @@
 //
 
 #import "DealTableViewCell.h"
+#import "UIColor+CustomColors.h"
+
+@interface DealTableViewCell ()
+
+@property (nonatomic, strong) NSNumber* liked;
+
+@end
 
 @implementation DealTableViewCell
 
@@ -65,21 +72,21 @@ const double kCatchWidth = 150.0f;
     [self.scrollView addSubview:self.scrollViewButtonView];
     
     // Set up our two buttons
-    UIButton *shareButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    shareButton.backgroundColor = [UIColor colorWithRed:0.0f green:174.0f/255.0f blue:177.0f/255.0f alpha:1.0f];
-    shareButton.frame = CGRectMake(kCatchWidth / 2.0f, 0, kCatchWidth / 2.0f, CGRectGetHeight(self.scrollViewButtonView.bounds));
-    [shareButton setTitle:@"Share" forState:UIControlStateNormal];
-    [shareButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [shareButton addTarget:self action:@selector(shareDeal:) forControlEvents:UIControlEventTouchUpInside];
-    [self.scrollViewButtonView addSubview:shareButton];
+    self.shareButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.shareButton.backgroundColor = [UIColor colorWithRed:0.0f green:174.0f/255.0f blue:177.0f/255.0f alpha:1.0f];
+    self.shareButton.frame = CGRectMake(kCatchWidth / 2.0f, 0, kCatchWidth / 2.0f, CGRectGetHeight(self.scrollViewButtonView.bounds));
+    [self.shareButton setTitle:@"Share" forState:UIControlStateNormal];
+    [self.shareButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.shareButton addTarget:self action:@selector(shareDeal:) forControlEvents:UIControlEventTouchUpInside];
+    [self.scrollViewButtonView addSubview:self.shareButton];
     
-    UIButton *deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    deleteButton.backgroundColor = [UIColor colorWithRed:231.0f/255.0f green:193.0f/255.0f blue:24.0f/255.0f alpha:1.0f];
-    deleteButton.frame = CGRectMake(0, 0, kCatchWidth / 2.0f, CGRectGetHeight(self.scrollViewButtonView.bounds));
-    [deleteButton setTitle:@"Like" forState:UIControlStateNormal];
-    [deleteButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [deleteButton addTarget:self action:@selector(likeDeal:) forControlEvents:UIControlEventTouchUpInside];
-    [self.scrollViewButtonView addSubview:deleteButton];
+    self.likeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.likeButton.backgroundColor = [UIColor dealNotLikedColor];
+    self.likeButton.frame = CGRectMake(0, 0, kCatchWidth / 2.0f, CGRectGetHeight(self.scrollViewButtonView.bounds));
+    [self.likeButton setTitle:@"Like" forState:UIControlStateNormal];
+    [self.likeButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.likeButton addTarget:self action:@selector(likeDeal:) forControlEvents:UIControlEventTouchUpInside];
+    [self.scrollViewButtonView addSubview:self.likeButton];
     
     self.scrollViewContentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds))];
     self.scrollViewContentView.backgroundColor = [UIColor clearColor];
@@ -96,7 +103,16 @@ const double kCatchWidth = 150.0f;
     [self.scrollView addSubview:self.scrollViewContentView];
 }
 
+- (void)setLike:(BOOL)like {
+    self.liked = [NSNumber numberWithBool:like];
+    UIColor* dealColor = like ? [UIColor dealLikedColor] : [UIColor dealNotLikedColor];
+    NSString* dealText = like ? @"Liked" : @"Like";
+    [self.likeButton setBackgroundColor:dealColor];
+    [self.likeButton setTitle:dealText forState:UIControlStateNormal];
+}
+
 - (void)likeDeal:(id)sender {
+    [self setLike:!self.liked.boolValue];
     [self.delegate likeButtonTapped:self];
 }
 

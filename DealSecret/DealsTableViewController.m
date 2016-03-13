@@ -19,7 +19,6 @@ const float kDealCellHeight = 100.0f;
 
 @interface DealsTableViewController ()
 
-@property (nonatomic, strong) NSFetchedResultsController* fetchedResultsController;
 @property (nonatomic, strong) CLLocation* location;
 @property (nonatomic, strong) NSMutableArray* deals;
 @property (nonatomic, strong) Deal* selectedDeal;
@@ -70,36 +69,17 @@ const float kDealCellHeight = 100.0f;
 }
 
 - (void)likeButtonTapped:(DealTableViewCell *)cell {
-    UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Deal has been liked."
-                                                      message:nil
-                                                     delegate:self
-                                            cancelButtonTitle:@"Cancel"
-                                            otherButtonTitles:nil];
-    
-    [message show];
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    Deal* deal = [self.deals objectAtIndex:indexPath.row];
+    deal.liked = deal.liked.boolValue ? @1 : @0;
+    [User likeDealWithId:deal.dealId withBool:deal.liked.boolValue block:^(NSDictionary* response) {
+        if (response) {
+            NSLog(@"%@",response);
+        } else {
+            NSLog(@"success");
+        }
+    }];
 }
-
-/*
-- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
-    [self.tableView reloadData];
-}
-
-- (void)initializeFetchResultsController {
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Deal"];
-    NSSortDescriptor *fetchSort = [NSSortDescriptor sortDescriptorWithKey:@"dealId" ascending:YES];
-    [fetchRequest setSortDescriptors:@[fetchSort]];
-    NSManagedObjectContext *c = [ManagedObject context];
-    
-    [self setFetchedResultsController:[[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:c sectionNameKeyPath:nil cacheName:nil]];
-    [self.fetchedResultsController setDelegate:self];
-    
-    NSError *error = nil;
-    if (![[self fetchedResultsController] performFetch:&error]) {
-        NSLog(@"Failed to initialize FetchedResultsController: %@\n%@", [error localizedDescription], [error userInfo]);
-        abort();
-    }
-}
-*/
 
 - (void)dealSelected:(DealTableViewCell*)cell {
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
@@ -112,24 +92,27 @@ const float kDealCellHeight = 100.0f;
     self.title = @"Current Deals";
     
     self.refreshControl = [[UIRefreshControl alloc] init];
-    self.refreshControl.backgroundColor = [UIColor purpleColor];
-    self.refreshControl.tintColor = [UIColor whiteColor];
     [self.refreshControl addTarget:self action:@selector(refreshTable) forControlEvents:UIControlEventValueChanged];
+    [self.refreshControl setTintColor:[UIColor whiteColor]];
+    [self.tableView addSubview:self.refreshControl];
     
     [self.tableView registerClass:[DealTableViewCell class] forCellReuseIdentifier:@"DealCell"];
-    
     self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"form_background"]];
+    self.tableView.backgroundView.layer.zPosition -= 1;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self refreshDealsWithBlock:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
 }
 
 -(void)refreshTable {
-    [self.tableView reloadData];
-    [self.refreshControl endRefreshing];
+    NSLog(@"refreshing..");
+    [self refreshDealsWithBlock:^{
+       [self.refreshControl endRefreshing];
+    }];
 }
 
 - (void)refreshDealsWithBlock:(void (^)())block {
@@ -142,7 +125,7 @@ const float kDealCellHeight = 100.0f;
                              if (block) {
                                  block();
                              }
-                             [self refreshTable];
+                             [self.tableView reloadData];
                          }];
 }
 

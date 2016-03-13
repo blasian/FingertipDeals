@@ -8,5 +8,6 @@ target 'DealSecret' do
 	pod 'FBSDKCoreKit'
 	pod 'FBSDKShareKit'
 	pod 'FBSDKLoginKit'
-	pod 'STTwitter'
+	pod 'Fabric’
+	pod 'TwitterKit’
 end
