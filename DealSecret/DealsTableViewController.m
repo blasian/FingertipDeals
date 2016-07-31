@@ -31,7 +31,6 @@ const float kDealCellHeight = 100.0f;
 {
     self = [super initWithStyle:style];
     if (self) {
-//        [self initializeFetchResultsController];
         self.location = [LocationManager sharedInstance].location;
     }
     return self;
@@ -116,17 +115,22 @@ const float kDealCellHeight = 100.0f;
 }
 
 - (void)refreshDealsWithBlock:(void (^)())block {
-    [User getDealsWithLatitude:[NSString stringWithFormat:@"%f", [LocationManager sharedInstance].location.coordinate.latitude]
-                     longitude:[NSString stringWithFormat:@"%f", [LocationManager sharedInstance].location.coordinate.longitude]
-                         block:^(NSDictionary * _Nonnull response) {
-                             if (!response[@"error"]) {
-                                 self.deals = response[@"deals"];
-                             }
-                             if (block) {
-                                 block();
-                             }
-                             [self.tableView reloadData];
-                         }];
+    
+    void (^callback)(NSDictionary*) = ^void(NSDictionary* response) {
+        if (!response[@"error"]) {
+            self.deals = response[@"deals"];
+        }
+        if (block) {
+            block();
+        }
+        [self.tableView reloadData];
+    };
+    
+    if (self.category) {
+        [User getUserDealsWithCategory:self.category withLatitude:[NSString stringWithFormat:@"%f", [LocationManager sharedInstance].location.coordinate.latitude] withLongitude:[NSString stringWithFormat:@"%f", [LocationManager sharedInstance].location.coordinate.longitude] withBlock:callback];
+    } else {
+        [User getDealsWithLatitude:[NSString stringWithFormat:@"%f", [LocationManager sharedInstance].location.coordinate.latitude] longitude:[NSString stringWithFormat:@"%f", [LocationManager sharedInstance].location.coordinate.longitude] block:callback];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

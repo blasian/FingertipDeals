@@ -145,6 +145,7 @@
 #pragma mark - Navigation
 - (void)navigateToDeals {
     DealsTableViewController *dealsVC = [[DealsTableViewController alloc] init];
+    dealsVC.category = self.category;
     [self.navigationController pushViewController:dealsVC animated:YES];
 }
 

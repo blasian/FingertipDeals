@@ -23,12 +23,12 @@
 @property (nonatomic, weak) IBOutlet TextField* confirmPasswordField;
 @property (nonatomic, weak) IBOutlet TextField* firstNameField;
 @property (nonatomic, weak) IBOutlet TextField* lastNameField;
-@property (nonatomic, weak) IBOutlet TextField* dobField;
-@property (nonatomic, weak) IBOutlet UISegmentedControl* genderControl;
+//@property (nonatomic, weak) IBOutlet TextField* dobField;
+//@property (nonatomic, weak) IBOutlet UISegmentedControl* genderControl;
 @property (nonatomic, weak) IBOutlet UIButton* nextButton;
 
 @property (nonatomic, strong) UITextField* activeField;
-@property (nonatomic, strong) NSDate* dob;
+//@property (nonatomic, strong) NSDate* dob;
 
 @end
 
@@ -41,16 +41,16 @@
     self.scrollView.contentSize = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height);
     self.scrollView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     
-    UIDatePicker *datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 200)];
-    [datePicker addTarget:self action:@selector(dobSelected:) forControlEvents:UIControlEventValueChanged];
-    datePicker.datePickerMode = UIDatePickerModeDate;
-    datePicker.maximumDate = [NSDate date];
-    self.dobField.inputView = datePicker;
-    self.dobField.tintColor = [UIColor clearColor];
+//    UIDatePicker *datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 200)];
+//    [datePicker addTarget:self action:@selector(dobSelected:) forControlEvents:UIControlEventValueChanged];
+//    datePicker.datePickerMode = UIDatePickerModeDate;
+//    datePicker.maximumDate = [NSDate date];
+//    self.dobField.inputView = datePicker;
+//    self.dobField.tintColor = [UIColor clearColor];
     
     [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(backgroundTapped)]];
     [self.nextButton addTarget:self action:@selector(nextButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-    self.dob = [NSDate date];
+//    self.dob = [NSDate date];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWasShown:)
                                                  name:UIKeyboardDidShowNotification object:nil];
@@ -66,6 +66,7 @@
     // Dispose of any resources that can be recreated.
 }
 
+/*
 - (void)dobSelected:(id)sender {
     UIDatePicker *picker = sender;
     self.dob = picker.date;
@@ -73,6 +74,7 @@
     [formatter setDateStyle:NSDateFormatterLongStyle];
     self.dobField.text = [formatter stringFromDate:picker.date];
 }
+*/
 
 // Called when the UIKeyboardDidShowNotification is sent.
 - (void)keyboardWasShown:(NSNotification*)aNotification
@@ -119,7 +121,7 @@
     
     // 0 = Male
     // 1 = Female
-    NSInteger gender = self.genderControl.selectedSegmentIndex;
+//    NSInteger gender = self.genderControl.selectedSegmentIndex;
     
     /*
     NSDictionary* params = @{@"email" : self.emailField.text,
@@ -138,8 +140,6 @@
                          password:self.passwordField.text
                         firstName:self.firstNameField.text
                          lastName:self.lastNameField.text
-                              dob:self.dob
-                           gender:[NSNumber numberWithInteger:gender]
                          timezone:[NSTimeZone systemTimeZone]
                          deviceId:deviceId
                             block:^void(NSDictionary* response) {

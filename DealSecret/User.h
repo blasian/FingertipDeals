@@ -22,8 +22,6 @@ NS_ASSUME_NONNULL_BEGIN
                    password:(NSString*)password
                    firstName:(NSString*)firstName
                    lastName:(NSString*)lastName
-                        dob:(NSDate*)dob
-                     gender:(NSNumber*)gender
                    timezone:(NSTimeZone*)timezone
                    deviceId:(NSString*)deviceId
                       block:(void (^_Nullable)(NSDictionary* response))block;
@@ -32,8 +30,6 @@ NS_ASSUME_NONNULL_BEGIN
                      source:(NSString*)source
                   firstName:(NSString*)firstName
                    lastName:(NSString*)lastName
-                        dob:(NSDate*)dob
-                     gender:(NSNumber*)gender
                    timezone:(NSTimeZone*)timezone
                    deviceId:(NSString*)deviceId
                       block:(void (^_Nullable)(NSDictionary* response))block;
@@ -68,6 +64,8 @@ NS_ASSUME_NONNULL_BEGIN
                     withLatitude:(NSString*)lat
                    withLongitude:(NSString*)lon
                        withBlock:(void (^)(NSDictionary* response))block;
+
++ (void)getTermsWithBlock:(void (^ _Nullable) (NSString* response))block;
 
 @end
 

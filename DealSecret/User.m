@@ -204,8 +204,6 @@
                    password:(NSString*)password
                   firstName:(NSString*)firstName
                    lastName:(NSString*)lastName
-                        dob:(NSDate*)dob
-                     gender:(NSNumber*)gender
                    timezone:(NSTimeZone*)timezone
                    deviceId:(NSString*)deviceId
                       block:(void (^_Nullable)(NSDictionary* response))block
@@ -217,8 +215,8 @@
                              @"um_upass" : password,
                              @"um_fname" : firstName,
                              @"um_lname" : lastName,
-                             @"um_dob"   : dob,
-                             @"um_gender": gender,
+                             @"um_dob"   : @"",
+                             @"um_gender": @"",
                              @"um_timezone":timezone,
                              @"um_deviceidios":deviceId};
 
@@ -253,8 +251,6 @@
                    source:(NSString*)source
                   firstName:(NSString*)firstName
                    lastName:(NSString*)lastName
-                        dob:(NSDate*)dob
-                     gender:(NSNumber*)gender
                    timezone:(NSTimeZone*)timezone
                    deviceId:(NSString*)deviceId
                       block:(void (^_Nullable)(NSDictionary* response))block
@@ -263,8 +259,8 @@
                              @"um_source" : source,
                              @"um_fname" : firstName,
                              @"um_lname" : lastName,
-                             @"um_dob"   : dob,
-                             @"um_gender": gender,
+                             @"um_dob"   : @"",
+                             @"um_gender": @"",
                              @"um_timezone":timezone,
                              @"um_deviceidios":deviceId};
     
@@ -355,6 +351,22 @@
                                  }];
 }
 
+
+
++ (void)getTermsWithBlock:(void (^ _Nullable) (NSString* response))block {
+    NSString* route = kTermsEndpoint;
+    [[NetworkManager sharedInstance] GET:route parameters:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+        if (block) {
+            NSString* text = [responseObject valueForKey:@"data"];
+            block(text);
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        if (block) {
+            block(nil);
+        }
+    }];
+}
+
 + (void)updateUserWithLocation:(NSArray*)locations
                          block:(void (^_Nullable )(NSDictionary* response))block {
     NSError* error;
@@ -405,7 +417,8 @@
                     withLatitude:(NSString*)lat
                    withLongitude:(NSString*)lon
                        withBlock:(void (^)(NSDictionary*))block {
-    [[NetworkManager sharedInstance] GET:[NSString stringWithFormat:kUserDealsWithClassEndpoint, category.title, lat, lon] parameters:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+    NSString* url = [[NSString stringWithFormat:kUserDealsWithClassEndpoint, category.title, lat, lon] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    [[NetworkManager sharedInstance] GET:url parameters:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
         NSDictionary *dealsDict = [responseObject valueForKey:@"data"];
         NSMutableArray *deals = [NSMutableArray array];
         for (NSDictionary *dealDict in dealsDict) {
